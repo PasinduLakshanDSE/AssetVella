@@ -3,7 +3,7 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "animate.css";
-import { Routes, Route } from "react-router-dom";
+import {  Routes, Route } from "react-router-dom";
 
 import Home from "./components/Home/Home";
 import AdminNavBar from "./components/Admin/AdminNav/AdminNav";
@@ -18,13 +18,16 @@ import AssetRegister from "./components/Admin/AssetRegistration/AssetRegister";
 import Categorization from "./components/Admin/AssetCategorization/Assetcategorization";
 
 import AssetDetails from "./components/Admin/AssetDetails/AssetDetails";
+import QRVIEW from "./components/QRview/QRView";
 
+//import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 //import Users from "./components/Users/Users";
 
 
 function App() {
   return (
     <div className="App">
+       
       <Routes>
         
         <Route path="/" element={<Home/>}/>
@@ -39,8 +42,10 @@ function App() {
         <Route path="/AssetRegister" element={<AssetRegister/>}/>
         <Route path="/category" element={<Categorization/>}/>
         <Route path="/AssetDetails" element={<AssetDetails/>}/>
+        <Route path="/QRview/:trackingId" element={<QRVIEW/>}/>
       </Routes>
     </div>
+   
   );
 }
 

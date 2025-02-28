@@ -67,6 +67,19 @@ router.get("/getAssetDetails",async(req,res)=>{
   }
 })
 
+router.get("/AssetRegisterDetails/:trackingId", async (req, res) => {
+  try {
+    const asset = await AssetRegisterDetails.findOne({ trackingId: req.params.trackingId }); // ✅ Correct model usage
+    if (!asset) {
+      return res.status(404).json({ message: "Asset not found" });
+    }
+    res.json(asset);
+  } catch (error) {
+    console.error("Error fetching asset:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 
 
 

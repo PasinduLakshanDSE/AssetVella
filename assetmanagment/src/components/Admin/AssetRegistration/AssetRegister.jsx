@@ -236,7 +236,7 @@ const AssetRegister = () => {
 
 
 
-  const handleSubmit = async () => {
+  /*const handleSubmit = async () => {
     if (!name || !company || !department || !mainCategory || !assetUpdateDate || !type) {
       alert("Please fill in all required fields before submitting.");
       return;
@@ -303,7 +303,78 @@ const AssetRegister = () => {
       console.error("Error submitting data:", error);
       alert("Error creating asset. Please try again.");
     }
+  };*/
+
+  const handleSubmit = async () => {
+    if (!name || !company || !department || !mainCategory || !assetUpdateDate || !type) {
+      alert("Please fill in all required fields before submitting.");
+      return;
+    }
+  
+    try {
+      if (computerComponents === "fullSet") {
+
+        const components = [
+          { assetName: CPUassetName, serialNumber: CPUserialNumber, model: CPUassetModel, label: "CPU" },
+          { assetName: MoniterassetName, serialNumber: MoniterserialNumber, model: MoniterassetModel, label: "Monitor" },
+          { assetName: MouseassetName, serialNumber: MouseserialNumber, model: MouseassetModel, label: "Mouse" },
+          { assetName: KeyboardassetName, serialNumber: KeyboardserialNumber, model: KeyboardassetModel, label: "Keyboard" },
+        ];
+
+
+
+
+        for (const component of components) {
+          if (component.assetName) {
+            const id = generateTrackingId(component.serialNumber);
+            const assetData = {
+              name,
+              company,
+              department,
+              mainCategory,
+              type: type === "Other" ? customType : type,
+              assetName: component.assetName,
+              assetModel: component.model,
+              assetUpdateDate,
+              serialNumber: component.serialNumber || null,
+              trackingId: id,
+              specialNote,
+              computerComponents: component.label, // Label component type
+            };
+  
+          await axios.post("http://localhost:8000/api/AssetRegisterDetails", assetData);
+        }}
+      } else {
+        const assetData = {
+          name,
+          company,
+          department,
+          mainCategory,
+          type: type === "Other" ? customType : type,
+          assetName,
+          assetModel,
+          assetUpdateDate,
+          serialNumber: mainCategory === "Electronic items" ? serialNumber : null,
+          trackingId: qrCodeData[0]?.trackingId, // Use tracking ID from QR data
+          specialNote,
+          computerComponents,
+        };
+  
+        await axios.post("http://localhost:8000/api/AssetRegisterDetails", assetData);
+      }
+  
+      alert("Assets submitted successfully!");
+      resetForm();
+    } catch (error) {
+      console.error("Error submitting data:", error);
+      alert("Error creating asset. Please try again.");
+    }
   };
+  
+
+
+
+
 
   // Function to reset form after submission
   const resetForm = () => {

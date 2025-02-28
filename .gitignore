@@ -1,0 +1,5 @@
+# Ignore Git pack files
+*.pack
+*.idx
+
+

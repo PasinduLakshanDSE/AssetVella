@@ -26,12 +26,8 @@ const AssetDetails = () => {
             (asset.assetModel?.toLowerCase() || "").includes(searchQuery.toLowerCase()) ||
             (asset.serialNumber?.toLowerCase() || "").includes(searchQuery.toLowerCase()) ||
             (asset.trackingId?.toLowerCase() || "").includes(searchQuery.toLowerCase()) ||
-            /*(asset.
-                computerComponents?.toLowerCase() || "").includes(searchQuery.toLowerCase())*/
-            (asset.computerComponents &&
-                Object.keys(asset.computerComponents)
-                    .some(key => key.toLowerCase().includes(searchQuery.toLowerCase()))
-            );
+            (asset.computerComponents?.toLowerCase() || "").includes(searchQuery.toLowerCase())
+           
 
         const matchesSecondQuery =
             (asset.name?.toLowerCase() || "").includes(searchQuery1.toLowerCase()) ||
@@ -43,12 +39,8 @@ const AssetDetails = () => {
             (asset.assetName?.toLowerCase() || "").includes(searchQuery1.toLowerCase()) ||
             (asset.assetModel?.toLowerCase() || "").includes(searchQuery1.toLowerCase()) ||
             (asset.serialNumber?.toLowerCase() || "").includes(searchQuery1.toLowerCase()) ||
-            /*(asset.trackingId?.toLowerCase() || "").includes(searchQuery1.toLowerCase()) ||(asset.
-                computerComponents?.toLowerCase() || "").includes(searchQuery.toLowerCase())*/
-            (asset.computerComponents &&
-                Object.keys(asset.computerComponents)
-                    .some(key => key.toLowerCase().includes(searchQuery1.toLowerCase()))
-            );
+            (asset.trackingId?.toLowerCase() || "").includes(searchQuery1.toLowerCase()) ||
+            (asset.computerComponents?.toLowerCase() || "").includes(searchQuery.toLowerCase())
 
         const matchesThirdQuery =
             (asset.name?.toLowerCase() || "").includes(searchQuery2.toLowerCase()) ||
@@ -61,12 +53,7 @@ const AssetDetails = () => {
             (asset.assetModel?.toLowerCase() || "").includes(searchQuery2.toLowerCase()) ||
             (asset.serialNumber?.toLowerCase() || "").includes(searchQuery2.toLowerCase()) ||
             (asset.trackingId?.toLowerCase() || "").includes(searchQuery2.toLowerCase()) ||
-            /*(asset.
-                computerComponents?.toLowerCase() || "").includes(searchQuery.toLowerCase())*/
-            (asset.computerComponents &&
-                Object.keys(asset.computerComponents)
-                    .some(key => key.toLowerCase().includes(searchQuery2.toLowerCase()))
-            );
+            (asset.computerComponents?.toLowerCase() || "").includes(searchQuery.toLowerCase())
 
         // Apply logic: If all fields are filled, all must match; otherwise, match based on input
         if (searchQuery && searchQuery1 && searchQuery2) {
