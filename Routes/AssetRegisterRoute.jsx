@@ -67,16 +67,20 @@ router.get("/getAssetDetails",async(req,res)=>{
   }
 })
 
-router.get("/AssetRegisterDetails/:trackingId", async (req, res) => {
+// Route to get asset details by tracking ID
+router.get("/:trackingId", async (req, res) => {
   try {
-    const asset = await AssetRegisterDetails.findOne({ trackingId: req.params.trackingId }); // ✅ Correct model usage
+    const { trackingId } = req.params; // Get tracking ID from the URL params
+    const asset = await AssetRegisterDetails.findOne({ trackingId: trackingId }); // Search for asset by tracking ID
+
     if (!asset) {
       return res.status(404).json({ message: "Asset not found" });
     }
-    res.json(asset);
-  } catch (error) {
-    console.error("Error fetching asset:", error);
-    res.status(500).json({ message: "Internal Server Error" });
+    
+    res.json(asset); // Send the asset details as the response
+  } catch (err) {
+    console.error("Error fetching asset by tracking ID:", err);
+    res.status(500).json({ message: "Server error" });
   }
 });
 

@@ -56,7 +56,7 @@ const AssetRegister = () => {
     "Stationery",
   ];
 
-  const companies = ["Vella", "98 Acers", "Ravana Pool Club", "Flying Ravana", "Le Maas Tota", "Tea Factory"];
+  const companies = ["Vella", "98 Acers", "Ravana Pool Club", "Flying Ravana", "Le Maas Tota", "Tea Factory","Walaa kulu","kiri kopi"];
   const departments = ["ICT", "HR", "Kitchen", "Front Office", "Store", "Account", "Audit"];
 
   useEffect(() => {
@@ -86,7 +86,7 @@ const AssetRegister = () => {
   };
 
   const generateTrackingId = (serialNumber) => {
-    const companyCodes = { Vella: "VE", "98 Acers": "98", "Ravana Pool Club": "RPC", "Flying Ravana": "FR", "Le Maas Tota": "LMT", "Tea Factory": "TF" };
+    const companyCodes = { Vella: "VE", "98 Acers": "98", "Ravana Pool Club": "RPC", "Flying Ravana": "FR", "Le Maas Tota": "LMT", "Tea Factory": "TF" , "Walaa kulu": "WK","kiri kopi":"KK"};
     const departmentCodes = { ICT: "IT", HR: "HR", Kitchen: "KT", Store: "ST", "Front Office": "FO", Account: "AC", Audit: "AU" };
 
     const companyCode = companyCodes[company] || "XX";
@@ -142,6 +142,9 @@ const AssetRegister = () => {
             specialNote,
           });
 
+          //const qrData= `http://localhost:3000/QRView/${id}`;
+         
+
           qrDataArray.push({ qrData, trackingId: id, component: item.label });
           //setIsQRGenerated(true); // Update state to show checkmark
         }
@@ -150,7 +153,7 @@ const AssetRegister = () => {
     } else {
       // Normal QR generation
       const id = generateTrackingId(serialNumber);
-      const qrData = JSON.stringify({
+      /*const qrData = JSON.stringify({
         name,
         company,
         department,
@@ -162,8 +165,8 @@ const AssetRegister = () => {
         trackingId: id,
         assetModel,
         specialNote,
-      });
-
+      });*/
+      const qrData= `http://localhost:3000/QRView/${id}`;
       qrDataArray.push({ qrData, trackingId: id });
     }
 
