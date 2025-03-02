@@ -31,13 +31,20 @@ const Login = () => {
         password,
       });
   
-      const user = response.data; // Access the returned user object
+      const user = response.data;
       setUsername("");
       setPassword("");
       setShowError(false);
   
+      if (user.isBlocked) {
+        setError("Your account is blocked. Please contact the administrator.");
+        setShowError(true);
+        return;
+      }
+  
+      localStorage.setItem('currentUser', JSON.stringify({ username: user.name, role: user.selectedOption }));
+  
       if (user.selectedOption === "Admin") {
-        localStorage.setItem('currentUser', JSON.stringify({ username: user.name, role: user.selectedOption }));
         navigate('/AdminDashboardPage');
       } else if (user.selectedOption === "CompanyAdmin") {
         navigate('/CompanyDashBord');
@@ -47,10 +54,11 @@ const Login = () => {
       }
     } catch (error) {
       console.error(error);
-      setError("Invalid username or password.");
+      setError(error.response?.data?.message || "Invalid username or password.");
       setShowError(true);
     }
   };
+  
   
 
   return (

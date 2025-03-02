@@ -36,7 +36,7 @@ const DashBoard = () => {
   const cards = [
     { count: bookings.length, label: "Total Asset", color: "blue", icon: <i className="fas fa-calendar-days si"></i> },
     { count: techniciansCount, label: "Total ", color: "green", icon: <i className="fas fa-gear si"></i> },
-    { count: servicesCount, label: " Service", color: "teal", icon: <i className="fas fa-handshake si"></i> },
+    /*{ count: servicesCount, label: " Service", color: "teal", icon: <i className="fas fa-handshake si"></i> },*/
     { count: usersCount, label: "Total Users", color: "red", icon: <i className="fas fa-user si"></i> },
   ];
 

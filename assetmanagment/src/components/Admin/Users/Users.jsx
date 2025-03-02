@@ -22,26 +22,35 @@ const Users = () => {
     fetchUsers(); // Fetch data when the component mounts
   }, []);
 
-  const handleDelete = async (id) => {
-    if (window.confirm("Are you sure you want to delete this user?")) {
-      try {
-        const response = await axios.delete(`http://localhost:8000/api/users/${id}`);
-        if (response.status === 200) {
-          alert("User deleted successfully!");
-          fetchUsers(); // Refresh the list after deletion
-        } else {
-          alert("Failed to delete the user. Please try again.");
-        }
-      } catch (error) {
-        console.error("Error deleting user:", error);
-        alert("An error occurred while deleting the user.");
-      }
-    }
+  const handleBlock = async (id) => {
+    const confirmLogout = window.confirm("Are you sure you want to Block?");
+    if(confirmLogout){
+    try {
+      await axios.put(`http://localhost:8000/api/users/block/${id}`);
+      alert("User blocked successfully!");
+      fetchUsers(); // Refresh the list after blocking
+    } catch (error) {
+      console.error("Error blocking user:", error);
+      alert("An error occurred while blocking the user.");
+    }}
+  };
+
+  const handleUnblock = async (id) => {
+    const confirmLogout = window.confirm("Are you sure you want to UnBlock?");
+    if(confirmLogout){
+    try {
+      await axios.put(`http://localhost:8000/api/users/unblock/${id}`);
+      alert("User unblocked successfully!");
+      fetchUsers(); // Refresh the list after unblocking
+    } catch (error) {
+      console.error("Error unblocking user:", error);
+      alert("An error occurred while unblocking the user.");
+    }}
   };
 
   const handleEdit = (user) => {
-    setEditingUser(user); // Set the user to edit
-    setShowEditModal(true); // Show the edit modal
+    setEditingUser(user);
+    setShowEditModal(true);
   };
 
   const handleUpdate = async (updatedUser) => {
@@ -51,8 +60,6 @@ const Users = () => {
         alert("User updated successfully!");
         fetchUsers(); // Refresh the list after update
         setShowEditModal(false); // Close the modal
-      } else {
-        alert("Failed to update the user. Please try again.");
       }
     } catch (error) {
       console.error("Error updating user:", error);
@@ -71,9 +78,10 @@ const Users = () => {
               <th>Last Name</th>
               <th>Designation</th>
               <th>Contact</th>
-              <th>User Name</th>
+              <th>Username</th>
               <th>User Role</th>
               <th>Company Name</th>
+              <th>Status</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -89,33 +97,32 @@ const Users = () => {
                   <td>{user.username}</td>
                   <td>{user.selectedOption}</td>
                   <td>{user.companyName}</td>
+                  <td>{user.isBlocked ? "Blocked" : "Active"}</td>
                   <td>
-                    <button
-                      className="btn btn-primary btn-sm me-2"
-                      onClick={() => handleEdit(user)}
-                    >
+                    <button className="btn btn-primary btn-sm me-2" onClick={() => handleEdit(user)}>
                       Update
                     </button>
-                    <button
-                      className="btn btn-danger btn-sm"
-                      onClick={() => handleDelete(user._id)}
-                    >
-                      Delete
-                    </button>
+                    {user.isBlocked ? (
+                      <button className="btn btn-success btn-sm" onClick={() => handleUnblock(user._id)}>
+                        Unblock
+                      </button>
+                    ) : (
+                      <button className="btn btn-color btn-sm" onClick={() => handleBlock(user._id)}>
+                        Block
+                      </button>
+                    )}
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="9" className="text-center">
+                <td colSpan="10" className="text-center">
                   No user data available
                 </td>
               </tr>
             )}
           </tbody>
         </table>
-
-        {/* Edit Modal */}
         {showEditModal && editingUser && (
           <EditUserModal
             show={showEditModal}
@@ -130,7 +137,11 @@ const Users = () => {
 };
 
 const EditUserModal = ({ show, onClose, user, onUpdate }) => {
-  const [updatedUser, setUpdatedUser] = useState(user);
+  const [updatedUser, setUpdatedUser] = useState(user || {});
+
+  useEffect(() => {
+    setUpdatedUser(user || {});
+  }, [user]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -142,112 +153,41 @@ const EditUserModal = ({ show, onClose, user, onUpdate }) => {
   };
 
   return (
-    <div className={`modal ${show ? "d-block" : "d-none"}`} tabIndex="-1">
+    <div className={`modal fade ${show ? "show d-block" : ""}`} tabIndex="-1" role="dialog">
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title">Edit User</h5>
-            <button
-              type="button"
-              className="btn-close"
-              onClick={onClose}
-            ></button>
+            <button type="button" className="btn-close" onClick={onClose}></button>
           </div>
           <div className="modal-body">
-            <div className="mb-3">
-              <label className="form-label">First Name</label>
-              <input
-                type="text"
-                className="form-control"
-                name="firstName"
-                value={updatedUser.firstName}
-                onChange={handleChange}
-              />
-            </div>
+            <label className="form-label">First Name</label>
+            <input type="text" className="form-control" name="firstName" value={updatedUser.firstName || ''} onChange={handleChange} />
+            
+            <label className="form-label">Last Name</label>
+            <input type="text" className="form-control" name="lastName" value={updatedUser.lastName || ''} onChange={handleChange} />
 
-            <div className="mb-3">
-              <label className="form-label">Last Name</label>
-              <input
-                type="text"
-                className="form-control"
-                name="lastName"
-                value={updatedUser.lastName}
-                onChange={handleChange}
-              />
-            </div>
+            <label className="form-label">Designation</label>
+            <input type="text" className="form-control" name="designation" value={updatedUser.designation || ''} onChange={handleChange} />
 
-            <div className="mb-3">
-              <label className="form-label">Designation</label>
-              <input
-                type="text"
-                className="form-control"
-                name="designation"
-                value={updatedUser.designation}
-                onChange={handleChange}
-              />
-            </div>
+            <label className="form-label">Contact</label>
+            <input type="text" className="form-control" name="contact" value={updatedUser.contact || ''} onChange={handleChange} />
 
-            <div className="mb-3">
-              <label className="form-label">Contact</label>
-              <input
-                type="text"
-                className="form-control"
-                name="contact"
-                value={updatedUser.contact}
-                onChange={handleChange}
-              />
-            </div>
+            <label className="form-label">Username</label>
+            <input type="text" className="form-control" name="username" value={updatedUser.username || ''} onChange={handleChange} />
 
-            <div className="mb-3">
-              <label className="form-label">Username</label>
-              <input
-                type="text"
-                className="form-control"
-                name="username"
-                value={updatedUser.username}
-                onChange={handleChange}
-              />
-            </div>
+            <label className="form-label">Company Name</label>
+            <input type="text" className="form-control" name="companyName" value={updatedUser.companyName || ''} onChange={handleChange} />
 
-            <div className="mb-3">
-              <label className="form-label">Company Name</label>
-              <input
-                type="text"
-                className="form-control"
-                name="companyName"
-                value={updatedUser.companyName}
-                onChange={handleChange}
-              />
-            </div>
-
-            <div className="mb-3">
-              <label className="form-label">User Role</label>
-              <select
-                className="form-control"
-                name="selectedOption"
-                value={updatedUser.selectedOption}
-                onChange={handleChange}
-              >
-                <option value="Admin">Admin</option>
-                <option value="CompanyAdmin">Company Admin</option>
-              </select>
-            </div>
+            <label className="form-label">User Role</label>
+            <select className="form-control" name="selectedOption" value={updatedUser.selectedOption || ''} onChange={handleChange}>
+              <option value="Admin">Admin</option>
+              <option value="CompanyAdmin">Company Admin</option>
+            </select>
           </div>
           <div className="modal-footer">
-            <button
-              type="button"
-              className="btn btn-secondary"
-              onClick={onClose}
-            >
-              Close
-            </button>
-            <button
-              type="button"
-              className="btn btn-primary"
-              onClick={handleSubmit}
-            >
-              Save Changes
-            </button>
+            <button type="button" className="btn btn-secondary" onClick={onClose}>Close</button>
+            <button type="button" className="btn btn-primary" onClick={handleSubmit}>Save Changes</button>
           </div>
         </div>
       </div>

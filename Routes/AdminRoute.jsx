@@ -36,21 +36,29 @@ router.post("/login", async (req, res) => {
 
   try {
     const user = await User.findOne({ email, password });
-    if (user) {
-      const temp = {
-        name: user.firstName,
-        email: user.email,
-        selectedOption: user.selectedOption,
-        _id: user._id,
-      };
-      res.json(temp);  // Return user data with the selected option
-    } else {
-      return res.status(400).json({ message: 'Login failed. Invalid email, password, or role.' });
+
+    if (!user) {
+      return res.status(400).json({ message: "Login failed. Invalid email or password." });
     }
+
+    if (user.isBlocked) {
+      return res.status(403).json({ message: "Your account is blocked. Please contact the administrator." });
+    }
+
+    const temp = {
+      name: user.firstName,
+      email: user.email,
+      selectedOption: user.selectedOption,
+      _id: user._id,
+    };
+
+    res.json(temp); // Return user data with the selected option
   } catch (error) {
-    return res.status(500).json({ error: error.message || 'Server error' });
+    console.error("Login error:", error);
+    return res.status(500).json({ error: error.message || "Server error" });
   }
 });
+
 
 
 router.put("/:id", async (req, res) => {
@@ -92,6 +100,36 @@ router.delete('/:id', async (req, res) => {
     res.status(500).send({ error: "Failed to delete User." });
   }
 });
+
+
+router.put("/block/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findByIdAndUpdate(id, { isBlocked: true }, { new: true });
+    if (!user) {
+      return res.status(404).json({ error: "User not found." });
+    }
+    res.status(200).json({ message: "User blocked successfully", user });
+  } catch (error) {
+    console.error("Error blocking user:", error);
+    res.status(500).json({ error: "Failed to block user." });
+  }
+});
+
+router.put("/unblock/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findByIdAndUpdate(id, { isBlocked: false }, { new: true });
+    if (!user) {
+      return res.status(404).json({ error: "User not found." });
+    }
+    res.status(200).json({ message: "User unblocked successfully", user });
+  } catch (error) {
+    console.error("Error unblocking user:", error);
+    res.status(500).json({ error: "Failed to unblock user." });
+  }
+});
+
 
 
 

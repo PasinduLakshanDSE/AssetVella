@@ -49,20 +49,20 @@ const AdminNavBar = () => {
             </Link>
           </div>
           <div className="nav-button">
-            <i className="fas fa-gear"></i>
+            <i className="fas   fa-pen-to-square"></i>
             <a href="/AssetRegister" className="nav-link">
               Asset Registration
             </a>
           </div>
           <hr />
           <div className="nav-button">
-            <i className="fas fa-user"></i>
+            <i className="fas fa-network-wired"></i>
             <a href="/category" className="nav-link">
             Asset Categorize
             </a>
           </div>
           <div className="nav-button">
-            <i className="fas fa-user"></i>
+            <i className="fas  fa-building"></i>
             <a href="/AssetDetails" className="nav-link">
             Asset Details
             </a>
@@ -75,6 +75,7 @@ const AdminNavBar = () => {
           </div>
           <hr/>
          
+
           <hr/>
           <div id="nav-content-highlight"></div>
         </div>
