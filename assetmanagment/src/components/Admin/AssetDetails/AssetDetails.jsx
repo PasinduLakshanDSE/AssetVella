@@ -1,108 +1,111 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "./assetDetails.css"
+import "./assetDetails.css";
 
 const AssetDetails = () => {
-    const [AssetRegisterDetails, setAssetRegisterDetails] = useState([]);
-    const [searchQuery, setSearchQuery] = useState("");  // First search field
-    const [searchQuery1, setSearchQuery1] = useState(""); // Second search field
-    const [searchQuery2, setSearchQuery2] = useState(""); // Second search field
+    const [assetRegisterDetails, setAssetRegisterDetails] = useState([]);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [searchQuery1, setSearchQuery1] = useState("");
+    const [searchQuery2, setSearchQuery2] = useState("");
+
+    // State for new asset
+   /* const [newAsset, setNewAsset] = useState({
+        name: "",
+        company: "",
+        department: "",
+        mainCategory: "",
+        type: "",
+        assetName: "",
+        assetModel: "",
+        assetUpdateDate: "",
+        serialNumber: "",
+        trackingId: "",
+        specialNote: "",
+        computerComponents: "",
+    });*/
+
+    // State for editing
+    const [editingAsset, setEditingAsset] = useState(null);
 
     useEffect(() => {
+        fetchAssets();
+    }, []);
+
+    const fetchAssets = () => {
         axios.get("http://localhost:8000/api/AssetRegisterDetails/getAssetDetails")
             .then(response => setAssetRegisterDetails(response.data))
             .catch(error => console.error("Error fetching asset details:", error));
-    }, []);
+    };
 
-    const filteredAssets = AssetRegisterDetails.filter(asset => {
-        const matchesFirstQuery =
-            (asset.name?.toLowerCase() || "").includes(searchQuery.toLowerCase()) ||
-            (asset.company?.toLowerCase() || "").includes(searchQuery.toLowerCase()) ||
-            (asset.department?.toLowerCase() || "").includes(searchQuery.toLowerCase()) ||
-            (asset.mainCategory?.toLowerCase() || "").includes(searchQuery.toLowerCase()) ||
-            
-            (asset.type?.toLowerCase() || "").includes(searchQuery.toLowerCase()) ||
-            (asset.assetName?.toLowerCase() || "").includes(searchQuery.toLowerCase()) ||
-            (asset.assetModel?.toLowerCase() || "").includes(searchQuery.toLowerCase()) ||
-            (asset.serialNumber?.toLowerCase() || "").includes(searchQuery.toLowerCase()) ||
-            (asset.trackingId?.toLowerCase() || "").includes(searchQuery.toLowerCase()) ||
-            (asset.computerComponents?.toLowerCase() || "").includes(searchQuery.toLowerCase())
-           
+    // Add a new asset
+    /*const handleAddAsset = () => {
+        axios.post("http://localhost:8000/api/AssetRegisterDetails/addAsset", newAsset)
+            .then(() => {
+                fetchAssets();
+                setNewAsset({
+                    name: "", company: "", department: "", mainCategory: "", type: "",
+                    assetName: "", assetModel: "", assetUpdateDate: "", serialNumber: "",
+                    trackingId: "", specialNote: "", computerComponents: ""
+                });
+            })
+            .catch(error => console.error("Error adding asset:", error));
+    };*/
 
-        const matchesSecondQuery =
-            (asset.name?.toLowerCase() || "").includes(searchQuery1.toLowerCase()) ||
-            (asset.company?.toLowerCase() || "").includes(searchQuery1.toLowerCase()) ||
-            (asset.department?.toLowerCase() || "").includes(searchQuery1.toLowerCase()) ||
-            (asset.mainCategory?.toLowerCase() || "").includes(searchQuery1.toLowerCase()) ||
-            
-            (asset.type?.toLowerCase() || "").includes(searchQuery1.toLowerCase()) ||
-            (asset.assetName?.toLowerCase() || "").includes(searchQuery1.toLowerCase()) ||
-            (asset.assetModel?.toLowerCase() || "").includes(searchQuery1.toLowerCase()) ||
-            (asset.serialNumber?.toLowerCase() || "").includes(searchQuery1.toLowerCase()) ||
-            (asset.trackingId?.toLowerCase() || "").includes(searchQuery1.toLowerCase()) ||
-            (asset.computerComponents?.toLowerCase() || "").includes(searchQuery.toLowerCase())
+    // Update an existing asset
+    const handleUpdateAsset = (id, updatedAsset) => {
+        axios.put(`http://localhost:8000/api/AssetRegisterDetails/updateAsset/${id}`, updatedAsset)
+            .then(() => {
+                fetchAssets();
+                setEditingAsset(null);
+            })
+            .catch(error => console.error("Error updating asset:", error));
+    };
 
-        const matchesThirdQuery =
-            (asset.name?.toLowerCase() || "").includes(searchQuery2.toLowerCase()) ||
-            (asset.company?.toLowerCase() || "").includes(searchQuery2.toLowerCase()) ||
-            (asset.department?.toLowerCase() || "").includes(searchQuery2.toLowerCase()) ||
-            (asset.mainCategory?.toLowerCase() || "").includes(searchQuery2.toLowerCase()) ||
-           
-            (asset.type?.toLowerCase() || "").includes(searchQuery2.toLowerCase()) ||
-            (asset.assetName?.toLowerCase() || "").includes(searchQuery2.toLowerCase()) ||
-            (asset.assetModel?.toLowerCase() || "").includes(searchQuery2.toLowerCase()) ||
-            (asset.serialNumber?.toLowerCase() || "").includes(searchQuery2.toLowerCase()) ||
-            (asset.trackingId?.toLowerCase() || "").includes(searchQuery2.toLowerCase()) ||
-            (asset.computerComponents?.toLowerCase() || "").includes(searchQuery.toLowerCase())
-
-        // Apply logic: If all fields are filled, all must match; otherwise, match based on input
-        if (searchQuery && searchQuery1 && searchQuery2) {
-            return matchesFirstQuery && matchesSecondQuery && matchesThirdQuery;
-        } else if (searchQuery && searchQuery1) {
-            return matchesFirstQuery && matchesSecondQuery;
-        } else if (searchQuery && searchQuery2) {
-            return matchesFirstQuery && matchesThirdQuery;
-        } else if (searchQuery1 && searchQuery2) {
-            return matchesSecondQuery && matchesThirdQuery;
-        }  else if (searchQuery ) {
-            return matchesFirstQuery ;
-        } else {
-            return matchesFirstQuery || matchesSecondQuery || matchesThirdQuery;
+    // Delete an asset
+    const handleDeleteAsset = (id) => {
+        if (window.confirm("Are you sure you want to delete this asset?")) {
+            axios.delete(`http://localhost:8000/api/AssetRegisterDetails/deleteAsset/${id}`)
+                .then(() => fetchAssets())
+                .catch(error => console.error("Error deleting asset:", error));
         }
+    };
+
+    // Filter logic
+    const filteredAssets = assetRegisterDetails.filter(asset => {
+        const queryMatch = (query, asset) =>
+            (asset.name?.toLowerCase() || "").includes(query.toLowerCase()) ||
+            (asset.company?.toLowerCase() || "").includes(query.toLowerCase()) ||
+            (asset.department?.toLowerCase() || "").includes(query.toLowerCase()) ||
+            (asset.mainCategory?.toLowerCase() || "").includes(query.toLowerCase()) ||
+            (asset.type?.toLowerCase() || "").includes(query.toLowerCase()) ||
+            (asset.assetName?.toLowerCase() || "").includes(query.toLowerCase()) ||
+            (asset.assetModel?.toLowerCase() || "").includes(query.toLowerCase()) ||
+            (asset.serialNumber?.toLowerCase() || "").includes(query.toLowerCase()) ||
+            (asset.trackingId?.toLowerCase() || "").includes(query.toLowerCase()) ||
+            (asset.computerComponents?.toLowerCase() || "").includes(query.toLowerCase());
+
+        return [searchQuery, searchQuery1, searchQuery2].every(query => !query || queryMatch(query, asset));
     });
-
-
 
     return (
         <div className="row">
             <div className="col-md-12">
                 <h1 className="assethead">Asset Details</h1>
-                {/* First Search Input */}
-                <input
-                    type="text"
-                    className="form-control mb-3"
-                    placeholder="Search assets..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                />
 
-                {/* Second Search Input */}
-                <input
-                    type="text"
-                    className="form-control mb-3"
-                    placeholder="Search by another parameter..."
-                    value={searchQuery1}
-                    onChange={(e) => setSearchQuery1(e.target.value)}
-                />
-                {/* Third Search Input */}
-                <input
-                    type="text"
-                    className="form-control mb-3"
-                    placeholder="Search by another parameter..."
-                    value={searchQuery2}
-                    onChange={(e) => setSearchQuery2(e.target.value)}
-                />
+                {/* Search Inputs */}
+                <input type="text" className="form-control mb-2" placeholder="Search..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+                <input type="text" className="form-control mb-2" placeholder="Search by another parameter..." value={searchQuery1} onChange={(e) => setSearchQuery1(e.target.value)} />
+                <input type="text" className="form-control mb-2" placeholder="Search by another parameter..." value={searchQuery2} onChange={(e) => setSearchQuery2(e.target.value)} />
 
+                {/* Add New Asset Form */}
+                {/*<h3>Add New Asset</h3>
+                <div className="mb-3">
+                    <input type="text" className="form-control mb-2" placeholder="Registered Name" value={newAsset.name} onChange={(e) => setNewAsset({ ...newAsset, name: e.target.value })} />
+                    <input type="text" className="form-control mb-2" placeholder="Company" value={newAsset.company} onChange={(e) => setNewAsset({ ...newAsset, company: e.target.value })} />
+                    <button className="btn btn-success" onClick={handleAddAsset}>Add Asset</button>
+                </div>*/}
+
+                {/* Asset Table */}
                 <table className="table table-bordered table-light">
                     <thead className="thead-dark">
                         <tr>
@@ -112,38 +115,55 @@ const AssetDetails = () => {
                             <th>Category</th>
                             <th>Type</th>
                             <th>Asset Name</th>
-                            <th>Asset model</th>
-                            <th>Asset Register Date</th>
+                            <th>User Name</th>
+                            <th>Model</th>
+                            <th>Update Date</th>
                             <th>Serial Number</th>
                             <th>Tracking ID</th>
                             <th>Special Note</th>
-                            <th>Computer Components</th>
+                            <th>Components</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         {filteredAssets.length > 0 ? (
                             filteredAssets.map((asset) => (
                                 <tr key={asset._id}>
-                                    <td>{asset.name}</td>
-                                    <td>{asset.company}</td>
-                                    <td>{asset.department}</td>
-                                    <td>{asset.mainCategory}</td>
-                                    <td>{asset.type}</td>
-                                    <td>{asset.assetName}</td>
-                                    <td>{asset.assetModel}</td>
-                                    <td>{asset.assetUpdateDate}</td>
-                                    <td>{asset.serialNumber}</td>
-                                    <td>{asset.trackingId}</td>
-                                    
-                                    <td>{asset.specialNote}</td>
-                                    <td>{asset.computerComponents}</td>
+                                    {editingAsset === asset._id ? (
+                                        <>
+                                            <td><input type="text" value={asset.name} onChange={(e) => setEditingAsset({ ...asset, name: e.target.value })} /></td>
+                                            <td><input type="text" value={asset.company} onChange={(e) => setEditingAsset({ ...asset, company: e.target.value })} /></td>
+                                            <td colSpan="10">
+                                                <button className="btn btn-primary" onClick={() => handleUpdateAsset(asset._id, editingAsset)}>Save</button>
+                                                <button className="btn btn-secondary" onClick={() => setEditingAsset(null)}>Cancel</button>
+                                            </td>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <td>{asset.name}</td>
+                                            <td>{asset.company}</td>
+                                            <td>{asset.department}</td>
+                                            <td>{asset.mainCategory}</td>
+                                            <td>{asset.type}</td>
+                                            <td>{asset.assetName}</td>
+                                            <td>{asset.assetUserName}</td>
+                                            <td>{asset.assetModel}</td>
+                                            <td>{asset.assetUpdateDate}</td>
+                                            <td>{asset.serialNumber}</td>
+                                            <td>{asset.trackingId}</td>
+                                            <td>{asset.specialNote}</td>
+                                            <td>{asset.computerComponents}</td>
+                                            <td>
+                                                <button className="btn detbtn1" onClick={() => setEditingAsset(asset._id)}>Transfer</button>
+                                                <button className="btn detbtn2" onClick={() => handleDeleteAsset(asset._id)}>Discard</button>
+                                            </td>
+                                        </>
+                                    )}
                                 </tr>
                             ))
                         ) : (
                             <tr>
-                                <td colSpan="11" className="text-center">
-                                    No matching asset data available
-                                </td>
+                                <td colSpan="13" className="text-center">No matching asset data available</td>
                             </tr>
                         )}
                     </tbody>

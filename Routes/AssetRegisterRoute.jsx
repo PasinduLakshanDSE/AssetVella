@@ -20,6 +20,7 @@ router.post("/", async (req, res) => {
         MouseassetModel,
         KeyboardassetModel,
         assetModel, 
+        assetUserName, 
     assetUpdateDate,
     serialNumber,
     trackingId,
@@ -43,6 +44,7 @@ router.post("/", async (req, res) => {
        MouseassetModel, 
         KeyboardassetModel, 
         assetModel, 
+        assetUserName,
         assetUpdateDate,
         serialNumber,
         trackingId,
@@ -83,6 +85,39 @@ router.get("/:trackingId", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
+
+router.put("/updateAsset/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedData = req.body;
+    const updatedUser = await User.findByIdAndUpdate(id, updatedData, { new: true });
+    if (!updatedUser) {
+      return res.status(404).json({ error: "User not found." });
+    }
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    console.error("Error updating user:", error);
+    res.status(500).json({ error: "Failed to update user." });
+  }
+});
+
+
+
+
+
+router.delete('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    await User.findByIdAndDelete(id); // MongoDB example
+    res.status(200).send({ message: "User deleted successfully." });
+  } catch (error) {
+    console.error("Error deleting User:", error);
+    res.status(500).send({ error: "Failed to delete User." });
+  }
+});
+
+
 
 
 

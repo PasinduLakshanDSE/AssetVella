@@ -86,6 +86,10 @@ const AsetRegisterSchema = mongoose.Schema(
         type: String,
         required: false,
       },
+      assetUserName: {
+        type: String,
+        required: false,
+      },
       
     
   },

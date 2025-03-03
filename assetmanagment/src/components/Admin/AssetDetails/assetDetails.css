@@ -1,4 +1,31 @@
-.assethead{
+.assethead {
     font-size: 40px;
-   font-family: "bold";
-} 
+    font-family: "bold";
+}
+
+.detbtn1 {
+    background-color: rgb(25, 92, 92);
+    margin-left: 55px;
+    margin-right: 55px;
+    padding: 10px;
+
+    color: white;
+
+}
+
+.detbtn1:hover {
+    background-color: rgb(11, 141, 141);
+}
+
+.detbtn2 {
+    background-color: rgb(238, 61, 61);
+    margin-left: 45px;
+    margin-right: 45px;
+    color: white;
+
+
+}
+
+.detbtn2:hover {
+    background-color: rgb(95, 15, 15);
+}

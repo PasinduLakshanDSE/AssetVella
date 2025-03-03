@@ -37,6 +37,8 @@ const AssetRegister = () => {
   const [MouseassetModel, setMouseAssetModel] = useState("");
   const [KeyboardassetModel, setKeyboardAssetModel] = useState("");
   const [assetModel, setAssetModel] = useState("");
+  const [assetUserName, setUserName] = useState("");
+  
 
 
   const [computerComponents, setComputerComponents] = useState("");
@@ -179,7 +181,7 @@ const AssetRegister = () => {
         MouseassetModel,
         KeyboardassetModel,
         assetModel,
-
+        assetUserName,
         type: type === "Other" ? customType : type,
         assetUpdateDate,
         serialNumber: mainCategory === "Electronic items" ? serialNumber : null,
@@ -214,7 +216,8 @@ const AssetRegister = () => {
 
       // Add a temporary border for the QR code container
       qrElement.style.border = "8px solid #0b4c55"; // Customize border style
-      qrElement.style.padding = "10px"; // Add padding inside the border
+      qrElement.style.padding = "0px";
+      qrElement.style.paddingBottom = "0px"; // Add padding inside the border
       //qrElement.style.margin = "50px";
 
       // Capture the QR code with the frame
@@ -240,81 +243,6 @@ const AssetRegister = () => {
   }
 };
 
-  
-  
-  
-
-
-
-
-  /*const handleSubmit = async () => {
-    if (!name || !company || !department || !mainCategory || !assetUpdateDate || !type) {
-      alert("Please fill in all required fields before submitting.");
-      return;
-    }
-
-    try {
-      if (computerComponents === "fullSet") {
-        const components = [
-          { assetName: CPUassetName, serialNumber: CPUserialNumber, model: CPUassetModel, label: "CPU" },
-          { assetName: MoniterassetName, serialNumber: MoniterserialNumber, model: MoniterassetModel, label: "Monitor" },
-          { assetName: MouseassetName, serialNumber: MouseserialNumber, model: MouseassetModel, label: "Mouse" },
-          { assetName: KeyboardassetName, serialNumber: KeyboardserialNumber, model: KeyboardassetModel, label: "Keyboard" },
-        ];
-
-        for (const component of components) {
-          if (component.assetName) {
-            //const trackingId = generateTrackingId(); // Generate unique ID for each
-            const id = generateTrackingId(component.serialNumber);
-            const assetData = {
-              name,
-              company,
-              department,
-              mainCategory,
-              type: type === "Other" ? customType : type,
-              assetName: component.assetName,
-              assetModel: component.model,
-              assetUpdateDate,
-              serialNumber: component.serialNumber || null,
-              trackingId: id,
-              specialNote,
-              computerComponents: component.label, // Label component type
-            };
-
-            const response = await axios.post("http://localhost:8000/api/AssetRegisterDetails", assetData);
-            console.log(`Submitted ${component.label}:`, response.data);
-          }
-        }
-      } else {
-        // Single asset submission
-        const id = generateTrackingId(serialNumber);
-        const assetData = {
-
-          name,
-          company,
-          department,
-          mainCategory,
-          type: type === "Other" ? customType : type,
-          assetName,
-          assetModel,
-          assetUpdateDate,
-          serialNumber: mainCategory === "Electronic items" ? serialNumber : null,
-          trackingId: id,
-          specialNote,
-          computerComponents,
-        };
-
-        const response = await axios.post("http://localhost:8000/api/AssetRegisterDetails", assetData);
-        console.log("Submitted single asset:", response.data);
-      }
-
-      alert("Assets submitted successfully!");
-      resetForm();
-    } catch (error) {
-      console.error("Error submitting data:", error);
-      alert("Error creating asset. Please try again.");
-    }
-  };*/
 
   const handleSubmit = async () => {
     if (!name || !company || !department || !mainCategory || !assetUpdateDate || !type) {
@@ -344,6 +272,7 @@ const AssetRegister = () => {
               department,
               mainCategory,
               type: type === "Other" ? customType : type,
+              assetUserName, 
               assetName: component.assetName,
               assetModel: component.model,
               assetUpdateDate,
@@ -364,6 +293,7 @@ const AssetRegister = () => {
           type: type === "Other" ? customType : type,
           assetName,
           assetModel,
+          assetUserName,
           assetUpdateDate,
           serialNumber: mainCategory === "Electronic items" ? serialNumber : null,
           trackingId: qrCodeData[0]?.trackingId, // Use tracking ID from QR data
@@ -414,6 +344,7 @@ const AssetRegister = () => {
     setMouseAssetModel("");
     setKeyboardAssetModel("");
     setAssetModel("");
+    setUserName("");
 
   };
 
@@ -452,6 +383,8 @@ const AssetRegister = () => {
                 ))}
               </select>
             </div>
+
+
 
             <div className="col-md-6">
 
@@ -651,6 +584,12 @@ const AssetRegister = () => {
             </div>
           )}
 
+<input
+                type="text"
+                value={assetUserName}
+                onChange={(e) => setUserName(e.target.value)}
+                placeholder="User Name"
+              />
           {computerComponents !== "fullSet" && (
             <>
               <input
@@ -711,10 +650,10 @@ const AssetRegister = () => {
                       logoImage="https://via.placeholder.com/30"
                       logoWidth={50}
                     />
-                    <p>ID: {item.trackingId}</p>
+                    <p className="tid">{item.trackingId}</p>
                   </div>
                   <button className="button2 download-btn" onClick={() => handleDownloadQR(index)}>
-                    Download<i className="fas fa-download"></i>
+                    <i className="fas fa-download"></i>
                   </button>
                   
                 </div>
