@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./assetDetails.css";
+import { useNavigate } from "react-router-dom";
+
 
 const AssetDetails = () => {
     const [assetRegisterDetails, setAssetRegisterDetails] = useState([]);
@@ -8,21 +10,6 @@ const AssetDetails = () => {
     const [searchQuery1, setSearchQuery1] = useState("");
     const [searchQuery2, setSearchQuery2] = useState("");
 
-    // State for new asset
-   /* const [newAsset, setNewAsset] = useState({
-        name: "",
-        company: "",
-        department: "",
-        mainCategory: "",
-        type: "",
-        assetName: "",
-        assetModel: "",
-        assetUpdateDate: "",
-        serialNumber: "",
-        trackingId: "",
-        specialNote: "",
-        computerComponents: "",
-    });*/
 
     // State for editing
     const [editingAsset, setEditingAsset] = useState(null);
@@ -37,19 +24,12 @@ const AssetDetails = () => {
             .catch(error => console.error("Error fetching asset details:", error));
     };
 
-    // Add a new asset
-    /*const handleAddAsset = () => {
-        axios.post("http://localhost:8000/api/AssetRegisterDetails/addAsset", newAsset)
-            .then(() => {
-                fetchAssets();
-                setNewAsset({
-                    name: "", company: "", department: "", mainCategory: "", type: "",
-                    assetName: "", assetModel: "", assetUpdateDate: "", serialNumber: "",
-                    trackingId: "", specialNote: "", computerComponents: ""
-                });
-            })
-            .catch(error => console.error("Error adding asset:", error));
-    };*/
+    const navigate = useNavigate();
+
+const handleTransferClick = (asset) => {
+  navigate("/transfer-form", { state: { asset } }); // Pass asset data via state
+};
+
 
     // Update an existing asset
     const handleUpdateAsset = (id, updatedAsset) => {
@@ -96,14 +76,6 @@ const AssetDetails = () => {
                 <input type="text" className="form-control mb-2" placeholder="Search..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
                 <input type="text" className="form-control mb-2" placeholder="Search by another parameter..." value={searchQuery1} onChange={(e) => setSearchQuery1(e.target.value)} />
                 <input type="text" className="form-control mb-2" placeholder="Search by another parameter..." value={searchQuery2} onChange={(e) => setSearchQuery2(e.target.value)} />
-
-                {/* Add New Asset Form */}
-                {/*<h3>Add New Asset</h3>
-                <div className="mb-3">
-                    <input type="text" className="form-control mb-2" placeholder="Registered Name" value={newAsset.name} onChange={(e) => setNewAsset({ ...newAsset, name: e.target.value })} />
-                    <input type="text" className="form-control mb-2" placeholder="Company" value={newAsset.company} onChange={(e) => setNewAsset({ ...newAsset, company: e.target.value })} />
-                    <button className="btn btn-success" onClick={handleAddAsset}>Add Asset</button>
-                </div>*/}
 
                 {/* Asset Table */}
                 <table className="table table-bordered table-light">
@@ -154,7 +126,10 @@ const AssetDetails = () => {
                                             <td>{asset.specialNote}</td>
                                             <td>{asset.computerComponents}</td>
                                             <td>
-                                                <button className="btn detbtn1" onClick={() => setEditingAsset(asset._id)}>Transfer</button>
+                                            <button className="btn detbtn1" onClick={() => handleTransferClick(asset)}>
+  Transfer
+</button>
+
                                                 <button className="btn detbtn2" onClick={() => handleDeleteAsset(asset._id)}>Discard</button>
                                             </td>
                                         </>

@@ -95,8 +95,13 @@ const AssetRegister = () => {
     const departmentCode = departmentCodes[department] || "XX";
     const serialSuffix = mainCategory === "Electronic items" && serialNumber ? serialNumber.slice(-4) : "";
 
+    
 
-    const randomNum = `${new Date().toISOString().slice(2, 10).replace(/-/g, "")}${String(Math.floor(Math.random() * 100)).padStart(2, "0")}`;
+
+
+
+    const randomNum = `${new Date().toISOString().slice(2, 10).replace(/-/g, "").slice(0, 6)}${String(Math.floor(Math.random() * 100)).padStart(2, "0")}`
+
 
     return serialNumber ? `${companyCode}-${departmentCode}-${serialSuffix}` : `${companyCode}-${departmentCode}-${randomNum}`;
   };
@@ -448,7 +453,7 @@ const AssetRegister = () => {
                         type="text"
                         value={CPUassetModel}
                         onChange={(e) => setCPUAssetModel(e.target.value)}
-                        placeholder="Enter Asset Model"
+                        placeholder="Enter Asset Model Number"
                       />
 
                       <input
@@ -485,7 +490,7 @@ const AssetRegister = () => {
                         type="text"
                         value={MoniterassetModel}
                         onChange={(e) => setMoniterAssetModel(e.target.value)}
-                        placeholder="Enter Asset Model"
+                        placeholder="Enter Asset Model Number"
                       />
                       <input
                         type="text"
@@ -511,7 +516,7 @@ const AssetRegister = () => {
                         type="text"
                         value={MouseassetModel}
                         onChange={(e) => setMouseAssetModel(e.target.value)}
-                        placeholder="Enter Asset Model"
+                        placeholder="Enter Asset Model Number"
                       />
                       <input
                         type="text"
@@ -535,7 +540,7 @@ const AssetRegister = () => {
                         type="text"
                         value={KeyboardassetModel}
                         onChange={(e) => setKeyboardAssetModel(e.target.value)}
-                        placeholder="Enter Asset Model"
+                        placeholder="Enter Asset Model Number"
                       />
                       <input
                         type="text"
@@ -603,7 +608,7 @@ const AssetRegister = () => {
                 type="text"
                 value={assetModel}
                 onChange={(e) => setAssetModel(e.target.value)}
-                placeholder="Enter Asset Model"
+                placeholder="Enter Asset Model Number"
               />
             </>
           )}

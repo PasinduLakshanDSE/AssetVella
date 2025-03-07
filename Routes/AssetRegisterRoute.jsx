@@ -89,19 +89,17 @@ router.get("/:trackingId", async (req, res) => {
 
 router.put("/updateAsset/:id", async (req, res) => {
   try {
-    const { id } = req.params;
-    const updatedData = req.body;
-    const updatedUser = await User.findByIdAndUpdate(id, updatedData, { new: true });
-    if (!updatedUser) {
-      return res.status(404).json({ error: "User not found." });
-    }
-    res.status(200).json(updatedUser);
+      const updatedAsset = await AssetRegisterDetails.findByIdAndUpdate(
+          req.params.id,
+          req.body,
+          { new: true }
+      );
+      res.json(updatedAsset);
   } catch (error) {
-    console.error("Error updating user:", error);
-    res.status(500).json({ error: "Failed to update user." });
+      console.error("Error updating asset:", error);
+      res.status(500).json({ error: "Failed to update asset" });
   }
 });
-
 
 
 

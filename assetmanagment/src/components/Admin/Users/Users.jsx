@@ -79,6 +79,7 @@ const Users = () => {
               <th>Designation</th>
               <th>Contact</th>
               <th>Username</th>
+              <th>Password</th>
               <th>User Role</th>
               <th>Company Name</th>
               <th>Status</th>
@@ -95,6 +96,7 @@ const Users = () => {
                   <td>{user.designation}</td>
                   <td>{user.contact}</td>
                   <td>{user.username}</td>
+                  <td>{user.password}</td>
                   <td>{user.selectedOption}</td>
                   <td>{user.companyName}</td>
                   <td>{user.isBlocked ? "Blocked" : "Active"}</td>
@@ -175,6 +177,9 @@ const EditUserModal = ({ show, onClose, user, onUpdate }) => {
 
             <label className="form-label">Username</label>
             <input type="text" className="form-control" name="username" value={updatedUser.username || ''} onChange={handleChange} />
+
+            <label className="form-label">Password</label>
+            <input type="text" className="form-control" name="password" value={updatedUser.password || ''} onChange={handleChange} />
 
             <label className="form-label">Company Name</label>
             <input type="text" className="form-control" name="companyName" value={updatedUser.companyName || ''} onChange={handleChange} />

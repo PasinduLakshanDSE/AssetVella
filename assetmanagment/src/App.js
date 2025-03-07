@@ -19,6 +19,7 @@ import Categorization from "./components/Admin/AssetCategorization/Assetcategori
 
 import AssetDetails from "./components/Admin/AssetDetails/AssetDetails";
 import QRVIEW from "./components/QRview/QRView";
+import TransferForm from "./components/Admin/Transfer/Transfer"
 
 //import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 //import Users from "./components/Users/Users";
@@ -43,6 +44,7 @@ function App() {
         <Route path="/category" element={<Categorization/>}/>
         <Route path="/AssetDetails" element={<AssetDetails/>}/>
         <Route path="/QRview/:trackingId" element={<QRVIEW/>}/>
+        <Route path="/transfer-form" element={<TransferForm />} />
       </Routes>
     </div>
    
