@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation , useNavigate } from "react-router-dom";
 import { QRCode } from "react-qrcode-logo";
 import "./transfer.css";
 import axios from "axios";
@@ -17,6 +17,7 @@ const Transfer = () => {
   const [specialNote, setSpecialNote] = useState("");
 
   const [qrCodeData, setQrCodeData] = useState([]); // State to store QR codes
+  const navigate = useNavigate();
 
   const qrCodeContainerRef = useRef(null); // Reference for QR code container
 
@@ -122,6 +123,7 @@ const handleUpdate = async () => {
     );
     if (response.status === 200) {
       alert("Asset transferred successfully!");
+      navigate("/AssetDetails"); 
     }
   } catch (error) {
     console.error("Error transferring asset:", error);
@@ -132,13 +134,18 @@ const handleUpdate = async () => {
   
 
   // Function to handle QR code download
-  const handleDownloadQR = (index) => {
+  const handleDownloadQR = (index, event) => {
+    event.preventDefault(); // Prevent any default action that may cause a reset
+  
     const canvas = qrCodeContainerRef.current.getElementsByTagName("canvas")[index];
+    if (!canvas) return;
+  
     const link = document.createElement("a");
     link.href = canvas.toDataURL("image/png");
     link.download = `QR_Code_${qrCodeData[index].trackingId}.png`;
     link.click();
   };
+  
 
   return (
     <div className="transfer-container">
@@ -232,9 +239,10 @@ const handleUpdate = async () => {
                 <QRCode value={item.qrData} size={100} />
                 <p className="tid">{item.trackingId}</p>
               </div>
-              <button className="button2 download-btn" onClick={() => handleDownloadQR(index)}>
-                <i className="fas fa-download"></i>
-              </button>
+              <button className="button2 download-btn" onClick={(e) => handleDownloadQR(index, e)}>
+  <i className="fas fa-download"></i>
+</button>
+
             </div>
           ))}
         </div>

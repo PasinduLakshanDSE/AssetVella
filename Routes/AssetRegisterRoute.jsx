@@ -104,14 +104,14 @@ router.put("/updateAsset/:id", async (req, res) => {
 
 
 
-router.delete('/:id', async (req, res) => {
+router.delete('/deleteAsset/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    await User.findByIdAndDelete(id); // MongoDB example
-    res.status(200).send({ message: "User deleted successfully." });
+    await AssetRegisterDetails.findByIdAndDelete(id); // MongoDB example
+    res.status(200).send({ message: "Asset deleted successfully." });
   } catch (error) {
-    console.error("Error deleting User:", error);
-    res.status(500).send({ error: "Failed to delete User." });
+    console.error("Error deleting Asset:", error);
+    res.status(500).send({ error: "Failed to delete Asset." });
   }
 });
 
