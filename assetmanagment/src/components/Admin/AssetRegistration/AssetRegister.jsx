@@ -250,7 +250,7 @@ const AssetRegister = () => {
 
 
   const handleSubmit = async () => {
-    if (!name || !company || !department || !mainCategory || !assetUpdateDate || !type) {
+    if (!name || !company || !department || !mainCategory || !assetUpdateDate || !type || !assetUserName) {
       alert("Please fill in all required fields before submitting.");
       return;
     }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import './admindashboard.css'
 import AdminNavBar from "../AdminNav/AdminNav";
+import { Link } from "react-router-dom";
 
 
 const DashBoard = () => {
@@ -34,10 +35,10 @@ const DashBoard = () => {
   }, []);
 
   const cards = [
-    { count: bookings.length, label: "Total Asset", color: "blue", icon: <i className="fas fa-calendar-days si"></i> },
-    { count: techniciansCount, label: "Total ", color: "green", icon: <i className="fas fa-gear si"></i> },
-    { count: servicesCount, label: " Service", color: "teal", icon: <i className="fas fa-handshake si"></i> },
-    { count: usersCount, label: "Total Users", color: "red", icon: <i className="fas fa-user si"></i> },
+    { count: bookings.length, label: "Total Asset", color: "blue", icon: <i className="fas fa-house-laptop si"></i> },
+    { count: techniciansCount, label: "Total Admin ", color: "green", icon: <i className="fas fa-user-tie si"></i> },
+    { count: servicesCount, label: "Total Company Users ", color: "teal", icon: <i className="fas fa-user si"></i> },
+    { count: usersCount, label: "Total Department Users", color: "red", icon: <i className="fas fa-users si"></i> },
   ];
 
   return (
@@ -47,7 +48,9 @@ const DashBoard = () => {
       <div className="dashboard">
         <div className="dashboard-header">
           <h1 className="title">Dashboard</h1>
-          <p>Home / Dashboard</p>
+          <p>
+        <Link to="/">Home</Link> / <Link to="/AdminDashboardPage">DashBoard</Link>
+      </p>
         </div>
 
         <div className="dashboard-cards">
@@ -59,7 +62,7 @@ const DashBoard = () => {
             >
               <div className="card-content">
                 <h2>{card.count}</h2>
-                <p>{card.label}</p>
+                <p className="clabel">{card.label}</p>
               </div>
               <div className="card-icon">
                 {card.icon}
