@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./assetDetails.css";
 import { useNavigate } from "react-router-dom";
-
+import QRCode from "qrcode"; // Correct import
 
 const AssetDetails = () => {
     const [assetRegisterDetails, setAssetRegisterDetails] = useState([]);
@@ -50,6 +50,41 @@ const handleTransferClick = (asset) => {
         }
     };
 
+
+    const handleDownloadQR = (trackingId) => {
+        const URL = `http://localhost:3000/QRView/${trackingId}`;
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+        const qrSize = 80;
+        const borderSize = 10;
+        const textHeight = 20;
+
+        canvas.width = qrSize + borderSize * 2;
+        canvas.height = qrSize + borderSize * 2 + textHeight;
+
+        ctx.fillStyle = "#0b4c55";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(borderSize, borderSize, qrSize, qrSize);
+
+        const qrCanvas = document.createElement("canvas");
+        QRCode.toCanvas(qrCanvas, URL, { width: qrSize }, (error) => {
+            if (error) return console.error(error);
+            ctx.drawImage(qrCanvas, borderSize, borderSize, qrSize, qrSize);
+
+            ctx.fillStyle = "#ffffff";
+            ctx.font = "bold 10px Arial";
+            ctx.textAlign = "center";
+            ctx.fillText(trackingId, canvas.width / 2, canvas.height - 10);
+
+            const link = document.createElement("a");
+            link.href = canvas.toDataURL("image/png");
+            link.download = `QR_Code_${trackingId}.png`;
+            link.click();
+        }); };
+
+
     // Filter logic
     const filteredAssets = assetRegisterDetails.filter(asset => {
         const queryMatch = (query, asset) =>
@@ -69,14 +104,14 @@ const handleTransferClick = (asset) => {
 
     return (
         <div className="row">
-            <div className="col-md-12">
+            <div className="col-md-14">
                 <h1 className="assethead">Asset Details</h1>
 
-                {/* Search Inputs */}
+                {/* Search Inputs */}<div className="row"><div className="col-md-4">
                 <input type="text" className="form-control mb-2" placeholder="Search..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
-                <input type="text" className="form-control mb-2" placeholder="Search by another parameter..." value={searchQuery1} onChange={(e) => setSearchQuery1(e.target.value)} />
-                <input type="text" className="form-control mb-2" placeholder="Search by another parameter..." value={searchQuery2} onChange={(e) => setSearchQuery2(e.target.value)} />
-
+                </div><div className="col-md-4"><input type="text" className="form-control mb-2" placeholder="Search by another parameter..." value={searchQuery1} onChange={(e) => setSearchQuery1(e.target.value)} />
+                </div><div className="col-md-4"><input type="text" className="form-control mb-2" placeholder="Search by another parameter..." value={searchQuery2} onChange={(e) => setSearchQuery2(e.target.value)} />
+                </div></div>
                 {/* Asset Table */}
                 <table className="table table-bordered table-light">
                     <thead className="thead-dark">
@@ -125,13 +160,11 @@ const handleTransferClick = (asset) => {
                                             <td>{asset.trackingId}</td>
                                             <td>{asset.specialNote}</td>
                                             <td>{asset.computerComponents}</td>
-                                            <td>
-                                            <button className="btn detbtn1" onClick={() => handleTransferClick(asset)}>
-  Transfer
-</button>
-
-                                                <button className="btn detbtn2" onClick={() => handleDeleteAsset(asset._id)}>Discard</button>
-                                            </td>
+                                            <td className="d-flex gap-2">
+                                    <button className="btn btn-primary1" onClick={() => handleTransferClick(asset)}>Transfer</button>
+                                    <button className="btn btn-danger2" onClick={() => handleDeleteAsset(asset._id)}>Discard</button>
+                                    <button className="btn btn-success3" onClick={() => handleDownloadQR(asset.trackingId)}> QR  <i className="fas fa-download"></i></button>
+                                </td>
                                         </>
                                     )}
                                 </tr>

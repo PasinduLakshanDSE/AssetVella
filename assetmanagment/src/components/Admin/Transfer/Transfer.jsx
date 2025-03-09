@@ -182,7 +182,7 @@ const Transfer = () => {
       ctx.drawImage(qrImage, borderSize, borderSize, qrSize, qrSize);
   
       // Add Tracking ID text below QR
-      ctx.fillStyle = "#000"; // Black text color
+      ctx.fillStyle = "#ffffff"; // Black text color
       ctx.font = "bold 10px Arial";
       ctx.textAlign = "center";
       ctx.fillText(qrCodeData[index].trackingId, width / 2, height - 10);
