@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./assetDetails.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import QRCode from "qrcode"; // Correct import
 
 const AssetDetails = () => {
@@ -26,9 +26,9 @@ const AssetDetails = () => {
 
     const navigate = useNavigate();
 
-const handleTransferClick = (asset) => {
-  navigate("/transfer-form", { state: { asset } }); // Pass asset data via state
-};
+    const handleTransferClick = (asset) => {
+        navigate("/transfer-form", { state: { asset } }); // Pass asset data via state
+    };
 
 
     // Update an existing asset
@@ -82,7 +82,8 @@ const handleTransferClick = (asset) => {
             link.href = canvas.toDataURL("image/png");
             link.download = `QR_Code_${trackingId}.png`;
             link.click();
-        }); };
+        });
+    };
 
 
     // Filter logic
@@ -106,12 +107,15 @@ const handleTransferClick = (asset) => {
         <div className="row">
             <div className="col-md-14">
                 <h1 className="assethead">Asset Details</h1>
+                <p>
+                    <Link to="/AdminDashboardPage">DashBoard</Link> / <Link to="/AssetDetails">Asset Details</Link>
+                </p>
 
                 {/* Search Inputs */}<div className="row"><div className="col-md-4">
-                <input type="text" className="form-control mb-2" placeholder="Search..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+                    <input type="text" className="form-control mb-2" placeholder="Search..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
                 </div><div className="col-md-4"><input type="text" className="form-control mb-2" placeholder="Search by another parameter..." value={searchQuery1} onChange={(e) => setSearchQuery1(e.target.value)} />
-                </div><div className="col-md-4"><input type="text" className="form-control mb-2" placeholder="Search by another parameter..." value={searchQuery2} onChange={(e) => setSearchQuery2(e.target.value)} />
-                </div></div>
+                    </div><div className="col-md-4"><input type="text" className="form-control mb-2" placeholder="Search by another parameter..." value={searchQuery2} onChange={(e) => setSearchQuery2(e.target.value)} />
+                    </div></div>
                 {/* Asset Table */}
                 <table className="table table-bordered table-light">
                     <thead className="thead-dark">
@@ -161,10 +165,10 @@ const handleTransferClick = (asset) => {
                                             <td>{asset.specialNote}</td>
                                             <td>{asset.computerComponents}</td>
                                             <td className="d-flex gap-2">
-                                    <button className="btn btn-primary1" onClick={() => handleTransferClick(asset)}>Transfer</button>
-                                    <button className="btn btn-danger2" onClick={() => handleDeleteAsset(asset._id)}>Discard</button>
-                                    <button className="btn btn-success3" onClick={() => handleDownloadQR(asset.trackingId)}> QR  <i className="fas fa-download"></i></button>
-                                </td>
+                                                <button className="btn btn-primary1" onClick={() => handleTransferClick(asset)}>Transfer</button>
+                                                <button className="btn btn-danger2" onClick={() => handleDeleteAsset(asset._id)}>Discard</button>
+                                                <button className="btn btn-success3" onClick={() => handleDownloadQR(asset.trackingId)}> QR  <i className="fas fa-download"></i></button>
+                                            </td>
                                         </>
                                     )}
                                 </tr>

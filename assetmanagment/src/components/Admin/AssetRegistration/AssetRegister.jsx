@@ -5,10 +5,11 @@ import "./assetRegister.css";
 import axios from "axios";
 import { model } from "mongoose";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Link} from "react-router-dom";
 
 const AssetRegister = () => {
   const user = JSON.parse(localStorage.getItem("currentUser"));
-
+  
   const [name, setName] = useState(user?.username || "");
   const [company, setCompany] = useState("");
   const [department, setDepartment] = useState("");
@@ -355,7 +356,11 @@ const AssetRegister = () => {
   return (
     <div className="asset-register">
       <div className="form-container">
+        
         <h2 className="registerhead">Asset Registration</h2>
+        <p>
+        <Link to="/AdminDashboardPage">DashBoard</Link> / <Link to="/assetregister">Asset Register</Link>
+      </p>
         <div className="input-box ">
 
 
@@ -464,15 +469,7 @@ const AssetRegister = () => {
                     </label>
                     <div className="button-group">
                     <button className="button generate-btn" onClick={handleGenerateQR}> QR</button>
-                      
-                      {/*{!isQRGenerated ? (
-        <button className="button generate-btn" onClick={handleGenerateQR}>
-          QR
-        </button>
-      ) : (setIsQRGenerated(false),
-        <span className="checkmark"><i class="fa-regular fa-circle-check si2"></i></span>
-         // Show checkmark after clicking QR button
-      )}*/}
+                  
                     </div>
                   </div>
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./users.css";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -24,28 +25,30 @@ const Users = () => {
 
   const handleBlock = async (id) => {
     const confirmLogout = window.confirm("Are you sure you want to Block?");
-    if(confirmLogout){
-    try {
-      await axios.put(`http://localhost:8000/api/users/block/${id}`);
-      alert("User blocked successfully!");
-      fetchUsers(); // Refresh the list after blocking
-    } catch (error) {
-      console.error("Error blocking user:", error);
-      alert("An error occurred while blocking the user.");
-    }}
+    if (confirmLogout) {
+      try {
+        await axios.put(`http://localhost:8000/api/users/block/${id}`);
+        alert("User blocked successfully!");
+        fetchUsers(); // Refresh the list after blocking
+      } catch (error) {
+        console.error("Error blocking user:", error);
+        alert("An error occurred while blocking the user.");
+      }
+    }
   };
 
   const handleUnblock = async (id) => {
     const confirmLogout = window.confirm("Are you sure you want to UnBlock?");
-    if(confirmLogout){
-    try {
-      await axios.put(`http://localhost:8000/api/users/unblock/${id}`);
-      alert("User unblocked successfully!");
-      fetchUsers(); // Refresh the list after unblocking
-    } catch (error) {
-      console.error("Error unblocking user:", error);
-      alert("An error occurred while unblocking the user.");
-    }}
+    if (confirmLogout) {
+      try {
+        await axios.put(`http://localhost:8000/api/users/unblock/${id}`);
+        alert("User unblocked successfully!");
+        fetchUsers(); // Refresh the list after unblocking
+      } catch (error) {
+        console.error("Error unblocking user:", error);
+        alert("An error occurred while unblocking the user.");
+      }
+    }
   };
 
   const handleEdit = (user) => {
@@ -69,7 +72,11 @@ const Users = () => {
 
   return (
     <div className="row">
-      <div className="col-md-12">
+      <h1 className="assethead">User Details</h1>
+      <p>
+        <Link to="/AdminDashboardPage">DashBoard</Link> / <Link to="/Users">User Details</Link>
+      </p>
+      <div className="col-md-13">
         <table className="table table-bordered table-light">
           <thead className="bs">
             <tr>
@@ -100,16 +107,16 @@ const Users = () => {
                   <td>{user.selectedOption}</td>
                   <td>{user.companyName}</td>
                   <td>{user.isBlocked ? "Blocked" : "Active"}</td>
-                  <td>
-                    <button className="btn btn-primary btn-sm me-2" onClick={() => handleEdit(user)}>
+                  <td className="d-flex gap-2">
+                    <button className="btn btn-primary btn-md me-2" onClick={() => handleEdit(user)}>
                       Update
                     </button>
                     {user.isBlocked ? (
-                      <button className="btn btn-success btn-sm" onClick={() => handleUnblock(user._id)}>
+                      <button className="btn btn-success btn-md" onClick={() => handleUnblock(user._id)}>
                         Unblock
                       </button>
                     ) : (
-                      <button className="btn btn-color btn-sm" onClick={() => handleBlock(user._id)}>
+                      <button className="btn btn-color btn-md" onClick={() => handleBlock(user._id)}>
                         Block
                       </button>
                     )}
@@ -165,7 +172,7 @@ const EditUserModal = ({ show, onClose, user, onUpdate }) => {
           <div className="modal-body">
             <label className="form-label">First Name</label>
             <input type="text" className="form-control" name="firstName" value={updatedUser.firstName || ''} onChange={handleChange} />
-            
+
             <label className="form-label">Last Name</label>
             <input type="text" className="form-control" name="lastName" value={updatedUser.lastName || ''} onChange={handleChange} />
 

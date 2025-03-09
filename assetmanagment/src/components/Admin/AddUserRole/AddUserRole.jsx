@@ -1,7 +1,7 @@
 import './adduserrole.css';
 import React, { useState } from 'react';
 import axios from 'axios';
-
+import { Link} from "react-router-dom";
 
 const AddUsersRole = () => {
     const [firstName, setFirstName] = useState("");
@@ -86,6 +86,9 @@ const AddUsersRole = () => {
         <div className="Users">
 
             <h1 className='userhead'>User Registration</h1>
+            <p>
+                    <Link to="/AdminDashboardPage">DashBoard</Link> / <Link to="/UsersRole">User Registration</Link>
+                  </p>
             <fieldset>
                 <form onSubmit={handleSubmit}>
                     <div className='row'>

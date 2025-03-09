@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./assetCategorization.css";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Categorization = () => {
   const [category, setCategory] = useState(""); // State for selected category
@@ -27,16 +28,16 @@ const Categorization = () => {
         return ["Table", "Chair", "Sofa", "Cupboard", "Other"];
       case "Stationery":
         return ["Pen", "Notebook", "Marker", "Stapler", "Other"];
-        case "Laundry & Linen":
-          return ["towels", "bed sheets", "pillow covers","Other"];
-          case "Electrical items":
-            return ["Breaker", "Wall Socket", "Holders", "Voltage Tester", "Bell Switch","Fuse","Other"];
-            case "Outdoor & Garden Equipment":
-              return ["Garden Hose", "Watering Can", "Chainsaw", "Grass Trimmer", "Other"];
-              case "Security & Safety":
-                return ["fire extinguisher", "door locks",  "Other"];
-                case "Housekeeping Supplies":
-                return ["cleaning chemicals", "vacuum cleaners", "Other"];
+      case "Laundry & Linen":
+        return ["towels", "bed sheets", "pillow covers", "Other"];
+      case "Electrical items":
+        return ["Breaker", "Wall Socket", "Holders", "Voltage Tester", "Bell Switch", "Fuse", "Other"];
+      case "Outdoor & Garden Equipment":
+        return ["Garden Hose", "Watering Can", "Chainsaw", "Grass Trimmer", "Other"];
+      case "Security & Safety":
+        return ["fire extinguisher", "door locks", "Other"];
+      case "Housekeeping Supplies":
+        return ["cleaning chemicals", "vacuum cleaners", "Other"];
       default:
         return [];
     }
@@ -82,6 +83,9 @@ const Categorization = () => {
       <div className="asset-categorization">
         <div className="form-container">
           <h2 className="catergoryhead">Asset Categorization</h2>
+          <p>
+            <Link to="/AdminDashboardPage">DashBoard</Link> / <Link to="/category">Asset Categorization</Link>
+          </p>
           <form onSubmit={handleSubmit}>
             <div className="input-box">
               {/* Category Dropdown */}
