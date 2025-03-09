@@ -200,53 +200,52 @@ const AssetRegister = () => {
 
 
 
-  const handleDownloadQR = async (index) => {
-  try {
-    if (!qrCodeContainerRef.current) return;
-    const qrElements = qrCodeContainerRef.current.querySelectorAll(".qr-code");
-
-    if (qrElements[index]) {
-      const qrElement = qrElements[index];
-
-      // Find and hide the item label (component name)
-      const label = qrElement.querySelector("h4");
-      if (label) label.style.display = "none";
-
-      // Add a temporary border and background color for the tracking ID
-      const trackingIdElement = qrElement.querySelector(".tracking-id"); // Adjust this selector as needed
-      if (trackingIdElement) {
-        trackingIdElement.style.backgroundColor = "#f0f0f0"; // Set background color for tracking ID
-        trackingIdElement.style.border = "4px solid #0b4c55"; // Add border for tracking ID
-      }
-
-      // Add a temporary border for the QR code container
-      qrElement.style.border = "8px solid #0b4c55"; // Customize border style
-      qrElement.style.padding = "0px";
-      qrElement.style.paddingBottom = "0px"; // Add padding inside the border
-      //qrElement.style.margin = "50px";
-
-      // Capture the QR code with the frame
-      const canvas = await html2canvas(qrElement);
+  const handleDownloadQR = (index, event) => {
+    event.preventDefault();
+  
+    const canvas = qrCodeContainerRef.current.getElementsByTagName("canvas")[index];
+    if (!canvas) return;
+  
+    const qrImage = new Image();
+    qrImage.src = canvas.toDataURL("image/png");
+  
+    qrImage.onload = () => {
+      const borderSize = 10; // Border thickness
+      const qrSize = 80; // QR code size
+      const textHeight = 20; // Space for the tracking ID text
+      const width = qrSize + borderSize * 2;
+      const height = qrSize + borderSize * 2 + textHeight;
+  
+      const canvasElement = document.createElement("canvas");
+      const ctx = canvasElement.getContext("2d");
+  
+      canvasElement.width = width;
+      canvasElement.height = height;
+  
+      // Border
+      ctx.fillStyle = "#0b4c55"; // Dark teal border color
+      ctx.fillRect(0, 0, width, height);
+  
+      // QR Code background (white)
+      ctx.fillStyle = "#ffffff"; // White background inside the border
+      ctx.fillRect(borderSize, borderSize, qrSize, qrSize);
+  
+      // Draw the QR Code
+      ctx.drawImage(qrImage, borderSize, borderSize, qrSize, qrSize);
+  
+      // Add Tracking ID text below QR
+      ctx.fillStyle = "#000"; // Black text color
+      ctx.font = "bold 10px Arial";
+      ctx.textAlign = "center";
+      ctx.fillText(qrCodeData[index].trackingId, width / 2, height - 10);
+  
+      // Download QR code with border
       const link = document.createElement("a");
-      link.download = `QRCode_${qrCodeData[index].trackingId}.png`;
-      link.href = canvas.toDataURL("image/png");
+      link.href = canvasElement.toDataURL("image/png");
+      link.download = `QR_Code_${qrCodeData[index].trackingId}.png`;
       link.click();
-
-      // Restore original styles
-      if (trackingIdElement) {
-        trackingIdElement.style.backgroundColor = "";
-        trackingIdElement.style.border = "";
-      }
-      qrElement.style.border = "";
-      qrElement.style.padding = "";
-      //qrElement.style.margin = "";
-      if (label) label.style.display = "";
-    }
-  } catch (error) {
-    console.error("Failed to download the QR code:", error);
-    alert("Error occurred while downloading. Please try again.");
-  }
-};
+    };
+  };
 
 
   const handleSubmit = async () => {
@@ -638,7 +637,7 @@ const AssetRegister = () => {
 
           {computerComponents != "fullSet" && (
             <div className="button-group">
-              <button className="button generate-btn" onClick={handleGenerateQR}>Generate QR</button>
+              <button className="button  generate-btn" onClick={handleGenerateQR}>Generate QR</button>
             </div>)}
 
 
@@ -657,14 +656,15 @@ const AssetRegister = () => {
                     />
                     <p className="tid">{item.trackingId}</p>
                   </div>
-                  <button className="button2 download-btn" onClick={() => handleDownloadQR(index)}>
+                  <button className="button2 download-btn"  onClick={(event) => handleDownloadQR(index, event)}>
                     <i className="fas fa-download"></i>
                   </button>
                   
                 </div>
 
               ))}
-               <button className="button3" onClick={handleSubmit}>Submit</button>
+              <div>
+               <button className="button3" onClick={handleSubmit}>Submit</button></div>
             </div>
           )}
 

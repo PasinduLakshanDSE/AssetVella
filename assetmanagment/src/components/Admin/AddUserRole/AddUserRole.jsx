@@ -2,6 +2,7 @@ import './adduserrole.css';
 import React, { useState } from 'react';
 import axios from 'axios';
 
+
 const AddUsersRole = () => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -83,29 +84,37 @@ const AddUsersRole = () => {
 
     return (
         <div className="Users">
+
             <h1 className='userhead'>User Registration</h1>
             <fieldset>
                 <form onSubmit={handleSubmit}>
-                    <label>First Name*</label>
-                    <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-                    {errors.firstName && <span className="error">{errors.firstName}</span>}
-
-                    <label>Last Name*</label>
-                    <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
-                    {errors.lastName && <span className="error">{errors.lastName}</span>}
-
-                    <label>Designation*</label>
-                    <input type="text" value={designation} onChange={(e) => setDesignation(e.target.value)} />
-                    {errors.designation && <span className="error">{errors.designation}</span>}
-
-                    <label>Contact*</label>
-                    <input type="text" value={contact} onChange={(e) => setContact(e.target.value)} />
-                    {errors.contact && <span className="error">{errors.contact}</span>}
-
-                    <label>Username*</label>
-                    <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
-                    {errors.username && <span className="error">{errors.username}</span>}
-
+                    <div className='row'>
+                        <div className='col-md-6'>
+                            <label>First Name*</label>
+                            <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                            {errors.firstName && <span className="error">{errors.firstName}</span>}
+                        </div><div className='col-md-6'>
+                            <label>Last Name*</label>
+                            <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                            {errors.lastName && <span className="error">{errors.lastName}</span>}</div>
+                    </div><div className='row'><div className='col-md-6'>
+                        <label>Designation*</label>
+                        <input type="text" value={designation} onChange={(e) => setDesignation(e.target.value)} />
+                        {errors.designation && <span className="error">{errors.designation}</span>}
+                    </div>
+                        <div className='col-md-6'>
+                            <label>Contact*</label>
+                            <input type="text" value={contact} onChange={(e) => setContact(e.target.value)} />
+                            {errors.contact && <span className="error">{errors.contact}</span>}</div></div><div className='row'>
+                        <div className='col-md-6'>
+                            <label>Username*</label>
+                            <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+                            {errors.username && <span className="error">{errors.username}</span>}
+                        </div><div className='col-md-6'>
+                            <label>Company Name*</label>
+                            <input type="text" value={companyName} onChange={(e) => setCompanyName(e.target.value)} />
+                            {errors.companyName && <span className="error">{errors.companyName}</span>}
+                        </div></div>
                     <label>Password*</label>
                     <input
                         type={showPassword ? "text" : "password"}
@@ -130,9 +139,7 @@ const AddUsersRole = () => {
                         Show Password
                     </label>
 
-                    <label>Company Name*</label>
-                    <input type="text" value={companyName} onChange={(e) => setCompanyName(e.target.value)} />
-                    {errors.companyName && <span className="error">{errors.companyName}</span>}
+
 
                     <label>User Role*</label>
                     <select value={selectedOption} onChange={(e) => setSelectedOption(e.target.value)}>
@@ -141,10 +148,10 @@ const AddUsersRole = () => {
                         <option value="CompanyAdmin">Company Admin</option>
                     </select>
 
-                   
 
-                    <button  className ="btn1" type="button" onClick={handleReset}>Reset</button>
-                    <button className ="btn2" type="submit">Submit</button>
+
+                    <button className="btn1" type="button" onClick={handleReset}>Reset</button>
+                    <button className="btn2" type="submit">Submit</button>
                 </form>
             </fieldset>
         </div>
