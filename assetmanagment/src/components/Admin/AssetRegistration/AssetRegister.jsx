@@ -117,10 +117,18 @@ const AssetRegister = () => {
   };
 
   const handleGenerateQR = () => {
-    if (!name || !company || !department || !mainCategory) {
-      alert("Please fill in all fields before generating the QR code.");
+    if (!name || !company || !department || !mainCategory || !assetUpdateDate || !type || !assetUserName) {
+      alert("Please fill in all required fields before submitting.");
       return;
-    }
+  } else if (mainCategory === "Electronic items" &&  (!name || !company || !department || !mainCategory || !assetUpdateDate || !type || !assetUserName || !(assetModel || serialNumber))) {
+      alert("Please fill in Serial Number or Model Number.");
+      return;
+  }else if (computerComponents === "fullSet" &&  (!MoniterassetName || !(MoniterserialNumber || MoniterassetModel) || 
+  !CPUassetName || !(CPUserialNumber || CPUassetModel) || !MouseassetName || !(MoniterserialNumber || MouseassetModel) || !KeyboardassetName || !(KeyboardserialNumber || KeyboardassetModel) || !assetUserName || !assetUpdateDate)) {
+      alert("Please fill in all required fields for computer components before submitting.");
+      return;
+
+  }
 
     let qrDataArray = [];
 
@@ -203,6 +211,8 @@ const AssetRegister = () => {
 
   const handleDownloadQR = (index, event) => {
     event.preventDefault();
+
+
   
     const canvas = qrCodeContainerRef.current.getElementsByTagName("canvas")[index];
     if (!canvas) return;
@@ -253,7 +263,16 @@ const AssetRegister = () => {
     if (!name || !company || !department || !mainCategory || !assetUpdateDate || !type || !assetUserName) {
       alert("Please fill in all required fields before submitting.");
       return;
-    }
+  } else if (mainCategory === "Electronic items" &&  (!name || !company || !department || !mainCategory || !assetUpdateDate || !type || !assetUserName || !(assetModel || serialNumber))) {
+      alert("Please fill in  Serial Number or Model Number.");
+      return;
+  }else if (computerComponents === "fullSet" &&  (!MoniterassetName || !(MoniterserialNumber || MoniterassetModel) || 
+  !CPUassetName || !(CPUserialNumber || CPUassetModel) || !MouseassetName || !(MoniterserialNumber || MouseassetModel) || !KeyboardassetName || !(KeyboardserialNumber || KeyboardassetModel) || !assetUserName || !assetUpdateDate)) {
+      alert("Please fill in all required fields for computer components before submitting.");
+      return;
+
+  }
+
   
     try {
       if (computerComponents === "fullSet") {
@@ -451,7 +470,7 @@ const AssetRegister = () => {
                         type="text"
                         value={CPUassetName}
                         onChange={(e) => setCPUAssetName(e.target.value)}
-                        placeholder="Enter Asset Name"
+                        placeholder="Enter Asset Name/Brand"
                       />
                       <input
                         type="text"
@@ -480,7 +499,7 @@ const AssetRegister = () => {
                         type="text"
                         value={MoniterassetName}
                         onChange={(e) => setMoniterAssetName(e.target.value)}
-                        placeholder="Enter Asset Name"
+                        placeholder="Enter Asset Name / Brand"
                       />
                       <input
                         type="text"
@@ -506,7 +525,7 @@ const AssetRegister = () => {
                         type="text"
                         value={MouseassetName}
                         onChange={(e) => setMouseAssetName(e.target.value)}
-                        placeholder="Enter Asset Name"
+                        placeholder="Enter Asset Name / Brand"
                       />
                       <input
                         type="text"
@@ -530,7 +549,7 @@ const AssetRegister = () => {
                         type="text"
                         value={KeyboardassetName}
                         onChange={(e) => setKeyboardAssetName(e.target.value)}
-                        placeholder="Enter Asset Name"
+                        placeholder="Enter Asset Name / Brand"
                       />
                       <input
                         type="text"
@@ -600,23 +619,25 @@ const AssetRegister = () => {
                 placeholder="Enter Asset Name / Brand"
               />
 
-              <input
-                type="text"
-                value={assetModel}
-                onChange={(e) => setAssetModel(e.target.value)}
-                placeholder="Enter Asset Model Number"
-              />
+              
             </>
           )}
 
 
           {mainCategory === "Electronic items" && computerComponents != "fullSet" && (
+            <div>
             <input
               type="text"
               value={serialNumber}
               onChange={(e) => setSerialNumber(e.target.value)}
               placeholder="Enter Serial Number"
-            />
+            />  <div style={{ marginBottom: "10px" }}></div> {/* Add spacing instead of <br> */}<input
+            type="text"
+            value={assetModel}
+            onChange={(e) => setAssetModel(e.target.value)}
+            placeholder="Enter Model Number"
+          /></div>
+            
           )}
 
           <input

@@ -6,26 +6,36 @@ import { Link } from "react-router-dom";
 
 
 const DashBoard = () => {
-  const [bookings, setBookings] = useState([]);
-  const [techniciansCount, setTechniciansCount] = useState(0);
-  const [servicesCount, setServicesCount] = useState(0);
-  const [usersCount, setUsers] = useState(0);
+  const [Asset, setAsset] = useState([]);
+  const [Admin, setAdmin] = useState(0);
+  const [Companyadmin, setCompanyAdmin] = useState(0);
+  const [DepartmentAdmin, setDepartmentAdmin] = useState(0);
+  
 
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        const bookingsResponse = await axios.get("/api/bookings/getallbookings");
-        setBookings(bookingsResponse.data);
+        const AssetResponse = await axios.get("http://localhost:8000/api/AssetRegisterDetails/getAssetDetails")
+        setAsset(AssetResponse.data);
 
-        // Fetch additional counts from relevant endpoints
-        const techniciansResponse = await axios.get("/api/technicians/gettechnician");
-        setTechniciansCount(techniciansResponse.data.length);
+        
 
-        const servicesResponse = await axios.get("/api/services/getallservices");
-        setServicesCount(servicesResponse.data.length);
 
-        const usersResponse = await axios.get("/api/users/getallUsers");
-        setUsers(usersResponse.data.length);
+        // Fetch all users
+        const usersResponse = await axios.get("http://localhost:8000/api/users/getallUsers");
+
+        // Filter users with destination === 'admin'
+        const adminUsers = usersResponse.data.filter(user => user.selectedOption === "Admin");
+        setAdmin(adminUsers.length);
+
+        const CompanyadminUsers = usersResponse.data.filter(user => user.selectedOption === "CompanyAdmin");
+        setCompanyAdmin(CompanyadminUsers.length);
+
+        const DepartmentadminUsers = usersResponse.data.filter(user => user.selectedOption === "DepartmentAdmin");
+        setDepartmentAdmin(DepartmentadminUsers.length);
+
+        
+
       } catch (error) {
         console.error("Error fetching dashboard data:", error);
       }
@@ -35,10 +45,10 @@ const DashBoard = () => {
   }, []);
 
   const cards = [
-    { count: bookings.length, label: "Total Asset", color: "blue", icon: <i className="fas fa-house-laptop si"></i> },
-    { count: techniciansCount, label: "Total Admin ", color: "green", icon: <i className="fas fa-user-tie si"></i> },
-    { count: servicesCount, label: "Total Company Users ", color: "teal", icon: <i className="fas fa-user si"></i> },
-    { count: usersCount, label: "Total Department Users", color: "red", icon: <i className="fas fa-users si"></i> },
+    { count: Asset.length, label: "Total Asset", color: "blue", icon: <i className="fas fa-house-laptop si"></i> },
+    { count: Admin, label: "Total Admin ", color: "green", icon: <i className="fas fa-user-tie si"></i> },
+    { count: Companyadmin, label: "Total Company Users ", color: "teal", icon: <i className="fas fa-user si"></i> },
+    { count: DepartmentAdmin, label: "Total Department Users", color: "red", icon: <i className="fas fa-users si"></i> },
   ];
 
   return (

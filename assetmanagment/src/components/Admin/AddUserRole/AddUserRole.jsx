@@ -22,7 +22,9 @@ const AddUsersRole = () => {
         if (!firstName) formErrors.firstName = "First Name is required.";
         if (!lastName) formErrors.lastName = "Last Name is required.";
         if (!designation) formErrors.designation = "Designation is required.";
-        if (!contact) formErrors.contact = "Contact is required.";
+        if (!contact.trim() || !/^\d{10}$/.test(contact)) {
+            formErrors.contact = "Enter a valid 10-digit contact number.";}
+       // if (!contact) formErrors.contact = "Contact is required.";
         if (!username) formErrors.username = "Username is required.";
         if (!password) formErrors.password = "Password is required.";
         if (!confirmPassword) formErrors.confirmPassword = "Confirm Password is required.";
@@ -41,6 +43,8 @@ const AddUsersRole = () => {
         const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
         return strongPasswordRegex.test(password);
     };
+
+   
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -149,6 +153,7 @@ const AddUsersRole = () => {
                         <option value="">Select Role</option>
                         <option value="Admin">Admin</option>
                         <option value="CompanyAdmin">Company Admin</option>
+                        <option value="DepartmentAdmin">Department Admin(HOD)</option>
                     </select>
 
 
