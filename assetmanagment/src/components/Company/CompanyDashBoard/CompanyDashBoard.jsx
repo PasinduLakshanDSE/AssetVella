@@ -59,7 +59,7 @@ const CompanyDashBoard = () => {
         <div className="dashboard-header">
           <h1 className="title">Dashboard</h1>
           <p>
-        <Link to="/">Home</Link> / <Link to="/AdminDashboardPage">DashBoard</Link>
+        <Link to="/">Home</Link> / <Link to="/CompanyDashBord">DashBoard</Link>
       </p>
         </div>
 

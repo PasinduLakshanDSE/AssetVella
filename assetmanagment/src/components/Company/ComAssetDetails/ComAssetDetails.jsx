@@ -10,7 +10,7 @@ const ComAssetDetails = () => {
     const [searchQuery1, setSearchQuery1] = useState("");
     const [searchQuery2, setSearchQuery2] = useState("");
 
-    const user = JSON.parse(localStorage.getItem("currentUser"));
+    //const user = JSON.parse(localStorage.getItem("currentUser"));
     // State for editing
     const [editingAsset, setEditingAsset] = useState(null);
 
@@ -20,11 +20,39 @@ const ComAssetDetails = () => {
         fetchAssets();
     }, []);
 
-    const fetchAssets = () => {
-        axios.get("http://localhost:8000/api/AssetRegisterDetails/getAssetDetails")
-            .then(response => setAssetRegisterDetails(response.data))
-            .catch(error => console.error("Error fetching asset details:", error));
+    const fetchAssets = async () => {
+        const currentUser = JSON.parse(localStorage.getItem("currentUser")); // Get logged-in user details
+    
+        if (!currentUser || !currentUser.username) {
+            console.error("User data not found or username missing");
+            return;
+        }
+    
+        try {
+            // Fetch all registered users
+            const userResponse = await axios.get("http://localhost:8000/api/users/getallUsers");
+            const allUsers = userResponse.data;
+    
+            // Find the user that matches the current username
+            const userData = allUsers.find(user => user.username === currentUser.username);
+    
+            if (!userData || !userData.companyName) {
+                console.error("User company details not found");
+                return;
+            }
+    
+            // Fetch asset details
+            const assetResponse = await axios.get("http://localhost:8000/api/AssetRegisterDetails/getAssetDetails2");
+            const filteredAssets = assetResponse.data.filter(asset => asset.company === userData.companyName);
+    
+            setAssetRegisterDetails(filteredAssets); // Only set assets that match the company
+        } catch (error) {
+            console.error("Error fetching asset details or user data:", error);
+        }
     };
+    
+    
+    
 
     const navigate = useNavigate();
 
@@ -33,7 +61,7 @@ const ComAssetDetails = () => {
     };
 
 
-    // Update an existing asset
+    // Update an existing asseta
     const handleUpdateAsset = (id, updatedAsset) => {
         axios.put(`http://localhost:8000/api/AssetRegisterDetails/updateAsset/${id}`, updatedAsset)
             .then(() => {
@@ -110,7 +138,7 @@ const ComAssetDetails = () => {
             <div className="col-md-14">
                 <h1 className="assethead">Asset Details</h1>
                 <p>
-                    <Link to="/AdminDashboardPage">DashBoard</Link> / <Link to="/AssetDetails">Asset Details</Link>
+                    <Link to="/CompanyDashBord">DashBoard</Link> / <Link to="/AssetDetails">Asset Details</Link>
                 </p>
 
                 {/* Search Inputs */}<div className="row"><div className="col-md-4">

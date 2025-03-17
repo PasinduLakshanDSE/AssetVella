@@ -32,10 +32,10 @@ router.post("/", async (req, res) => {
 
 
 router.post("/login", async (req, res) => {
-  const { email, password } = req.body;
+  const { username, password } = req.body;
 
   try {
-    const user = await User.findOne({ email, password });
+    const user = await User.findOne({ username, password });
 
     if (!user) {
       return res.status(400).json({ message: "Login failed. Invalid email or password." });
@@ -46,8 +46,8 @@ router.post("/login", async (req, res) => {
     }
 
     const temp = {
-      name: user.firstName,
-      email: user.email,
+      name: user.username,
+      
       selectedOption: user.selectedOption,
       _id: user._id,
     };

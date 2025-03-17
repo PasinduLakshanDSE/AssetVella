@@ -91,7 +91,7 @@ const CompanyAddUsersRole = () => {
 
             <h1 className='userhead'>User Registration</h1>
             <p>
-                    <Link to="/AdminDashboardPage">DashBoard</Link> / <Link to="/UsersRole">User Registration</Link>
+                    <Link to="/CompanyDashBord">DashBoard</Link> / <Link to="/UsersRole">User Registration</Link>
                   </p>
             <fieldset>
                 <form onSubmit={handleSubmit}>

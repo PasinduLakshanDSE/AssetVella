@@ -69,6 +69,24 @@ router.get("/getAssetDetails",async(req,res)=>{
   }
 })
 
+router.get("/getAssetDetails2", async (req, res) => {
+  try {
+      const { companyName } = req.query; // Get company name from request query
+      let assets;
+
+      if (companyName) {
+          assets = await AssetRegisterDetails.find({ company: companyName }); // Filter by company
+      } else {
+          assets = await AssetRegisterDetails.find(); // Fetch all if no filter
+      }
+
+      res.json(assets);
+  } catch (error) {
+      res.status(500).json({ error: "Failed to fetch asset details" });
+  }
+});
+
+
 // Route to get asset details by tracking ID
 router.get("/:trackingId", async (req, res) => {
   try {
