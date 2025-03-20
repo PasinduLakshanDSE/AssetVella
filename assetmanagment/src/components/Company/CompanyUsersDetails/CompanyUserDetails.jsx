@@ -10,14 +10,14 @@ const ComapnyUsers = () => {
   const [editingUser, setEditingUser] = useState(null);
 
   // Fetch users from the server
-  const fetchUsers = async () => {
+  /*const fetchUsers = async () => {
     try {
       const response = await axios.get("http://localhost:8000/api/users/getallUsers");
       setUsers(response.data);
     } catch (error) {
       console.error("Error fetching users:", error);
     }
-  };
+  };*/
 
   useEffect(() => {
     fetchUsers(); // Fetch data when the component mounts
@@ -70,6 +70,45 @@ const ComapnyUsers = () => {
     }
   };
 
+//const [assetRegisterDetails, setAssetRegisterDetails] = useState([]);
+
+ 
+
+const fetchUsers = async () => {
+    const currentUser = JSON.parse(localStorage.getItem("currentUser")); // Get logged-in user details
+  
+    if (!currentUser || !currentUser.username) {
+      console.error("User data not found or username missing");
+      return;
+    }
+  
+    try {
+      // Fetch all users from API
+      const response = await axios.get("http://localhost:8000/api/users/getallUsers");
+      const allUsers = response.data;
+  
+      // Find the current user in the database
+      const currentUserData = allUsers.find(user => user.username === currentUser.username);
+  
+      // If the current user has a company name, filter users from that company
+      if (currentUserData && currentUserData.companyName) {
+        const filteredUsers = allUsers.filter(user => user.companyName === currentUserData.companyName);
+        setUsers(filteredUsers); // Set users from the same company
+      } else {
+        console.warn("Current user does not have a company name assigned.");
+        setUsers([]); // No users to display
+      }
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
+  
+  
+
+
+
+
+  
   return (
     <div className="row">
       <h1 className="assethead">User Details</h1>

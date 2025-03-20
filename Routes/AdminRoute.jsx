@@ -132,6 +132,23 @@ router.put("/unblock/:id", async (req, res) => {
 
 
 
+router.get("/getCompanyUserDetails", async (req, res) => {
+  try {
+      const { companyName } = req.query; // Get company name from request query
+      let assets;
+
+      if (companyName) {
+          assets = await User.find({ company: companyName }); // Filter by company
+      } else {
+          assets = await User.find(); // Fetch all if no filter
+      }
+
+      res.json(assets);
+  } catch (error) {
+      res.status(500).json({ error: "Failed to fetch asset details" });
+  }
+});
+
 
 
 

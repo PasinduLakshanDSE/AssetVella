@@ -263,7 +263,7 @@ const ComAssetRegister = () => {
       }, []);
 
       const [company, setCompany] = useState("");
-      const [assetRegisterDetails, setAssetRegisterDetails] = useState([]);
+      //const [assetRegisterDetails, setAssetRegisterDetails] = useState([]);
       
       const fetchAssets = async () => {
           const currentUser = JSON.parse(localStorage.getItem("currentUser")); // Get logged-in user details
@@ -288,11 +288,7 @@ const ComAssetRegister = () => {
       
               setCompany(userData.companyName); // Store company name in state
       
-              // Fetch asset details
-              const assetResponse = await axios.get("http://localhost:8000/api/AssetRegisterDetails/getAssetDetails2");
-              const filteredAssets = assetResponse.data.filter(asset => asset.company === userData.companyName);
-      
-              setAssetRegisterDetails(filteredAssets); // Only set assets that match the company
+              
           } catch (error) {
               console.error("Error fetching asset details or user data:", error);
           }
