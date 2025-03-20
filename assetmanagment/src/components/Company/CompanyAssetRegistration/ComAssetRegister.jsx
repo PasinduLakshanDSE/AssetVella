@@ -11,7 +11,7 @@ const ComAssetRegister = () => {
   const user = JSON.parse(localStorage.getItem("currentUser"));
   
   const [name, setName] = useState(user?.username || "");
-  const [company, setCompany] = useState("");
+  //const [company, setCompany] = useState("");
   const [department, setDepartment] = useState("");
   const [mainCategory, setMainCategory] = useState("");
   const [type, setType] = useState("");
@@ -258,6 +258,48 @@ const ComAssetRegister = () => {
     };
   };
 
+    useEffect(() => {
+          fetchAssets();
+      }, []);
+
+      const [company, setCompany] = useState("");
+      const [assetRegisterDetails, setAssetRegisterDetails] = useState([]);
+      
+      const fetchAssets = async () => {
+          const currentUser = JSON.parse(localStorage.getItem("currentUser")); // Get logged-in user details
+      
+          if (!currentUser || !currentUser.username) {
+              console.error("User data not found or username missing");
+              return;
+          }
+      
+          try {
+              // Fetch all registered users
+              const userResponse = await axios.get("http://localhost:8000/api/users/getallUsers");
+              const allUsers = userResponse.data;
+      
+              // Find the user that matches the current username
+              const userData = allUsers.find(user => user.username === currentUser.username);
+      
+              if (!userData || !userData.companyName) {
+                  console.error("User company details not found");
+                  return;
+              }
+      
+              setCompany(userData.companyName); // Store company name in state
+      
+              // Fetch asset details
+              const assetResponse = await axios.get("http://localhost:8000/api/AssetRegisterDetails/getAssetDetails2");
+              const filteredAssets = assetResponse.data.filter(asset => asset.company === userData.companyName);
+      
+              setAssetRegisterDetails(filteredAssets); // Only set assets that match the company
+          } catch (error) {
+              console.error("Error fetching asset details or user data:", error);
+          }
+      };
+      
+
+  
 
   const handleSubmit = async () => {
     if (!name || !company || !department || !mainCategory || !assetUpdateDate || !type || !assetUserName) {
@@ -395,12 +437,8 @@ const ComAssetRegister = () => {
           <div className="row">
             <div className="col-md-6">
 
-              <select value={company} onChange={(e) => setCompany(e.target.value)}>
-                <option value="">Select Company</option>
-                {companies.map((com) => (
-                  <option key={com} value={com}>{com}</option>
-                ))}
-              </select>
+               
+        <input type="text" value={company} onChange={(e) => setCompany(e.target.value)} readOnly />
             </div>
 
             <div className="col-md-6">
