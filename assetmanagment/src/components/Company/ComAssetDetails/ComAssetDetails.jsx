@@ -138,7 +138,7 @@ const ComAssetDetails = () => {
             <div className="col-md-14">
                 <h1 className="assethead">Asset Details</h1>
                 <p>
-                    <Link to="/CompanyDashBord">DashBoard</Link> / <Link to="/AssetDetails">Asset Details</Link>
+                    <Link to="/CompanyDashBord">DashBoard</Link> / <Link to="/Comasset">Asset Details</Link>
                 </p>
 
                 {/* Search Inputs */}<div className="row"><div className="col-md-4">

@@ -36,7 +36,7 @@ const CompanyNavBar = () => {
         <div id="nav-content">
           <div className="nav-button">
             <i className="fas fa-palette"></i>
-            <Link to="/AdminDashboardPage" className="nav-link">
+            <Link to="/CompanyDashBord" className="nav-link">
               Dashboard
             </Link>
           </div>
@@ -48,7 +48,7 @@ const CompanyNavBar = () => {
           </div>
           <div className="nav-button">
             <i className="fas   fa-pen-to-square"></i>
-            <a href="/AssetRegister" className="nav-link">
+            <a href="/ComapnyAssetRegister" className="nav-link">
               Asset Registration
             </a>
           </div>
