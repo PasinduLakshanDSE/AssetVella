@@ -26,6 +26,7 @@ import CompanyAddUsersRole from "./components/Company/ComAddUserRole/ComAddUser"
 import ComAssetDetails from "./components/Company/ComAssetDetails/ComAssetDetails";
 import ComAssetRegister from "./components/Company/CompanyAssetRegistration/ComAssetRegister";
 import ComAssetCategorization from "./components/Company/ComAssetCategorization/ComAssetCategorization";
+import ComapnyUsers from "./components/Company/CompanyUsersDetails/CompanyUserDetails";
 
 //import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 //import Users from "./components/Users/Users";
@@ -57,6 +58,7 @@ function App() {
         <Route path="/Comasset" element={<ComAssetDetails/>} />
         <Route path="/ComapnyAssetRegister" element={<ComAssetRegister/>} />
         <Route path="/ComapnyassetCatergorization" element={<ComAssetCategorization/>} />
+        <Route path="/CompanyUsers" element={<ComapnyUsers/>} />
       </Routes>
     </div>
    

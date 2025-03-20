@@ -67,7 +67,7 @@ const CompanyNavBar = () => {
           </div>
           <div className="nav-button">
             <i className="fas fa-user"></i>
-            <a href="/Users" className="nav-link">
+            <a href="/CompanyUsers" className="nav-link">
               Users
             </a>
           </div>
