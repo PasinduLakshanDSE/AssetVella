@@ -55,7 +55,7 @@ const CompanyNavBar = () => {
           <hr />
           <div className="nav-button">
             <i className="fas fa-network-wired"></i>
-            <a href="/category" className="nav-link">
+            <a href="/ComapnyassetCatergorization" className="nav-link">
             Asset Categorize
             </a>
           </div>
