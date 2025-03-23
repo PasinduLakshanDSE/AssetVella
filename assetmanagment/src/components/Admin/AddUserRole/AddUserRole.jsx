@@ -1,5 +1,5 @@
 import './adduserrole.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from "react-router-dom";
 
@@ -16,6 +16,7 @@ const AddUsersRole = () => {
     const [companyName, setCompanyName] = useState("");
     const [errors, setErrors] = useState({});
     const [passwordStrength, setPasswordStrength] = useState("");
+    const [existingUsernames, setExistingUsernames] = useState([]);
 
     const validateForm = () => {
         let formErrors = {};
@@ -25,8 +26,11 @@ const AddUsersRole = () => {
         if (!contact.trim() || !/^\d{10}$/.test(contact)) {
             formErrors.contact = "Enter a valid 10-digit contact number.";
         }
-        if (!username) formErrors.username = "Username is required.";
-        if (!password) formErrors.password = "Password is required.";
+    
+        if (!username) {
+            formErrors.username = "Username is required.";
+        } else if (existingUsernames.includes(username)) {
+            formErrors.username = "This username is already taken. Please try another.";}
         if (!confirmPassword) formErrors.confirmPassword = "Confirm Password is required.";
         if (!companyName) formErrors.companyName = "Company Name is required.";
         if (password && !validatePasswordStrength(password)) {
@@ -70,6 +74,20 @@ const AddUsersRole = () => {
             alert("Error creating user. Please try again.");
         }
     };
+
+    const fetchUsers = async () => {
+        try {
+            const response = await axios.get("http://localhost:8000/api/users/getallUsers");
+            const usernames = response.data.map(user => user.username);
+            setExistingUsernames(usernames);
+        } catch (error) {
+            console.error("Error fetching users:", error);
+        }
+    };
+    
+      useEffect(() => {
+        fetchUsers(); // Fetch data when the component mounts
+      }, []);
 
     const handleReset = () => {
         setFirstName("");

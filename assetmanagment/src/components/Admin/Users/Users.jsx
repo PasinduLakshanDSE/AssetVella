@@ -8,9 +8,9 @@ const Users = () => {
   const [users, setUsers] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
   const [editingUser, setEditingUser] = useState(null);
-   const [searchQuery, setSearchQuery] = useState("");
-      const [searchQuery1, setSearchQuery1] = useState("");
-      const [searchQuery2, setSearchQuery2] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery1, setSearchQuery1] = useState("");
+  const [searchQuery2, setSearchQuery2] = useState("");
 
   // Fetch users from the server
   const fetchUsers = async () => {
@@ -77,14 +77,14 @@ const Users = () => {
 
   const usersf = users.filter(usersf => {
     const queryMatch = (query, usersf) =>
-        (usersf.firstName?.toLowerCase() || "").includes(query.toLowerCase()) ||
-        (usersf.lastName?.toLowerCase() || "").includes(query.toLowerCase()) ||
-        (usersf.username?.toLowerCase() || "").includes(query.toLowerCase()) ||
-        (usersf.companyName?.toLowerCase() || "").includes(query.toLowerCase()) 
-        
+      (usersf.firstName?.toLowerCase() || "").includes(query.toLowerCase()) ||
+      (usersf.lastName?.toLowerCase() || "").includes(query.toLowerCase()) ||
+      (usersf.username?.toLowerCase() || "").includes(query.toLowerCase()) ||
+      (usersf.companyName?.toLowerCase() || "").includes(query.toLowerCase())
+
 
     return [searchQuery, searchQuery1, searchQuery2].every(query => !query || queryMatch(query, usersf));
-});
+  });
 
   return (
     <div className="row">
@@ -93,11 +93,11 @@ const Users = () => {
         <Link to="/AdminDashboardPage">DashBoard</Link> / <Link to="/Users">User Details</Link>
       </p>
 
-  {/* Search Inputs */}<div className="row"><div className="col-md-4">
-  <input type="text" className="form-control mb-2" placeholder="Search..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
-                </div><div className="col-md-4"><input type="text" className="form-control mb-2" placeholder="Search by another parameter..." value={searchQuery1} onChange={(e) => setSearchQuery1(e.target.value)} />
-                    </div>
-                    </div>
+      {/* Search Inputs */}<div className="row"><div className="col-md-4">
+        <input type="text" className="form-control mb-2" placeholder="Search..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+      </div><div className="col-md-4"><input type="text" className="form-control mb-2" placeholder="Search by another parameter..." value={searchQuery1} onChange={(e) => setSearchQuery1(e.target.value)} />
+        </div>
+      </div>
 
       <div className="col-md-13">
         <table className="table table-bordered table-light">
