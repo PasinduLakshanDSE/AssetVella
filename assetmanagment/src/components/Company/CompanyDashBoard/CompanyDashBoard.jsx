@@ -15,10 +15,40 @@ const CompanyDashBoard = () => {
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        const AssetResponse = await axios.get("http://localhost:8000/api/AssetRegisterDetails/getAssetDetails")
-        setAsset(AssetResponse.data);
+       {/*} const AssetResponse = await axios.get("http://localhost:8000/api/AssetRegisterDetails/getAssetDetails")
+        setAsset(AssetResponse.data);*/}
 
         
+    
+          const currentUser = JSON.parse(localStorage.getItem("currentUser")); // Get logged-in user details
+      
+          if (!currentUser || !currentUser.username) {
+              console.error("User data not found or username missing");
+              return;
+          }
+      
+          try {
+              // Fetch all registered users
+              const userResponse = await axios.get("http://localhost:8000/api/users/getallUsers");
+              const allUsers = userResponse.data;
+      
+              // Find the user that matches the current username
+              const userData = allUsers.find(user => user.username === currentUser.username);
+      
+              if (!userData || !userData.companyName) {
+                  console.error("User company details not found");
+                  return;
+              }
+      
+              // Fetch asset details
+              const assetResponse = await axios.get("http://localhost:8000/api/AssetRegisterDetails/getAssetDetails2");
+              const filteredAssets = assetResponse.data.filter(asset => asset.company === userData.companyName);
+      
+              setAsset(filteredAssets); // Only set assets that match the company
+          } catch (error) {
+              console.error("Error fetching asset details or user data:", error);
+          }
+      
 
 
         // Fetch all users

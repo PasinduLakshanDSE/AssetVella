@@ -80,7 +80,9 @@ const Users = () => {
       (usersf.firstName?.toLowerCase() || "").includes(query.toLowerCase()) ||
       (usersf.lastName?.toLowerCase() || "").includes(query.toLowerCase()) ||
       (usersf.username?.toLowerCase() || "").includes(query.toLowerCase()) ||
-      (usersf.companyName?.toLowerCase() || "").includes(query.toLowerCase())
+      (usersf.companyName?.toLowerCase() || "").includes(query.toLowerCase()) ||
+      (usersf.
+        selectedOption?.toLowerCase() || "").includes(query.toLowerCase())
 
 
     return [searchQuery, searchQuery1, searchQuery2].every(query => !query || queryMatch(query, usersf));
