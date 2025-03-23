@@ -48,6 +48,9 @@ const Login = () => {
         navigate('/AdminDashboardPage');
       } else if (user.selectedOption === "CompanyAdmin") {
         navigate('/CompanyDashBord');
+      } else if( user.selectedOption === "DepartmentAdmin"){
+        navigate('/DepartmentDashBoard');
+      
       } else {
         setError("Unauthorized role.");
         setShowError(true);

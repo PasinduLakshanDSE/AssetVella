@@ -28,6 +28,8 @@ import ComAssetRegister from "./components/Company/CompanyAssetRegistration/ComA
 import ComAssetCategorization from "./components/Company/ComAssetCategorization/ComAssetCategorization";
 import ComapnyUsers from "./components/Company/CompanyUsersDetails/CompanyUserDetails";
 import ComapnyTransfer from "./components/Company/CompanyAssetTranfer/CompanyAssetTranfer";
+import DepartmentNavBar from "./components/Department/DepartmentNav/DepartmentNav";
+import DepartmentDashBoard from "./components/Department/DepartmentDashBoard/DepartmentDashBoard";
 
 //import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 //import Users from "./components/Users/Users";
@@ -61,6 +63,8 @@ function App() {
         <Route path="/ComapnyassetCatergorization" element={<ComAssetCategorization/>} />
         <Route path="/CompanyUsers" element={<ComapnyUsers/>} />
         <Route path="/CompanyAssetTranfer" element={<ComapnyTransfer/>} />
+        <Route path="/DepartmentNav" element={<DepartmentNavBar/>} />
+        <Route path="/DepartmentDashBoard" element={<DepartmentDashBoard/>} />
       </Routes>
     </div>
    
