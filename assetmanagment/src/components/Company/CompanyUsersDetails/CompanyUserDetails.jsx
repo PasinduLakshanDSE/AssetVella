@@ -88,11 +88,13 @@ const fetchUsers = async () => {
       const allUsers = response.data;
   
       // Find the current user in the database
+      
       const currentUserData = allUsers.find(user => user.username === currentUser.username);
   
       // If the current user has a company name, filter users from that company
-      if (currentUserData && currentUserData.companyName) {
-        const filteredUsers = allUsers.filter(user => user.companyName === currentUserData.companyName);
+      if (currentUserData && currentUserData.companyName  && currentUserData.selectedOption) {
+        const filteredUsers = allUsers.filter(user => user.companyName === currentUserData.companyName && user.selectedOption === currentUserData.selectedOption);
+
         setUsers(filteredUsers); // Set users from the same company
       } else {
         console.warn("Current user does not have a company name assigned.");
@@ -125,7 +127,7 @@ const fetchUsers = async () => {
               <th>Designation</th>
               <th>Contact</th>
               <th>Username</th>
-              <th>Password</th>
+              {/*<th>Password</th>*/}
               <th>User Role</th>
               <th>Company Name</th>
               <th>Status</th>
@@ -142,7 +144,7 @@ const fetchUsers = async () => {
                   <td>{user.designation}</td>
                   <td>{user.contact}</td>
                   <td>{user.username}</td>
-                  <td>{user.password}</td>
+                  {/*<td>{user.password}</td>*/}
                   <td>{user.selectedOption}</td>
                   <td>{user.companyName}</td>
                   <td>{user.isBlocked ? "Blocked" : "Active"}</td>
