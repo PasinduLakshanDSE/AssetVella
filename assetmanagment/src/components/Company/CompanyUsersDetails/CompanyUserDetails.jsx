@@ -8,6 +8,9 @@ const ComapnyUsers = () => {
   const [users, setUsers] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
   const [editingUser, setEditingUser] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+    const [searchQuery1, setSearchQuery1] = useState("");
+    const [searchQuery2, setSearchQuery2] = useState("");
 
   // Fetch users from the server
   /*const fetchUsers = async () => {
@@ -92,8 +95,8 @@ const fetchUsers = async () => {
       const currentUserData = allUsers.find(user => user.username === currentUser.username);
   
       // If the current user has a company name, filter users from that company
-      if (currentUserData && currentUserData.companyName  && currentUserData.selectedOption) {
-        const filteredUsers = allUsers.filter(user => user.companyName === currentUserData.companyName && user.selectedOption === currentUserData.selectedOption);
+      if (currentUserData && currentUserData.companyName  && currentUserData.selectedOption ) {
+        const filteredUsers = allUsers.filter(user => user.companyName === currentUserData.companyName &&  (user.selectedOption === currentUserData.selectedOption || user.selectedOption === "DepartmentAdmin" ));
 
         setUsers(filteredUsers); // Set users from the same company
       } else {
@@ -106,7 +109,16 @@ const fetchUsers = async () => {
   };
   
   
+  const usersf = users.filter(usersf => {
+    const queryMatch = (query, usersf) =>
+      (usersf.firstName?.toLowerCase() || "").includes(query.toLowerCase()) ||
+      (usersf.lastName?.toLowerCase() || "").includes(query.toLowerCase()) ||
+      (usersf.username?.toLowerCase() || "").includes(query.toLowerCase()) ||
+      (usersf.companyName?.toLowerCase() || "").includes(query.toLowerCase())
 
+
+    return [searchQuery, searchQuery1, searchQuery2].every(query => !query || queryMatch(query, usersf));
+  });
 
 
 
@@ -117,6 +129,14 @@ const fetchUsers = async () => {
       <p>
         <Link to="/CompanyDashBord">DashBoard</Link> / <Link to="/CompanyUsers">User Details</Link>
       </p>
+
+
+{/* Search Inputs */}<div className="row"><div className="col-md-4">
+<input type="text" className="form-control mb-2" placeholder="Search..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+      </div><div className="col-md-4"><input type="text" className="form-control mb-2" placeholder="Search by another parameter..." value={searchQuery1} onChange={(e) => setSearchQuery1(e.target.value)} />
+        </div>
+      </div>
+
       <div className="col-md-13">
         <table className="table table-bordered table-light">
           <thead className="bs">
@@ -135,8 +155,8 @@ const fetchUsers = async () => {
             </tr>
           </thead>
           <tbody>
-            {users.length > 0 ? (
-              users.map((user) => (
+            {usersf.length > 0 ? (
+              usersf.map((user) => (
                 <tr key={user._id}>
                   <td>{user._id}</td>
                   <td>{user.firstName}</td>

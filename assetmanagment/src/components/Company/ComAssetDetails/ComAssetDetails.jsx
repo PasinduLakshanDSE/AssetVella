@@ -57,7 +57,7 @@ const ComAssetDetails = () => {
     const navigate = useNavigate();
 
     const handleTransferClick = (asset) => {
-        navigate("/transfer-form", { state: { asset } }); // Pass asset data via state
+        navigate("/CompanyAssetTranfer", { state: { asset } }); // Pass asset data via state
     };
 
 
