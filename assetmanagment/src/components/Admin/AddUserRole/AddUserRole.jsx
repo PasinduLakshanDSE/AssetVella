@@ -17,6 +17,9 @@ const AddUsersRole = () => {
     const [errors, setErrors] = useState({});
     const [passwordStrength, setPasswordStrength] = useState("");
     const [existingUsernames, setExistingUsernames] = useState([]);
+    const[department,setDepartment] = useState("")
+
+    const departments = ["ICT", "HR", "Kitchen", "Front Office", "Store", "Account", "Audit","F&B"];
 
     const validateForm = () => {
         let formErrors = {};
@@ -26,7 +29,11 @@ const AddUsersRole = () => {
         if (!contact.trim() || !/^\d{10}$/.test(contact)) {
             formErrors.contact = "Enter a valid 10-digit contact number.";
         }
-    
+       
+    // Ensure department selection when "Department Admin" is chosen
+    if (selectedOption === "DepartmentAdmin" && !department) {
+        formErrors.department = "Department is required for Department Admin.";
+    }
         if (!username) {
             formErrors.username = "Username is required.";
         } else if (existingUsernames.includes(username)) {
@@ -62,7 +69,9 @@ const AddUsersRole = () => {
             username,
             selectedOption,
             password,
-            companyName
+            companyName,
+            department: selectedOption === "DepartmentAdmin" ? department : null // Ensure department is always included
+       
         };
 
         try {
@@ -102,6 +111,7 @@ const AddUsersRole = () => {
         setCompanyName("");
         setErrors({});
         setPasswordStrength("");
+        setDepartment("");
     };
 
     return (
@@ -188,6 +198,16 @@ const AddUsersRole = () => {
                         <option value="CompanyAdmin">Company Admin</option>
                         <option value="DepartmentAdmin">Department Admin (HOD)</option>
                     </select>
+                    {selectedOption === "DepartmentAdmin" && (
+            <div className="mb-3">
+              <select value={department} onChange={(e) => setDepartment(e.target.value)}>
+                <option value="">Select Department</option>
+                {departments.map((dep) => (
+                  <option key={dep} value={dep}>{dep}</option>
+                ))}
+                
+              </select>{errors.department && <span className="error">{errors.department}</span>}</div>
+          )}
 
                     <div className="button-group">
                         <button className="btn1" type="button" onClick={handleReset}>Reset</button>

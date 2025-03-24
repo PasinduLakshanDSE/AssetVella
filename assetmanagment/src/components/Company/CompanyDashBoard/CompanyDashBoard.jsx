@@ -27,7 +27,7 @@ const CompanyDashBoard = () => {
               return;
           }
       
-          try {
+          
               // Fetch all registered users
               const userResponse = await axios.get("http://localhost:8000/api/users/getallUsers");
               const allUsers = userResponse.data;
@@ -45,10 +45,7 @@ const CompanyDashBoard = () => {
               const filteredAssets = assetResponse.data.filter(asset => asset.company === userData.companyName);
       
               setAsset(filteredAssets); // Only set assets that match the company
-          } catch (error) {
-              console.error("Error fetching asset details or user data:", error);
-          }
-      
+          
 
 
         // Fetch all users
@@ -58,17 +55,18 @@ const CompanyDashBoard = () => {
        /* const adminUsers = usersResponse.data.filter(user => user.selectedOption === "Admin");
         setAdmin(adminUsers.length);*/
 
-        const CompanyadminUsers = usersResponse.data.filter(user => user.selectedOption === "CompanyAdmin");
+        const CompanyadminUsers = usersResponse.data.filter(user => user.selectedOption === "CompanyAdmin" && user.companyName === userData.companyName);
         setCompanyAdmin(CompanyadminUsers.length);
 
-        const DepartmentadminUsers = usersResponse.data.filter(user => user.selectedOption === "DepartmentAdmin");
+        const DepartmentadminUsers = usersResponse.data.filter(user => user.selectedOption === "DepartmentAdmin" && user.companyName === userData.companyName);
         setDepartmentAdmin(DepartmentadminUsers.length);
 
         
 
       } catch (error) {
-        console.error("Error fetching dashboard data:", error);
-      }
+        console.error("Error fetching asset details or user data:", error);
+    }
+
     };
 
     fetchDashboardData();

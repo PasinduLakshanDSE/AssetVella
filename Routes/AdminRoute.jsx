@@ -3,10 +3,10 @@ const User = require("../Module/AdminModule.jsx"); // Ensure the path is correct
 const router = express.Router();
 
 router.post("/", async (req, res) => {
-  const { firstName, lastName, designation, contact, username, selectedOption, password, companyName } = req.body;
+  const { firstName, lastName, designation, contact, username, selectedOption, password, companyName,department } = req.body;
 
   // Validate required fields
-  if (!firstName || !lastName || !designation || !contact || !username || !password || !companyName || !selectedOption) {
+  if (!firstName || !lastName || !designation || !contact || !username || !password || !companyName || !selectedOption ) {
     return res.status(400).json({ error: "All fields are required." });
   }
 
@@ -20,6 +20,7 @@ router.post("/", async (req, res) => {
       selectedOption,
       password,
       companyName,
+      department,
     });
 
     const savedUser = await newUser.save();

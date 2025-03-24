@@ -40,15 +40,15 @@ const DepartmentNavBar = () => {
               Dashboard
             </Link>
           </div>
-          <div className="nav-button">
+          {/*<div className="nav-button">
           <i className="fas fa-handshake "></i>
-            <Link to="/companyUserRole" className="nav-link">
+            <Link to="/DepartmentAddUser" className="nav-link">
               Add Users Role
             </Link>
-          </div>
+          </div>*/}
           <div className="nav-button">
             <i className="fas   fa-pen-to-square"></i>
-            <a href="/ComapnyAssetRegister" className="nav-link">
+            <a href="/DepartmentAssetRegister" className="nav-link">
               Asset Registration
             </a>
           </div>

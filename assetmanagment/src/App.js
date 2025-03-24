@@ -30,6 +30,8 @@ import ComapnyUsers from "./components/Company/CompanyUsersDetails/CompanyUserDe
 import ComapnyTransfer from "./components/Company/CompanyAssetTranfer/CompanyAssetTranfer";
 import DepartmentNavBar from "./components/Department/DepartmentNav/DepartmentNav";
 import DepartmentDashBoard from "./components/Department/DepartmentDashBoard/DepartmentDashBoard";
+import DepAssetRegister from "./components/Department/DepAssetRegister/DepAssetRegister";
+//import DepartmentAddUsersRole from "./components/Department/DepartmentAddUser/DepAddUser";
 
 //import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 //import Users from "./components/Users/Users";
@@ -65,6 +67,8 @@ function App() {
         <Route path="/CompanyAssetTranfer" element={<ComapnyTransfer/>} />
         <Route path="/DepartmentNav" element={<DepartmentNavBar/>} />
         <Route path="/DepartmentDashBoard" element={<DepartmentDashBoard/>} />
+        <Route path="/DepartmentAssetRegister" element={<DepAssetRegister/>} />
+        
       </Routes>
     </div>
    

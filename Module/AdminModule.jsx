@@ -34,6 +34,14 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+ 
+    department: {
+      type: String,
+      required: function () {
+        return this.selectedOption === "DepartmentAdmin";
+      }
+    },
+    
     isBlocked: { type: Boolean, default: false }, // Add this field
   },
   {

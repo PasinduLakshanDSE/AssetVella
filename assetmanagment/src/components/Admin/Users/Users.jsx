@@ -74,7 +74,7 @@ const Users = () => {
   };
 
 
-
+  
   const usersf = users.filter(usersf => {
     const queryMatch = (query, usersf) =>
       (usersf.firstName?.toLowerCase() || "").includes(query.toLowerCase()) ||
@@ -82,7 +82,9 @@ const Users = () => {
       (usersf.username?.toLowerCase() || "").includes(query.toLowerCase()) ||
       (usersf.companyName?.toLowerCase() || "").includes(query.toLowerCase()) ||
       (usersf.
-        selectedOption?.toLowerCase() || "").includes(query.toLowerCase())
+        selectedOption?.toLowerCase() || "").includes(query.toLowerCase()) ||
+        (usersf.
+          department?.toLowerCase() || "").includes(query.toLowerCase())
 
 
     return [searchQuery, searchQuery1, searchQuery2].every(query => !query || queryMatch(query, usersf));
@@ -114,6 +116,7 @@ const Users = () => {
               <th>Password</th>
               <th>User Role</th>
               <th>Company Name</th>
+              <th>Department</th>
               <th>Status</th>
               <th>Actions</th>
             </tr>
@@ -131,6 +134,7 @@ const Users = () => {
                   <td>{user.password}</td>
                   <td>{user.selectedOption}</td>
                   <td>{user.companyName}</td>
+                  <td>{user.department}</td>
                   <td>{user.isBlocked ? "Blocked" : "Active"}</td>
                   <td className="d-flex gap-2">
                     <button className="btn btn-primary btn-md me-2" onClick={() => handleEdit(user)}>
@@ -185,7 +189,8 @@ const EditUserModal = ({ show, onClose, user, onUpdate }) => {
   const handleSubmit = () => {
     onUpdate(updatedUser);
   };
-
+  const companies = ["Vella", "98 Acers", "Ravana Pool Club", "Flying Ravana", "Le Maas Tota", "Tea Factory", "Walaa kulu", "Kiri Kopi"];
+  const departments = ["ICT", "HR", "Kitchen", "Front Office", "Store", "Account", "Audit","F&B"];
   return (
     <div className={`modal fade ${show ? "show d-block" : ""}`} tabIndex="-1" role="dialog">
       <div className="modal-dialog">
@@ -212,9 +217,32 @@ const EditUserModal = ({ show, onClose, user, onUpdate }) => {
 
             <label className="form-label">Password</label>
             <input type="text" className="form-control" name="password" value={updatedUser.password || ''} onChange={handleChange} />
+ {/* Company Name (Fixed: Using Select) */}
+ <label className="form-label">Company Name</label>
+            <select 
+              className="form-control" 
+              name="companyName" 
+              value={updatedUser.companyName || ''} 
+              onChange={handleChange} 
+            >
+              <option value="">Select Company</option>
+              {companies.map((com) => (
+                <option key={com} value={com}>{com}</option>
+              ))}
+            </select>
 
-            <label className="form-label">Company Name</label>
-            <input type="text" className="form-control" name="companyName" value={updatedUser.companyName || ''} onChange={handleChange} />
+            <label className="form-label">Department</label>
+            <select 
+              className="form-control" 
+              name="department" 
+              value={updatedUser.department || ''} 
+              onChange={handleChange} 
+            >
+              <option value="">Select Department</option>
+              {departments.map((dep) => (
+                <option key={dep} value={dep}>{dep}</option>
+              ))}
+            </select>
 
             <label className="form-label">User Role</label>
             <select className="form-control" name="selectedOption" value={updatedUser.selectedOption || ''} onChange={handleChange}>

@@ -17,12 +17,16 @@ const CompanyAddUsersRole = () => {
     const [errors, setErrors] = useState({});
     const [passwordStrength, setPasswordStrength] = useState("");
     const [existingUsernames, setExistingUsernames] = useState([]);
+    const [department, setDepartment] = useState("");
+
+    const departments = ["ICT", "HR", "Kitchen", "Front Office", "Store", "Account", "Audit","F&B"];
 
     const validateForm = () => {
         let formErrors = {};
         if (!firstName) formErrors.firstName = "First Name is required.";
         if (!lastName) formErrors.lastName = "Last Name is required.";
         if (!designation) formErrors.designation = "Designation is required.";
+        if(!department) formErrors.department= "Department is required."
         if (!contact.trim() || !/^\d{10}$/.test(contact)) {
             formErrors.contact = "Enter a valid 10-digit contact number.";}
        // if (!contact) formErrors.contact = "Contact is required.";
@@ -110,7 +114,9 @@ const CompanyAddUsersRole = () => {
             username,
             selectedOption,
             password,
-            companyName
+            companyName,
+            department,
+    
         };
 
         try {
@@ -136,6 +142,7 @@ const CompanyAddUsersRole = () => {
         setCompanyName("");
         setErrors({});
         setPasswordStrength("");
+        setDepartment("");
     };
 
     return (
@@ -176,6 +183,27 @@ const CompanyAddUsersRole = () => {
             
                             {errors.companyName && <span className="error">{errors.companyName}</span>}
                         </div></div>
+
+                        <div className='row'><div className='col-md-6'>
+
+                        <label>User Role*</label>
+                    <select value={selectedOption} onChange={(e) => setSelectedOption(e.target.value)}>
+                        <option value="">Select Role</option>
+                        
+                        {/*<option value="CompanyAdmin">Company Admin</option>*/}
+                        <option value="DepartmentAdmin">Department Admin(HOD)</option>
+                    </select></div><div className='col-md-6'>
+
+                    <label>Department*</label>
+                    <select value={department} onChange={(e) => setDepartment(e.target.value)}>
+                <option value="">Select Department</option>
+                {departments.map((dep) => (
+                  <option key={dep} value={dep}>{dep}</option>
+                ))}
+                {errors.department && <span className="error">{errors.department}</span>}
+              </select></div>
+                    </div>
+
                         <label>Password*</label>
                     <input className="input"
                         type={showPassword ? "text" : "password"}
@@ -203,13 +231,7 @@ const CompanyAddUsersRole = () => {
 
 
 
-                    <label>User Role*</label>
-                    <select value={selectedOption} onChange={(e) => setSelectedOption(e.target.value)}>
-                        <option value="">Select Role</option>
-                        
-                        <option value="CompanyAdmin">Company Admin</option>
-                        <option value="DepartmentAdmin">Department Admin(HOD)</option>
-                    </select>
+                    
 
 
 

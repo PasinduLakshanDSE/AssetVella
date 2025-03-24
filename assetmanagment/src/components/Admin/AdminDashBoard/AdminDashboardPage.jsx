@@ -67,7 +67,7 @@ const DashBoard = () => {
           {cards.map((card, index) => (
             <div
               key={index}
-              className="dashboard-card"
+              className="dashboard-card1"
               style={{ backgroundColor: card.color }}
             >
               <div className="card-content">

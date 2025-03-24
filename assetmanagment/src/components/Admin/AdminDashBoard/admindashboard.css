@@ -25,13 +25,13 @@
     font-size: 14px;
   }
   
-  .dashboard-cards {
+  .dashboard-cards1 {
     display: flex;
     gap: 20px;
     flex-wrap: wrap;
   }
   
-  .dashboard-card {
+  .dashboard-card1 {
     flex: 1;
     min-width: 200px;
     color: white;

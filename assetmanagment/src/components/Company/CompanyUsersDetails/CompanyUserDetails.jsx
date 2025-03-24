@@ -116,7 +116,9 @@ const fetchUsers = async () => {
       (usersf.username?.toLowerCase() || "").includes(query.toLowerCase()) ||
       (usersf.companyName?.toLowerCase() || "").includes(query.toLowerCase()) ||
       (usersf.
-        selectedOption?.toLowerCase() || "").includes(query.toLowerCase())
+        selectedOption?.toLowerCase() || "").includes(query.toLowerCase())||
+        (usersf.
+          department?.toLowerCase() || "").includes(query.toLowerCase())
 
 
     return [searchQuery, searchQuery1, searchQuery2].every(query => !query || queryMatch(query, usersf));
@@ -151,6 +153,7 @@ const fetchUsers = async () => {
               <th>Username</th>
               {/*<th>Password</th>*/}
               <th>User Role</th>
+              <th>Department</th>
               <th>Company Name</th>
               <th>Status</th>
               <th>Actions</th>
@@ -168,22 +171,27 @@ const fetchUsers = async () => {
                   <td>{user.username}</td>
                   {/*<td>{user.password}</td>*/}
                   <td>{user.selectedOption}</td>
+                  <td>{user.department}</td>
                   <td>{user.companyName}</td>
                   <td>{user.isBlocked ? "Blocked" : "Active"}</td>
                   <td className="d-flex gap-2">
-                    <button className="btn btn-primary btn-md me-2" onClick={() => handleEdit(user)}>
-                      Update
-                    </button>
-                    {user.isBlocked ? (
-                      <button className="btn btn-success btn-md" onClick={() => handleUnblock(user._id)}>
-                        Unblock
-                      </button>
-                    ) : (
-                      <button className="btn btn-color btn-md" onClick={() => handleBlock(user._id)}>
-                        Block
-                      </button>
-                    )}
-                  </td>
+          {user.selectedOption !== "CompanyAdmin" && (
+            <>
+              <button className="btn btn-primary btn-md me-2" onClick={() => handleEdit(user)}>
+                Update
+              </button>
+              {user.isBlocked ? (
+                <button className="btn btn-success btn-md" onClick={() => handleUnblock(user._id)}>
+                  Unblock
+                </button>
+              ) : (
+                <button className="btn btn-danger btn-md" onClick={() => handleBlock(user._id)}>
+                  Block
+                </button>
+              )}
+            </>
+          )}
+        </td>
                 </tr>
               ))
             ) : (
@@ -223,8 +231,10 @@ const EditUserModal = ({ show, onClose, user, onUpdate }) => {
   const handleSubmit = () => {
     onUpdate(updatedUser);
   };
-
+  const companies = ["Vella", "98 Acers", "Ravana Pool Club", "Flying Ravana", "Le Maas Tota", "Tea Factory", "Walaa kulu", "Kiri Kopi"];
+  const departments = ["ICT", "HR", "Kitchen", "Front Office", "Store", "Account", "Audit","F&B"];
   return (
+
     <div className={`modal fade ${show ? "show d-block" : ""}`} tabIndex="-1" role="dialog">
       <div className="modal-dialog">
         <div className="modal-content">
@@ -248,16 +258,29 @@ const EditUserModal = ({ show, onClose, user, onUpdate }) => {
             <label className="form-label">Username</label>
             <input type="text" className="form-control" name="username" value={updatedUser.username || ''} onChange={handleChange} />
 
-            <label className="form-label">Password</label>
-            <input type="text" className="form-control" name="password" value={updatedUser.password || ''} onChange={handleChange} />
+          
 
-            <label className="form-label">Company Name</label>
-            <input type="text" className="form-control" name="companyName" value={updatedUser.companyName || ''} onChange={handleChange} />
+       
+ 
+
+            <label className="form-label">Department</label>
+            <select 
+              className="form-control" 
+              name="department" 
+              value={updatedUser.department || ''} 
+              onChange={handleChange} 
+            >
+              <option value="">Select Department</option>
+              {departments.map((dep) => (
+                <option key={dep} value={dep}>{dep}</option>
+              ))}
+            </select>
+
 
             <label className="form-label">User Role</label>
             <select className="form-control" name="selectedOption" value={updatedUser.selectedOption || ''} onChange={handleChange}>
-              <option value="Admin">Admin</option>
-              <option value="CompanyAdmin">Company Admin</option>
+              
+              <option value="DepartmentAdmin">Department Admin</option>
             </select>
           </div>
           <div className="modal-footer">
