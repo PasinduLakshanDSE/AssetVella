@@ -43,7 +43,7 @@ const DepartmentDashBoard = () => {
       
               // Fetch asset details
               const assetResponse = await axios.get("http://localhost:8000/api/AssetRegisterDetails/getAssetDetails2");
-              const filteredAssets = assetResponse.data.filter(asset => asset.company === userData.companyName);
+              const filteredAssets = assetResponse.data.filter(asset => asset.company === userData.companyName && asset.department === userData.department);
       
               setAsset(filteredAssets); // Only set assets that match the company
           } catch (error) {
@@ -76,10 +76,10 @@ const DepartmentDashBoard = () => {
   }, []);
 
   const cards = [
-    { count: Asset.length, label: "Total Asset", color: "blue", icon: <i className="fas fa-house-laptop si"></i> },
+    { count: Asset.length, label: "Total Asset", color: "teal", icon: <i className="fas fa-house-laptop si"></i> },
    // { count: Admin, label: "Total Admin ", color: "green", icon: <i className="fas fa-user-tie si"></i> },
     //{ count: Companyadmin, label: "Total Company Users ", color: "teal", icon: <i className="fas fa-user si"></i> },
-    { count: DepartmentAdmin, label: "Total Department Users", color: "teal", icon: <i className="fas fa-users si"></i> },
+    //{ count: DepartmentAdmin, label: "Total Department Users", color: "teal", icon: <i className="fas fa-users si"></i> },
   ];
 
   return (
@@ -98,10 +98,10 @@ const DepartmentDashBoard = () => {
           {cards.map((card, index) => (
             <div
               key={index}
-              className="dashboard-card"
+              className="dashboard-card2"
               style={{ backgroundColor: card.color }}
             >
-              <div className="card-content">
+              <div className="card-content2">
                 <h2>{card.count}</h2>
                 <p className="clabel">{card.label}</p>
               </div>

@@ -31,7 +31,7 @@
     flex-wrap: wrap;
   }
   
-  .dashboard-card {
+  .dashboard-card2 {
     flex: 1;
     min-width: 200px;
     color: white;
@@ -39,18 +39,20 @@
     border-radius: 30px;
     text-align: center;
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    margin-left: 50px;
+    margin-right: 50px;
   }
   
-  .card-content h2 {
-    font-size: 36px;
+  .card-content2 h2 {
+    font-size: 56px;
     margin: 0;
     font-weight: bold;
 
   }
   
-  .card-content p {
+  .card-content2 p {
     margin: 5px 0 15px;
-    font-size: 16px;
+    font-size: 26px;
     font-weight: bold;
     
   }

@@ -65,12 +65,12 @@ const DepartmentNavBar = () => {
             Asset Details
             </a>
           </div>
-          <div className="nav-button">
+          {/*<div className="nav-button">
             <i className="fas fa-user"></i>
             <a href="/CompanyUsers" className="nav-link">
               Users
             </a>
-          </div>
+          </div>*/}
           <hr/>
          
 
