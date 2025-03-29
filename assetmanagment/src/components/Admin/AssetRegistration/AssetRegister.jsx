@@ -5,11 +5,11 @@ import "./assetRegister.css";
 import axios from "axios";
 import { model } from "mongoose";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const AssetRegister = () => {
   const user = JSON.parse(localStorage.getItem("currentUser"));
-  
+
   const [name, setName] = useState(user?.username || "");
   const [company, setCompany] = useState("");
   const [department, setDepartment] = useState("");
@@ -39,7 +39,7 @@ const AssetRegister = () => {
   const [KeyboardassetModel, setKeyboardAssetModel] = useState("");
   const [assetModel, setAssetModel] = useState("");
   const [assetUserName, setUserName] = useState("");
-  
+
 
 
   const [computerComponents, setComputerComponents] = useState("");
@@ -59,7 +59,7 @@ const AssetRegister = () => {
     "Stationery",
   ];
 
-  const companies = ["Vella", "98 Acers", "Ravana Pool Club", "Flying Ravana", "Le Maas Tota", "Tea Factory","Walaa kulu","kiri kopi"];
+  const companies = ["Vella", "98 Acers", "Ravana Pool Club", "Flying Ravana", "Le Maas Tota", "Tea Factory", "Walaa kulu", "kiri kopi"];
   const departments = ["ICT", "HR", "Kitchen", "Front Office", "Store", "Account", "Audit"];
 
   useEffect(() => {
@@ -89,14 +89,14 @@ const AssetRegister = () => {
   };
 
   const generateTrackingId = (serialNumber) => {
-    const companyCodes = { Vella: "VE", "98 Acers": "98", "Ravana Pool Club": "RPC", "Flying Ravana": "FR", "Le Maas Tota": "LMT", "Tea Factory": "TF" , "Walaa kulu": "WK","kiri kopi":"KK"};
+    const companyCodes = { Vella: "VE", "98 Acers": "98", "Ravana Pool Club": "RPC", "Flying Ravana": "FR", "Le Maas Tota": "LMT", "Tea Factory": "TF", "Walaa kulu": "WK", "kiri kopi": "KK" };
     const departmentCodes = { ICT: "IT", HR: "HR", Kitchen: "KT", Store: "ST", "Front Office": "FO", Account: "AC", Audit: "AU" };
 
     const companyCode = companyCodes[company] || "XX";
     const departmentCode = departmentCodes[department] || "XX";
     const serialSuffix = mainCategory === "Electronic items" && serialNumber ? serialNumber.slice(-4) : "";
 
-    
+
 
 
 
@@ -120,15 +120,15 @@ const AssetRegister = () => {
     if (!name || !company || !department || !mainCategory || !assetUpdateDate || !type || !assetUserName) {
       alert("Please fill in all required fields before submitting.");
       return;
-  } else if (mainCategory === "Electronic items" &&  (!name || !company || !department || !mainCategory || !assetUpdateDate || !type || !assetUserName || !(assetModel || serialNumber))) {
+    } else if (mainCategory === "Electronic items" && (!name || !company || !department || !mainCategory || !assetUpdateDate || !type || !assetUserName || !(assetModel || serialNumber))) {
       alert("Please fill in Serial Number or Model Number.");
       return;
-  }else if (computerComponents === "fullSet" &&  (!MoniterassetName || !(MoniterserialNumber || MoniterassetModel) || 
-  !CPUassetName || !(CPUserialNumber || CPUassetModel) || !MouseassetName || !(MoniterserialNumber || MouseassetModel) || !KeyboardassetName || !(KeyboardserialNumber || KeyboardassetModel) || !assetUserName || !assetUpdateDate)) {
+    } else if (computerComponents === "fullSet" && (!MoniterassetName || !(MoniterserialNumber || MoniterassetModel) ||
+      !CPUassetName || !(CPUserialNumber || CPUassetModel) || !MouseassetName || !(MoniterserialNumber || MouseassetModel) || !KeyboardassetName || !(KeyboardserialNumber || KeyboardassetModel) || !assetUserName || !assetUpdateDate)) {
       alert("Please fill in all required fields for computer components before submitting.");
       return;
 
-  }
+    }
 
     let qrDataArray = [];
 
@@ -143,10 +143,10 @@ const AssetRegister = () => {
       items.forEach((item) => {
         if (item.asset) {
           const id = generateTrackingId(item.serial); // Generate a unique tracking ID
-          const qrData= `http://localhost:3000/QRView/${id}`;
+          const qrData = `http://localhost:3000/QRView/${id}`;
 
           //const qrData= `http://localhost:3000/QRView/${id}`;
-         
+
 
           qrDataArray.push({ qrData, trackingId: id, component: item.label });
           //setIsQRGenerated(true); // Update state to show checkmark
@@ -169,7 +169,7 @@ const AssetRegister = () => {
         assetModel,
         specialNote,
       });*/
-      const qrData= `http://localhost:3000/QRView/${id}`;
+      const qrData = `http://localhost:3000/QRView/${id}`;
       qrDataArray.push({ qrData, trackingId: id });
     }
 
@@ -213,43 +213,43 @@ const AssetRegister = () => {
     event.preventDefault();
 
 
-  
+
     const canvas = qrCodeContainerRef.current.getElementsByTagName("canvas")[index];
     if (!canvas) return;
-  
+
     const qrImage = new Image();
     qrImage.src = canvas.toDataURL("image/png");
-  
+
     qrImage.onload = () => {
       const borderSize = 10; // Border thickness
       const qrSize = 80; // QR code size
       const textHeight = 20; // Space for the tracking ID text
       const width = qrSize + borderSize * 2;
       const height = qrSize + borderSize * 2 + textHeight;
-  
+
       const canvasElement = document.createElement("canvas");
       const ctx = canvasElement.getContext("2d");
-  
+
       canvasElement.width = width;
       canvasElement.height = height;
-  
+
       // Border
       ctx.fillStyle = "#0b4c55"; // Dark teal border color
       ctx.fillRect(0, 0, width, height);
-  
+
       // QR Code background (white)
       ctx.fillStyle = "#ffffff"; // White background inside the border
       ctx.fillRect(borderSize, borderSize, qrSize, qrSize);
-  
+
       // Draw the QR Code
       ctx.drawImage(qrImage, borderSize, borderSize, qrSize, qrSize);
-  
+
       // Add Tracking ID text below QR
       ctx.fillStyle = "#ffffff"; // Black text color
       ctx.font = "bold 10px Arial";
       ctx.textAlign = "center";
       ctx.fillText(qrCodeData[index].trackingId, width / 2, height - 10);
-  
+
       // Download QR code with border
       const link = document.createElement("a");
       link.href = canvasElement.toDataURL("image/png");
@@ -263,17 +263,17 @@ const AssetRegister = () => {
     if (!name || !company || !department || !mainCategory || !assetUpdateDate || !type || !assetUserName) {
       alert("Please fill in all required fields before submitting.");
       return;
-  } else if (mainCategory === "Electronic items" &&  (!name || !company || !department || !mainCategory || !assetUpdateDate || !type || !assetUserName || !(assetModel || serialNumber))) {
+    } else if (mainCategory === "Electronic items" && (!name || !company || !department || !mainCategory || !assetUpdateDate || !type || !assetUserName || !(assetModel || serialNumber))) {
       alert("Please fill in  Serial Number or Model Number.");
       return;
-  }else if (computerComponents === "fullSet" &&  (!MoniterassetName || !(MoniterserialNumber || MoniterassetModel) || 
-  !CPUassetName || !(CPUserialNumber || CPUassetModel) || !MouseassetName || !(MoniterserialNumber || MouseassetModel) || !KeyboardassetName || !(KeyboardserialNumber || KeyboardassetModel) || !assetUserName || !assetUpdateDate)) {
+    } else if (computerComponents === "fullSet" && (!MoniterassetName || !(MoniterserialNumber || MoniterassetModel) ||
+      !CPUassetName || !(CPUserialNumber || CPUassetModel) || !MouseassetName || !(MoniterserialNumber || MouseassetModel) || !KeyboardassetName || !(KeyboardserialNumber || KeyboardassetModel) || !assetUserName || !assetUpdateDate)) {
       alert("Please fill in all required fields for computer components before submitting.");
       return;
 
-  }
+    }
 
-  
+
     try {
       if (computerComponents === "fullSet") {
 
@@ -296,7 +296,7 @@ const AssetRegister = () => {
               department,
               mainCategory,
               type: type === "Other" ? customType : type,
-              assetUserName, 
+              assetUserName,
               assetName: component.assetName,
               assetModel: component.model,
               assetUpdateDate,
@@ -305,9 +305,10 @@ const AssetRegister = () => {
               specialNote,
               computerComponents: component.label, // Label component type
             };
-  
-          await axios.post("http://localhost:8000/api/AssetRegisterDetails", assetData);
-        }}
+
+            await axios.post("http://localhost:8000/api/AssetRegisterDetails", assetData);
+          }
+        }
       } else {
         const assetData = {
           name,
@@ -324,10 +325,10 @@ const AssetRegister = () => {
           specialNote,
           computerComponents,
         };
-  
+
         await axios.post("http://localhost:8000/api/AssetRegisterDetails", assetData);
       }
-  
+
       alert("Assets submitted successfully!");
       resetForm();
     } catch (error) {
@@ -335,7 +336,7 @@ const AssetRegister = () => {
       alert("Error creating asset. Please try again.");
     }
   };
-  
+
 
 
 
@@ -375,11 +376,11 @@ const AssetRegister = () => {
   return (
     <div className="asset-register">
       <div className="form-container">
-        
+
         <h2 className="registerhead">Asset Registration</h2>
         <p>
-        <Link to="/AdminDashboardPage">DashBoard</Link> / <Link to="/assetregister">Asset Register</Link>
-      </p>
+          <Link to="/AdminDashboardPage">DashBoard</Link> / <Link to="/assetregister">Asset Register</Link>
+        </p>
         <div className="input-box ">
 
 
@@ -487,8 +488,8 @@ const AssetRegister = () => {
                       />
                     </label>
                     <div className="button-group">
-                    <button className="button generate-btn" onClick={handleGenerateQR}> QR</button>
-                  
+                      <button className="button generate-btn" onClick={handleGenerateQR}> QR</button>
+
                     </div>
                   </div>
 
@@ -604,12 +605,12 @@ const AssetRegister = () => {
             </div>
           )}
 
-<input
-                type="text"
-                value={assetUserName}
-                onChange={(e) => setUserName(e.target.value)}
-                placeholder="User Name"
-              />
+          <input
+            type="text"
+            value={assetUserName}
+            onChange={(e) => setUserName(e.target.value)}
+            placeholder="User Name"
+          />
           {computerComponents !== "fullSet" && (
             <>
               <input
@@ -619,25 +620,25 @@ const AssetRegister = () => {
                 placeholder="Enter Asset Name / Brand"
               />
 
-              
+
             </>
           )}
 
 
           {mainCategory === "Electronic items" && computerComponents != "fullSet" && (
             <div>
-            <input
-              type="text"
-              value={serialNumber}
-              onChange={(e) => setSerialNumber(e.target.value)}
-              placeholder="Enter Serial Number"
-            />  <div style={{ marginBottom: "10px" }}></div> {/* Add spacing instead of <br> */}<input
-            type="text"
-            value={assetModel}
-            onChange={(e) => setAssetModel(e.target.value)}
-            placeholder="Enter Model Number"
-          /></div>
-            
+              <input
+                type="text"
+                value={serialNumber}
+                onChange={(e) => setSerialNumber(e.target.value)}
+                placeholder="Enter Serial Number"
+              />  <div style={{ marginBottom: "10px" }}></div> {/* Add spacing instead of <br> */}<input
+                type="text"
+                value={assetModel}
+                onChange={(e) => setAssetModel(e.target.value)}
+                placeholder="Enter Model Number"
+              /></div>
+
           )}
 
           <input
@@ -674,15 +675,15 @@ const AssetRegister = () => {
                     />
                     <p className="tid">{item.trackingId}</p>
                   </div>
-                  <button className="button2 download-btn"  onClick={(event) => handleDownloadQR(index, event)}>
+                  <button className="button2 download-btn" onClick={(event) => handleDownloadQR(index, event)}>
                     <i className="fas fa-download"></i>
                   </button>
-                  
+
                 </div>
 
               ))}
               <div>
-               <button className="button3" onClick={handleSubmit}>Submit</button></div>
+                <button className="button3" onClick={handleSubmit}>Submit</button></div>
             </div>
           )}
 

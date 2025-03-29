@@ -43,7 +43,7 @@ const AdminNavBar = () => {
             </Link>
           </div>
           <div className="nav-button">
-          <i className="fas fa-handshake "></i>
+            <i className="fas fa-handshake "></i>
             <Link to="/UsersRole" className="nav-link">
               Add Users Role
             </Link>
@@ -58,13 +58,13 @@ const AdminNavBar = () => {
           <div className="nav-button">
             <i className="fas fa-network-wired"></i>
             <a href="/category" className="nav-link">
-            Asset Categorize
+              Asset Categorize
             </a>
           </div>
           <div className="nav-button">
             <i className="fas  fa-building"></i>
             <a href="/AssetDetails" className="nav-link">
-            Asset Details
+              Asset Details
             </a>
           </div>
           <div className="nav-button">
@@ -73,10 +73,10 @@ const AdminNavBar = () => {
               Users
             </a>
           </div>
-          <hr/>
-         
+          <hr />
 
-          <hr/>
+
+          <hr />
           <div id="nav-content-highlight"></div>
         </div>
         <input id="nav-footer-toggle" type="checkbox" />
@@ -113,12 +113,12 @@ const AdminNavBar = () => {
                       className="fas fa-sign-out-alt"
                       style={{ marginRight: '8px' }}
                     ></i>
-                    
+
                   </button>
                 </>
               ) : null}
             </div>
-            
+
           </div>
         </div>
       </div>

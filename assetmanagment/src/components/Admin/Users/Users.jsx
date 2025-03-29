@@ -74,7 +74,7 @@ const Users = () => {
   };
 
 
-  
+
   const usersf = users.filter(usersf => {
     const queryMatch = (query, usersf) =>
       (usersf.firstName?.toLowerCase() || "").includes(query.toLowerCase()) ||
@@ -83,8 +83,8 @@ const Users = () => {
       (usersf.companyName?.toLowerCase() || "").includes(query.toLowerCase()) ||
       (usersf.
         selectedOption?.toLowerCase() || "").includes(query.toLowerCase()) ||
-        (usersf.
-          department?.toLowerCase() || "").includes(query.toLowerCase())
+      (usersf.
+        department?.toLowerCase() || "").includes(query.toLowerCase())
 
 
     return [searchQuery, searchQuery1, searchQuery2].every(query => !query || queryMatch(query, usersf));
@@ -190,7 +190,7 @@ const EditUserModal = ({ show, onClose, user, onUpdate }) => {
     onUpdate(updatedUser);
   };
   const companies = ["Vella", "98 Acers", "Ravana Pool Club", "Flying Ravana", "Le Maas Tota", "Tea Factory", "Walaa kulu", "Kiri Kopi"];
-  const departments = ["ICT", "HR", "Kitchen", "Front Office", "Store", "Account", "Audit","F&B"];
+  const departments = ["ICT", "HR", "Kitchen", "Front Office", "Store", "Account", "Audit", "F&B"];
   return (
     <div className={`modal fade ${show ? "show d-block" : ""}`} tabIndex="-1" role="dialog">
       <div className="modal-dialog">
@@ -217,13 +217,13 @@ const EditUserModal = ({ show, onClose, user, onUpdate }) => {
 
             <label className="form-label">Password</label>
             <input type="text" className="form-control" name="password" value={updatedUser.password || ''} onChange={handleChange} />
- {/* Company Name (Fixed: Using Select) */}
- <label className="form-label">Company Name</label>
-            <select 
-              className="form-control" 
-              name="companyName" 
-              value={updatedUser.companyName || ''} 
-              onChange={handleChange} 
+            {/* Company Name (Fixed: Using Select) */}
+            <label className="form-label">Company Name</label>
+            <select
+              className="form-control"
+              name="companyName"
+              value={updatedUser.companyName || ''}
+              onChange={handleChange}
             >
               <option value="">Select Company</option>
               {companies.map((com) => (
@@ -232,11 +232,11 @@ const EditUserModal = ({ show, onClose, user, onUpdate }) => {
             </select>
 
             <label className="form-label">Department</label>
-            <select 
-              className="form-control" 
-              name="department" 
-              value={updatedUser.department || ''} 
-              onChange={handleChange} 
+            <select
+              className="form-control"
+              name="department"
+              value={updatedUser.department || ''}
+              onChange={handleChange}
             >
               <option value="">Select Department</option>
               {departments.map((dep) => (

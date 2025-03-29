@@ -10,7 +10,7 @@ const DashBoard = () => {
   const [Admin, setAdmin] = useState(0);
   const [Companyadmin, setCompanyAdmin] = useState(0);
   const [DepartmentAdmin, setDepartmentAdmin] = useState(0);
-  
+
 
   useEffect(() => {
     const fetchDashboardData = async () => {
@@ -18,7 +18,7 @@ const DashBoard = () => {
         const AssetResponse = await axios.get("http://localhost:8000/api/AssetRegisterDetails/getAssetDetails")
         setAsset(AssetResponse.data);
 
-        
+
 
 
         // Fetch all users
@@ -34,7 +34,7 @@ const DashBoard = () => {
         const DepartmentadminUsers = usersResponse.data.filter(user => user.selectedOption === "DepartmentAdmin");
         setDepartmentAdmin(DepartmentadminUsers.length);
 
-        
+
 
       } catch (error) {
         console.error("Error fetching dashboard data:", error);
@@ -53,14 +53,14 @@ const DashBoard = () => {
 
   return (
     <div>
-      <AdminNavBar/>
+      <AdminNavBar />
 
       <div className="dashboard">
         <div className="dashboard-header">
           <h1 className="title">Dashboard</h1>
           <p>
-        <Link to="/">Home</Link> / <Link to="/AdminDashboardPage">DashBoard</Link>
-      </p>
+            <Link to="/">Home</Link> / <Link to="/AdminDashboardPage">DashBoard</Link>
+          </p>
         </div>
 
         <div className="dashboard-cards">

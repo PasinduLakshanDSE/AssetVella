@@ -21,7 +21,7 @@ const Transfer = () => {
 
   const qrCodeContainerRef = useRef(null); // Reference for QR code container
 
-   
+
 
   const companies = [
     "Vella",
@@ -103,8 +103,8 @@ const Transfer = () => {
   // useEffect(() => { fetchUsers(); }, []);
 
   const handleUpdate = async () => {
-    
-    if (!company || !department ) {
+
+    if (!company || !department) {
       alert("Please select both company and department.");
       return;
     }
@@ -113,12 +113,12 @@ const Transfer = () => {
       alert("Please enter the user name.");
       return;
     }
-  
+
     if (!assetUpdateDate) {
       alert("Please enter the asset transfer date.");
       return;
     }
-   
+
 
     const updatedAsset = {
       ...asset,
@@ -150,43 +150,43 @@ const Transfer = () => {
   // Function to handle QR code download
   const handleDownloadQR = (index, event) => {
     event.preventDefault();
-  
+
     const canvas = qrCodeContainerRef.current.getElementsByTagName("canvas")[index];
     if (!canvas) return;
-  
+
     const qrImage = new Image();
     qrImage.src = canvas.toDataURL("image/png");
-  
+
     qrImage.onload = () => {
       const borderSize = 10; // Border thickness
       const qrSize = 80; // QR code size
       const textHeight = 20; // Space for the tracking ID text
       const width = qrSize + borderSize * 2;
       const height = qrSize + borderSize * 2 + textHeight;
-  
+
       const canvasElement = document.createElement("canvas");
       const ctx = canvasElement.getContext("2d");
-  
+
       canvasElement.width = width;
       canvasElement.height = height;
-  
+
       // Border
       ctx.fillStyle = "#0b4c55"; // Dark teal border color
       ctx.fillRect(0, 0, width, height);
-  
+
       // QR Code background (white)
       ctx.fillStyle = "#ffffff"; // White background inside the border
       ctx.fillRect(borderSize, borderSize, qrSize, qrSize);
-  
+
       // Draw the QR Code
       ctx.drawImage(qrImage, borderSize, borderSize, qrSize, qrSize);
-  
+
       // Add Tracking ID text below QR
       ctx.fillStyle = "#ffffff"; // Black text color
       ctx.font = "bold 10px Arial";
       ctx.textAlign = "center";
       ctx.fillText(qrCodeData[index].trackingId, width / 2, height - 10);
-  
+
       // Download QR code with border
       const link = document.createElement("a");
       link.href = canvasElement.toDataURL("image/png");
@@ -194,8 +194,8 @@ const Transfer = () => {
       link.click();
     };
   };
-  
-  
+
+
 
   return (
     <div className="transfer-container">
@@ -280,10 +280,10 @@ const Transfer = () => {
           onChange={(e) => setSpecialNote(e.target.value)}
           placeholder="Enter Special Note (Optional)"
         />
-<div>
-        <button type="button" className="button" onClick={generateQRCode}>
-          Generate QR 
-        </button></div>
+        <div>
+          <button type="button" className="button" onClick={generateQRCode}>
+            Generate QR
+          </button></div>
 
         <div ref={qrCodeContainerRef}>
           {qrCodeData.map((item, index) => (
@@ -301,12 +301,12 @@ const Transfer = () => {
           ))}
         </div>
         {qrCodeData.length > 0 && (
-  <div>
-    <button type="button" onClick={handleUpdate} className="transfer-button">
-      Transfer
-    </button>
-  </div>
-)}
+          <div>
+            <button type="button" onClick={handleUpdate} className="transfer-button">
+              Transfer
+            </button>
+          </div>
+        )}
 
       </form>
     </div>

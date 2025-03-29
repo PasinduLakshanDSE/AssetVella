@@ -5,11 +5,11 @@ import "./depAssetRegister.css";
 import axios from "axios";
 import { model } from "mongoose";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const DepAssetRegister = () => {
   const user = JSON.parse(localStorage.getItem("currentUser"));
-  
+
   const [name, setName] = useState(user?.username || "");
   //const [company, setCompany] = useState("");
   const [department, setDepartment] = useState("");
@@ -39,7 +39,7 @@ const DepAssetRegister = () => {
   const [KeyboardassetModel, setKeyboardAssetModel] = useState("");
   const [assetModel, setAssetModel] = useState("");
   const [assetUserName, setUserName] = useState("");
-  
+
 
 
   const [computerComponents, setComputerComponents] = useState("");
@@ -59,7 +59,7 @@ const DepAssetRegister = () => {
     "Stationery",
   ];
 
-  const companies = ["Vella", "98 Acers", "Ravana Pool Club", "Flying Ravana", "Le Maas Tota", "Tea Factory","Walaa kulu","kiri kopi"];
+  const companies = ["Vella", "98 Acers", "Ravana Pool Club", "Flying Ravana", "Le Maas Tota", "Tea Factory", "Walaa kulu", "kiri kopi"];
   const departments = ["ICT", "HR", "Kitchen", "Front Office", "Store", "Account", "Audit"];
 
   useEffect(() => {
@@ -89,14 +89,14 @@ const DepAssetRegister = () => {
   };
 
   const generateTrackingId = (serialNumber) => {
-    const companyCodes = { Vella: "VE", "98 Acers": "98", "Ravana Pool Club": "RPC", "Flying Ravana": "FR", "Le Maas Tota": "LMT", "Tea Factory": "TF" , "Walaa kulu": "WK","kiri kopi":"KK"};
+    const companyCodes = { Vella: "VE", "98 Acers": "98", "Ravana Pool Club": "RPC", "Flying Ravana": "FR", "Le Maas Tota": "LMT", "Tea Factory": "TF", "Walaa kulu": "WK", "kiri kopi": "KK" };
     const departmentCodes = { ICT: "IT", HR: "HR", Kitchen: "KT", Store: "ST", "Front Office": "FO", Account: "AC", Audit: "AU" };
 
     const companyCode = companyCodes[company] || "XX";
     const departmentCode = departmentCodes[department] || "XX";
     const serialSuffix = mainCategory === "Electronic items" && serialNumber ? serialNumber.slice(-4) : "";
 
-    
+
 
 
 
@@ -120,15 +120,15 @@ const DepAssetRegister = () => {
     if (!name || !company || !department || !mainCategory || !assetUpdateDate || !type || !assetUserName) {
       alert("Please fill in all required fields before submitting.");
       return;
-  } else if (mainCategory === "Electronic items" &&  (!name || !company || !department || !mainCategory || !assetUpdateDate || !type || !assetUserName || !(assetModel || serialNumber))) {
+    } else if (mainCategory === "Electronic items" && (!name || !company || !department || !mainCategory || !assetUpdateDate || !type || !assetUserName || !(assetModel || serialNumber))) {
       alert("Please fill in Serial Number or Model Number.");
       return;
-  }else if (computerComponents === "fullSet" &&  (!MoniterassetName || !(MoniterserialNumber || MoniterassetModel) || 
-  !CPUassetName || !(CPUserialNumber || CPUassetModel) || !MouseassetName || !(MoniterserialNumber || MouseassetModel) || !KeyboardassetName || !(KeyboardserialNumber || KeyboardassetModel) || !assetUserName || !assetUpdateDate)) {
+    } else if (computerComponents === "fullSet" && (!MoniterassetName || !(MoniterserialNumber || MoniterassetModel) ||
+      !CPUassetName || !(CPUserialNumber || CPUassetModel) || !MouseassetName || !(MoniterserialNumber || MouseassetModel) || !KeyboardassetName || !(KeyboardserialNumber || KeyboardassetModel) || !assetUserName || !assetUpdateDate)) {
       alert("Please fill in all required fields for computer components before submitting.");
       return;
 
-  }
+    }
 
     let qrDataArray = [];
 
@@ -143,10 +143,10 @@ const DepAssetRegister = () => {
       items.forEach((item) => {
         if (item.asset) {
           const id = generateTrackingId(item.serial); // Generate a unique tracking ID
-          const qrData= `http://localhost:3000/QRView/${id}`;
+          const qrData = `http://localhost:3000/QRView/${id}`;
 
           //const qrData= `http://localhost:3000/QRView/${id}`;
-         
+
 
           qrDataArray.push({ qrData, trackingId: id, component: item.label });
           //setIsQRGenerated(true); // Update state to show checkmark
@@ -169,7 +169,7 @@ const DepAssetRegister = () => {
         assetModel,
         specialNote,
       });*/
-      const qrData= `http://localhost:3000/QRView/${id}`;
+      const qrData = `http://localhost:3000/QRView/${id}`;
       qrDataArray.push({ qrData, trackingId: id });
     }
 
@@ -213,43 +213,43 @@ const DepAssetRegister = () => {
     event.preventDefault();
 
 
-  
+
     const canvas = qrCodeContainerRef.current.getElementsByTagName("canvas")[index];
     if (!canvas) return;
-  
+
     const qrImage = new Image();
     qrImage.src = canvas.toDataURL("image/png");
-  
+
     qrImage.onload = () => {
       const borderSize = 10; // Border thickness
       const qrSize = 80; // QR code size
       const textHeight = 20; // Space for the tracking ID text
       const width = qrSize + borderSize * 2;
       const height = qrSize + borderSize * 2 + textHeight;
-  
+
       const canvasElement = document.createElement("canvas");
       const ctx = canvasElement.getContext("2d");
-  
+
       canvasElement.width = width;
       canvasElement.height = height;
-  
+
       // Border
       ctx.fillStyle = "#0b4c55"; // Dark teal border color
       ctx.fillRect(0, 0, width, height);
-  
+
       // QR Code background (white)
       ctx.fillStyle = "#ffffff"; // White background inside the border
       ctx.fillRect(borderSize, borderSize, qrSize, qrSize);
-  
+
       // Draw the QR Code
       ctx.drawImage(qrImage, borderSize, borderSize, qrSize, qrSize);
-  
+
       // Add Tracking ID text below QR
       ctx.fillStyle = "#ffffff"; // Black text color
       ctx.font = "bold 10px Arial";
       ctx.textAlign = "center";
       ctx.fillText(qrCodeData[index].trackingId, width / 2, height - 10);
-  
+
       // Download QR code with border
       const link = document.createElement("a");
       link.href = canvasElement.toDataURL("image/png");
@@ -258,61 +258,61 @@ const DepAssetRegister = () => {
     };
   };
 
-    useEffect(() => {
-          fetchAssets();
-      }, []);
+  useEffect(() => {
+    fetchAssets();
+  }, []);
 
-      const [company, setCompany] = useState("");
-      //const [assetRegisterDetails, setAssetRegisterDetails] = useState([]);
-      
-      const fetchAssets = async () => {
-          const currentUser = JSON.parse(localStorage.getItem("currentUser")); // Get logged-in user details
-      
-          if (!currentUser || !currentUser.username) {
-              console.error("User data not found or username missing");
-              return;
-          }
-      
-          try {
-              // Fetch all registered users
-              const userResponse = await axios.get("http://localhost:8000/api/users/getallUsers");
-              const allUsers = userResponse.data;
-      
-              // Find the user that matches the current username
-              const userData = allUsers.find(user => user.username === currentUser.username);
-      
-              if (!userData || !userData.companyName) {
-                  console.error("User company details not found");
-                  return;
-              }
-      
-              setCompany(userData.companyName);
-               // Store company name in state
-              setDepartment(userData.department)
-              
-          } catch (error) {
-              console.error("Error fetching asset details or user data:", error);
-          }
-      };
-      
+  const [company, setCompany] = useState("");
+  //const [assetRegisterDetails, setAssetRegisterDetails] = useState([]);
 
-  
+  const fetchAssets = async () => {
+    const currentUser = JSON.parse(localStorage.getItem("currentUser")); // Get logged-in user details
+
+    if (!currentUser || !currentUser.username) {
+      console.error("User data not found or username missing");
+      return;
+    }
+
+    try {
+      // Fetch all registered users
+      const userResponse = await axios.get("http://localhost:8000/api/users/getallUsers");
+      const allUsers = userResponse.data;
+
+      // Find the user that matches the current username
+      const userData = allUsers.find(user => user.username === currentUser.username);
+
+      if (!userData || !userData.companyName) {
+        console.error("User company details not found");
+        return;
+      }
+
+      setCompany(userData.companyName);
+      // Store company name in state
+      setDepartment(userData.department)
+
+    } catch (error) {
+      console.error("Error fetching asset details or user data:", error);
+    }
+  };
+
+
+
 
   const handleSubmit = async () => {
     if (!name || !company || !department || !mainCategory || !assetUpdateDate || !type || !assetUserName) {
       alert("Please fill in all required fields before submitting.");
       return;
-  } else if (mainCategory === "Electronic items" &&  (!name || !company || !department || !mainCategory || !assetUpdateDate || !type || !assetUserName || !(assetModel || serialNumber))) {
+    } else if (mainCategory === "Electronic items" && (!name || !company || !department || !mainCategory || !assetUpdateDate || !type || !assetUserName || !(assetModel || serialNumber))) {
       alert("Please fill in  Serial Number or Model Number.");
       return;
-  }else if (computerComponents === "fullSet" &&  (!MoniterassetName || !(MoniterserialNumber || MoniterassetModel) || 
-  !CPUassetName || !(CPUserialNumber || CPUassetModel) || !MouseassetName || !(MoniterserialNumber || MouseassetModel) || !KeyboardassetName || !(KeyboardserialNumber || KeyboardassetModel) || !assetUserName || !assetUpdateDate)) {
+    } else if (computerComponents === "fullSet" && (!MoniterassetName || !(MoniterserialNumber || MoniterassetModel) ||
+      !CPUassetName || !(CPUserialNumber || CPUassetModel) || !MouseassetName || !(MoniterserialNumber || MouseassetModel) || !KeyboardassetName || !(KeyboardserialNumber || KeyboardassetModel) || !assetUserName || !assetUpdateDate)) {
       alert("Please fill in all required fields for computer components before submitting.");
       return;
 
-  }
+    }
 
-  
+
     try {
       if (computerComponents === "fullSet") {
 
@@ -335,7 +335,7 @@ const DepAssetRegister = () => {
               department,
               mainCategory,
               type: type === "Other" ? customType : type,
-              assetUserName, 
+              assetUserName,
               assetName: component.assetName,
               assetModel: component.model,
               assetUpdateDate,
@@ -344,9 +344,10 @@ const DepAssetRegister = () => {
               specialNote,
               computerComponents: component.label, // Label component type
             };
-  
-          await axios.post("http://localhost:8000/api/AssetRegisterDetails", assetData);
-        }}
+
+            await axios.post("http://localhost:8000/api/AssetRegisterDetails", assetData);
+          }
+        }
       } else {
         const assetData = {
           name,
@@ -363,10 +364,10 @@ const DepAssetRegister = () => {
           specialNote,
           computerComponents,
         };
-  
+
         await axios.post("http://localhost:8000/api/AssetRegisterDetails", assetData);
       }
-  
+
       alert("Assets submitted successfully!");
       resetForm();
     } catch (error) {
@@ -374,7 +375,7 @@ const DepAssetRegister = () => {
       alert("Error creating asset. Please try again.");
     }
   };
-  
+
 
 
 
@@ -414,11 +415,11 @@ const DepAssetRegister = () => {
   return (
     <div className="asset-register">
       <div className="form-container">
-        
+
         <h2 className="registerhead">Asset Registration</h2>
         <p>
-        <Link to="/DepartmentDashBoard">DashBoard</Link> / <Link to="/DepartmentAssetRegister">Asset Register</Link>
-      </p>
+          <Link to="/DepartmentDashBoard">DashBoard</Link> / <Link to="/DepartmentAssetRegister">Asset Register</Link>
+        </p>
         <div className="input-box ">
 
 
@@ -434,8 +435,8 @@ const DepAssetRegister = () => {
           <div className="row">
             <div className="col-md-6">
 
-               
-        <input type="text" value={company} onChange={(e) => setCompany(e.target.value)} readOnly />
+
+              <input type="text" value={company} onChange={(e) => setCompany(e.target.value)} readOnly />
             </div>
 
             <div className="col-md-6">
@@ -446,11 +447,11 @@ const DepAssetRegister = () => {
                 ))}
               </select>*/}
               <input type="text" value={department} onChange={(e) => setDepartment(e.target.value)} readOnly />
-            </div>
+            </div></div>
 
 
-
-            <div className="col-md-6">
+          <div className="row r1">
+            <div className="col-md-6 r1">
 
               <select value={mainCategory} onChange={(e) => setMainCategory(e.target.value)}>
                 <option value="">Select Category</option>
@@ -523,8 +524,8 @@ const DepAssetRegister = () => {
                       />
                     </label>
                     <div className="button-group">
-                    <button className="button generate-btn" onClick={handleGenerateQR}> QR</button>
-                  
+                      <button className="button generate-btn" onClick={handleGenerateQR}> QR</button>
+
                     </div>
                   </div>
 
@@ -640,12 +641,12 @@ const DepAssetRegister = () => {
             </div>
           )}
 
-<input
-                type="text"
-                value={assetUserName}
-                onChange={(e) => setUserName(e.target.value)}
-                placeholder="User Name"
-              />
+          <input
+            type="text"
+            value={assetUserName}
+            onChange={(e) => setUserName(e.target.value)}
+            placeholder="User Name"
+          />
           {computerComponents !== "fullSet" && (
             <>
               <input
@@ -655,25 +656,25 @@ const DepAssetRegister = () => {
                 placeholder="Enter Asset Name / Brand"
               />
 
-              
+
             </>
           )}
 
 
           {mainCategory === "Electronic items" && computerComponents != "fullSet" && (
             <div>
-            <input
-              type="text"
-              value={serialNumber}
-              onChange={(e) => setSerialNumber(e.target.value)}
-              placeholder="Enter Serial Number"
-            />  <div style={{ marginBottom: "10px" }}></div> {/* Add spacing instead of <br> */}<input
-            type="text"
-            value={assetModel}
-            onChange={(e) => setAssetModel(e.target.value)}
-            placeholder="Enter Model Number"
-          /></div>
-            
+              <input
+                type="text"
+                value={serialNumber}
+                onChange={(e) => setSerialNumber(e.target.value)}
+                placeholder="Enter Serial Number"
+              />  <div style={{ marginBottom: "10px" }}></div> {/* Add spacing instead of <br> */}<input
+                type="text"
+                value={assetModel}
+                onChange={(e) => setAssetModel(e.target.value)}
+                placeholder="Enter Model Number"
+              /></div>
+
           )}
 
           <input
@@ -710,15 +711,15 @@ const DepAssetRegister = () => {
                     />
                     <p className="tid">{item.trackingId}</p>
                   </div>
-                  <button className="button2 download-btn"  onClick={(event) => handleDownloadQR(index, event)}>
+                  <button className="button2 download-btn" onClick={(event) => handleDownloadQR(index, event)}>
                     <i className="fas fa-download"></i>
                   </button>
-                  
+
                 </div>
 
               ))}
               <div>
-               <button className="button3" onClick={handleSubmit}>Submit</button></div>
+                <button className="button3" onClick={handleSubmit}>Submit</button></div>
             </div>
           )}
 

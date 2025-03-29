@@ -17,9 +17,9 @@ const AddUsersRole = () => {
     const [errors, setErrors] = useState({});
     const [passwordStrength, setPasswordStrength] = useState("");
     const [existingUsernames, setExistingUsernames] = useState([]);
-    const[department,setDepartment] = useState("")
+    const [department, setDepartment] = useState("")
 
-    const departments = ["ICT", "HR", "Kitchen", "Front Office", "Store", "Account", "Audit","F&B"];
+    const departments = ["ICT", "HR", "Kitchen", "Front Office", "Store", "Account", "Audit", "F&B"];
 
     const validateForm = () => {
         let formErrors = {};
@@ -29,15 +29,16 @@ const AddUsersRole = () => {
         if (!contact.trim() || !/^\d{10}$/.test(contact)) {
             formErrors.contact = "Enter a valid 10-digit contact number.";
         }
-       
-    // Ensure department selection when "Department Admin" is chosen
-    if (selectedOption === "DepartmentAdmin" && !department) {
-        formErrors.department = "Department is required for Department Admin.";
-    }
+
+        // Ensure department selection when "Department Admin" is chosen
+        if (selectedOption === "DepartmentAdmin" && !department) {
+            formErrors.department = "Department is required for Department Admin.";
+        }
         if (!username) {
             formErrors.username = "Username is required.";
         } else if (existingUsernames.includes(username)) {
-            formErrors.username = "This username is already taken. Please try another.";}
+            formErrors.username = "This username is already taken. Please try another.";
+        }
         if (!confirmPassword) formErrors.confirmPassword = "Confirm Password is required.";
         if (!companyName) formErrors.companyName = "Company Name is required.";
         if (password && !validatePasswordStrength(password)) {
@@ -71,7 +72,7 @@ const AddUsersRole = () => {
             password,
             companyName,
             department: selectedOption === "DepartmentAdmin" ? department : null // Ensure department is always included
-       
+
         };
 
         try {
@@ -93,10 +94,10 @@ const AddUsersRole = () => {
             console.error("Error fetching users:", error);
         }
     };
-    
-      useEffect(() => {
+
+    useEffect(() => {
         fetchUsers(); // Fetch data when the component mounts
-      }, []);
+    }, []);
 
     const handleReset = () => {
         setFirstName("");
@@ -172,7 +173,7 @@ const AddUsersRole = () => {
                         value={password}
                         onChange={(e) => {
                             setPassword(e.target.value);
-                            
+
                         }}
                     />
                     <span className={`password-strength ${passwordStrength.toLowerCase()}`}>{passwordStrength}</span>
@@ -199,15 +200,15 @@ const AddUsersRole = () => {
                         <option value="DepartmentAdmin">Department Admin (HOD)</option>
                     </select>
                     {selectedOption === "DepartmentAdmin" && (
-            <div className="mb-3">
-              <select value={department} onChange={(e) => setDepartment(e.target.value)}>
-                <option value="">Select Department</option>
-                {departments.map((dep) => (
-                  <option key={dep} value={dep}>{dep}</option>
-                ))}
-                
-              </select>{errors.department && <span className="error">{errors.department}</span>}</div>
-          )}
+                        <div className="mb-3">
+                            <select value={department} onChange={(e) => setDepartment(e.target.value)}>
+                                <option value="">Select Department</option>
+                                {departments.map((dep) => (
+                                    <option key={dep} value={dep}>{dep}</option>
+                                ))}
+
+                            </select>{errors.department && <span className="error">{errors.department}</span>}</div>
+                    )}
 
                     <div className="button-group">
                         <button className="btn1" type="button" onClick={handleReset}>Reset</button>

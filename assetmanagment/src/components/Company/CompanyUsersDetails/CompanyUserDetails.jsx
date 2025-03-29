@@ -9,8 +9,8 @@ const ComapnyUsers = () => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [editingUser, setEditingUser] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-    const [searchQuery1, setSearchQuery1] = useState("");
-    const [searchQuery2, setSearchQuery2] = useState("");
+  const [searchQuery1, setSearchQuery1] = useState("");
+  const [searchQuery2, setSearchQuery2] = useState("");
 
   // Fetch users from the server
   /*const fetchUsers = async () => {
@@ -73,30 +73,30 @@ const ComapnyUsers = () => {
     }
   };
 
-//const [assetRegisterDetails, setAssetRegisterDetails] = useState([]);
+  //const [assetRegisterDetails, setAssetRegisterDetails] = useState([]);
 
- 
 
-const fetchUsers = async () => {
+
+  const fetchUsers = async () => {
     const currentUser = JSON.parse(localStorage.getItem("currentUser")); // Get logged-in user details
-  
+
     if (!currentUser || !currentUser.username) {
       console.error("User data not found or username missing");
       return;
     }
-  
+
     try {
       // Fetch all users from API
       const response = await axios.get("http://localhost:8000/api/users/getallUsers");
       const allUsers = response.data;
-  
+
       // Find the current user in the database
-      
+
       const currentUserData = allUsers.find(user => user.username === currentUser.username);
-  
+
       // If the current user has a company name, filter users from that company
-      if (currentUserData && currentUserData.companyName  && currentUserData.selectedOption ) {
-        const filteredUsers = allUsers.filter(user => user.companyName === currentUserData.companyName &&  (user.selectedOption === currentUserData.selectedOption || user.selectedOption === "DepartmentAdmin" ));
+      if (currentUserData && currentUserData.companyName && currentUserData.selectedOption) {
+        const filteredUsers = allUsers.filter(user => user.companyName === currentUserData.companyName && (user.selectedOption === currentUserData.selectedOption || user.selectedOption === "DepartmentAdmin"));
 
         setUsers(filteredUsers); // Set users from the same company
       } else {
@@ -107,8 +107,8 @@ const fetchUsers = async () => {
       console.error("Error fetching users:", error);
     }
   };
-  
-  
+
+
   const usersf = users.filter(usersf => {
     const queryMatch = (query, usersf) =>
       (usersf.firstName?.toLowerCase() || "").includes(query.toLowerCase()) ||
@@ -116,9 +116,9 @@ const fetchUsers = async () => {
       (usersf.username?.toLowerCase() || "").includes(query.toLowerCase()) ||
       (usersf.companyName?.toLowerCase() || "").includes(query.toLowerCase()) ||
       (usersf.
-        selectedOption?.toLowerCase() || "").includes(query.toLowerCase())||
-        (usersf.
-          department?.toLowerCase() || "").includes(query.toLowerCase())
+        selectedOption?.toLowerCase() || "").includes(query.toLowerCase()) ||
+      (usersf.
+        department?.toLowerCase() || "").includes(query.toLowerCase())
 
 
     return [searchQuery, searchQuery1, searchQuery2].every(query => !query || queryMatch(query, usersf));
@@ -126,7 +126,7 @@ const fetchUsers = async () => {
 
 
 
-  
+
   return (
     <div className="row">
       <h1 className="assethead">User Details</h1>
@@ -135,8 +135,8 @@ const fetchUsers = async () => {
       </p>
 
 
-{/* Search Inputs */}<div className="row"><div className="col-md-4">
-<input type="text" className="form-control mb-2" placeholder="Search..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+      {/* Search Inputs */}<div className="row"><div className="col-md-4">
+        <input type="text" className="form-control mb-2" placeholder="Search..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
       </div><div className="col-md-4"><input type="text" className="form-control mb-2" placeholder="Search by another parameter..." value={searchQuery1} onChange={(e) => setSearchQuery1(e.target.value)} />
         </div>
       </div>
@@ -175,23 +175,23 @@ const fetchUsers = async () => {
                   <td>{user.companyName}</td>
                   <td>{user.isBlocked ? "Blocked" : "Active"}</td>
                   <td className="d-flex gap-2">
-          {user.selectedOption !== "CompanyAdmin" && (
-            <>
-              <button className="btn btn-primary btn-md me-2" onClick={() => handleEdit(user)}>
-                Update
-              </button>
-              {user.isBlocked ? (
-                <button className="btn btn-success btn-md" onClick={() => handleUnblock(user._id)}>
-                  Unblock
-                </button>
-              ) : (
-                <button className="btn btn-danger btn-md" onClick={() => handleBlock(user._id)}>
-                  Block
-                </button>
-              )}
-            </>
-          )}
-        </td>
+                    {user.selectedOption !== "CompanyAdmin" && (
+                      <>
+                        <button className="btn btn-primary btn-md me-2" onClick={() => handleEdit(user)}>
+                          Update
+                        </button>
+                        {user.isBlocked ? (
+                          <button className="btn btn-success btn-md" onClick={() => handleUnblock(user._id)}>
+                            Unblock
+                          </button>
+                        ) : (
+                          <button className="btn btn-danger btn-md" onClick={() => handleBlock(user._id)}>
+                            Block
+                          </button>
+                        )}
+                      </>
+                    )}
+                  </td>
                 </tr>
               ))
             ) : (
@@ -232,7 +232,7 @@ const EditUserModal = ({ show, onClose, user, onUpdate }) => {
     onUpdate(updatedUser);
   };
   const companies = ["Vella", "98 Acers", "Ravana Pool Club", "Flying Ravana", "Le Maas Tota", "Tea Factory", "Walaa kulu", "Kiri Kopi"];
-  const departments = ["ICT", "HR", "Kitchen", "Front Office", "Store", "Account", "Audit","F&B"];
+  const departments = ["ICT", "HR", "Kitchen", "Front Office", "Store", "Account", "Audit", "F&B"];
   return (
 
     <div className={`modal fade ${show ? "show d-block" : ""}`} tabIndex="-1" role="dialog">
@@ -258,17 +258,17 @@ const EditUserModal = ({ show, onClose, user, onUpdate }) => {
             <label className="form-label">Username</label>
             <input type="text" className="form-control" name="username" value={updatedUser.username || ''} onChange={handleChange} />
 
-          
 
-       
- 
+
+
+
 
             <label className="form-label">Department</label>
-            <select 
-              className="form-control" 
-              name="department" 
-              value={updatedUser.department || ''} 
-              onChange={handleChange} 
+            <select
+              className="form-control"
+              name="department"
+              value={updatedUser.department || ''}
+              onChange={handleChange}
             >
               <option value="">Select Department</option>
               {departments.map((dep) => (
@@ -279,7 +279,7 @@ const EditUserModal = ({ show, onClose, user, onUpdate }) => {
 
             <label className="form-label">User Role</label>
             <select className="form-control" name="selectedOption" value={updatedUser.selectedOption || ''} onChange={handleChange}>
-              
+
               <option value="DepartmentAdmin">Department Admin</option>
             </select>
           </div>
