@@ -31,6 +31,9 @@ import ComapnyTransfer from "./components/Company/CompanyAssetTranfer/CompanyAss
 import DepartmentNavBar from "./components/Department/DepartmentNav/DepartmentNav";
 import DepartmentDashBoard from "./components/Department/DepartmentDashBoard/DepartmentDashBoard";
 import DepAssetRegister from "./components/Department/DepAssetRegister/DepAssetRegister";
+import DepAssetCategorization from "./components/Department/DepAssetCategory/DepCatergory";
+import DepAssetDetails from "./components/Department/DepAssetDetails/DepAssetDetails";
+import DepartmentTransfer from "./components/Department/DepAssetTranfer/DepAssetTranfer";
 //import DepartmentAddUsersRole from "./components/Department/DepartmentAddUser/DepAddUser";
 
 //import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -68,6 +71,9 @@ function App() {
         <Route path="/DepartmentNav" element={<DepartmentNavBar/>} />
         <Route path="/DepartmentDashBoard" element={<DepartmentDashBoard/>} />
         <Route path="/DepartmentAssetRegister" element={<DepAssetRegister/>} />
+        <Route path="/DepartmentCatergrization" element={<DepAssetCategorization/>} />
+        <Route path="/DepartmentAssetDetails" element={<DepAssetDetails/>} />
+        <Route path="/DepartmnetAssetTranfer" element={<DepartmentTransfer/>} />
         
       </Routes>
     </div>

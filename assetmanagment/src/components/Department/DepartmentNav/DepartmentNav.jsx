@@ -55,13 +55,13 @@ const DepartmentNavBar = () => {
           <hr />
           <div className="nav-button">
             <i className="fas fa-network-wired"></i>
-            <a href="/ComapnyassetCatergorization" className="nav-link">
+            <a href="/DepartmentCatergrization" className="nav-link">
             Asset Categorize
             </a>
           </div>
           <div className="nav-button">
             <i className="fas  fa-building"></i>
-            <a href="/Comasset" className="nav-link">
+            <a href="/DepartmentAssetDetails" className="nav-link">
             Asset Details
             </a>
           </div>
