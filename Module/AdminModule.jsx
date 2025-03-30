@@ -34,6 +34,8 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    otp: { type: String, default: null }, // Make it optional
+    expiresAt: { type: Date, default: null }, // Make it optional
  
     department: {
       type: String,

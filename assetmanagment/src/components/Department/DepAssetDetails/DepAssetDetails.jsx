@@ -196,7 +196,7 @@ const DepAssetDetails = () => {
                                             <td>{asset.computerComponents}</td>
                                             <td className="d-flex gap-2">
                                                 <button className="btn btn-primary1" onClick={() => handleTransferClick(asset)}>Transfer</button>
-                                                <button className="btn btn-danger2" onClick={() => handleDeleteAsset(asset._id)}>Discard</button>
+                                                {/*<button className="btn btn-danger2" onClick={() => handleDeleteAsset(asset._id)}>Discard</button>*/}
                                                 <button className="btn btn-success3" onClick={() => handleDownloadQR(asset.trackingId)}> QR  <i className="fas fa-download"></i></button>
                                             </td>
                                         </>

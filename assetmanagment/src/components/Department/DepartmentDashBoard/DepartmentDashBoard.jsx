@@ -76,7 +76,7 @@ const DepartmentDashBoard = () => {
   }, []);
 
   const cards = [
-    { count: Asset.length, label: "Total Asset", color: "teal", icon: <i className="fas fa-house-laptop si"></i> },
+    { count: Asset.length, label: "Total Asset", color: "Darkblue", icon: <i className="fas fa-house-laptop si"></i> },
    // { count: Admin, label: "Total Admin ", color: "green", icon: <i className="fas fa-user-tie si"></i> },
     //{ count: Companyadmin, label: "Total Company Users ", color: "teal", icon: <i className="fas fa-user si"></i> },
     //{ count: DepartmentAdmin, label: "Total Department Users", color: "teal", icon: <i className="fas fa-users si"></i> },

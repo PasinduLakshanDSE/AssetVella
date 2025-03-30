@@ -113,12 +113,13 @@ const Users = () => {
               <th>Designation</th>
               <th>Contact</th>
               <th>Username</th>
-              <th>Password</th>
+              
               <th>User Role</th>
               <th>Company Name</th>
               <th>Department</th>
               <th>Status</th>
               <th>Actions</th>
+              <th>OTP</th>
             </tr>
           </thead>
           <tbody>
@@ -131,7 +132,7 @@ const Users = () => {
                   <td>{user.designation}</td>
                   <td>{user.contact}</td>
                   <td>{user.username}</td>
-                  <td>{user.password}</td>
+                  
                   <td>{user.selectedOption}</td>
                   <td>{user.companyName}</td>
                   <td>{user.department}</td>
@@ -150,6 +151,7 @@ const Users = () => {
                       </button>
                     )}
                   </td>
+                  <td>{user.otp}</td>
                 </tr>
               ))
             ) : (

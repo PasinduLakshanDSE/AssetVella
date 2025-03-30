@@ -1,6 +1,8 @@
 const express = require("express");
 const User = require("../Module/AdminModule.jsx"); // Ensure the path is correct
 const router = express.Router();
+const crypto = require("crypto");
+const bcrypt = require("bcrypt");
 
 router.post("/", async (req, res) => {
   const { firstName, lastName, designation, contact, username, selectedOption, password, companyName,department } = req.body;
@@ -60,6 +62,93 @@ router.post("/login", async (req, res) => {
   }
 });
 
+
+
+router.post("/request", async (req, res) => {
+  const { username } = req.body;
+
+  try {
+    const user = await User.findOne({ username });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    return res.status(200).json({ message: "User Correct" });
+
+  } catch (error) {
+    console.error("Error finding user:", error);
+    res.status(500).json({ error: "Failed to find user." });
+  }
+});
+
+
+router.post("/otp", async (req, res) => {
+  const { username, otp } = req.body;
+
+  try {
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    user.otp = otp;
+    user.expiresAt = new Date(Date.now() + 5 * 60 * 1000); // 5 min expiry
+    await user.save();
+
+    res.status(200).json({ message: "OTP sent successfully" });
+  } catch (error) {
+    console.error("Error saving OTP:", error);
+    res.status(500).json({ error: "Failed to save OTP." });
+  }
+});
+
+
+// Verify OTP
+router.post("/verify", async (req, res) => {
+  const { username, otp } = req.body;
+
+  try {
+      const user = await User.findOne({ username });
+      if (!user) {
+          return res.status(404).json({ message: "User not found" });
+      }
+
+      if (user.otp !== otp || new Date() > user.expiresAt) {
+          return res.status(400).json({ message: "Invalid or expired OTP" });
+      }
+
+      res.status(200).json({ message: "OTP verified" });
+  } catch (error) {
+      console.error("Error verifying OTP:", error);
+      res.status(500).json({ error: "OTP verification failed." });
+  }
+});
+
+
+router.post("/reset-password", async (req, res) => {
+  const { username, newPassword } = req.body;
+
+  try {
+      const user = await User.findOne({ username });
+      if (!user) {
+          return res.status(404).json({ message: "User not found" });
+      }
+
+      user.password = newPassword;
+
+      // Clear OTP and expiry fields (no need to validate these fields for password reset)
+      user.otp = null;
+      user.expiresAt = null;
+
+      await user.save();  // Save the updated user
+
+      res.status(200).json({ message: "Password reset successfully" });
+  } catch (error) {
+      console.error("Error resetting password:", error);
+      res.status(500).json({ error: "Password reset failed." });
+  }
+});
 
 
 router.put("/:id", async (req, res) => {
@@ -149,6 +238,14 @@ router.get("/getCompanyUserDetails", async (req, res) => {
       res.status(500).json({ error: "Failed to fetch asset details" });
   }
 });
+
+
+
+
+
+
+
+
 
 
 

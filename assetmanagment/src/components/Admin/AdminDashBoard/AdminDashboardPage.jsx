@@ -70,7 +70,7 @@ const DashBoard = () => {
               className="dashboard-card1"
               style={{ backgroundColor: card.color }}
             >
-              <div className="card-content">
+              <div className="card-content1">
                 <h2>{card.count}</h2>
                 <p className="clabel">{card.label}</p>
               </div>

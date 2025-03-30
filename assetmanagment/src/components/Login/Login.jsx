@@ -11,6 +11,11 @@ const Login = () => {
   const [showError, setShowError] = useState(false);
   const navigate = useNavigate();
 
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [otp, setOtp] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [step, setStep] = useState(1);
+
   const validateForm = (e) => {
     e.preventDefault();
     if (!username || !password) {
@@ -62,39 +67,139 @@ const Login = () => {
     }
   };
   
+  const handleForgotPassword = async () => {
+    setError(""); // Clear any previous errors when moving to the next step
+    setShowError(false);
+    try {
+        const response = await axios.post('http://localhost:8000/api/users/request', { username });
+
+        if (response.data.message === "User Correct") {
+            const otpCode = Math.floor(100000 + Math.random() * 900000).toString(); // Generate OTP
+
+            // Send OTP to backend for saving
+            await axios.post('http://localhost:8000/api/users/otp', { username, otp: otpCode });
+
+            //setUsername(""); // Clear username after request
+            setStep(2);
+        } else {
+            setError("User not found.");
+            setShowError(true);
+        }
+    } catch (error) {
+        setError(error.response?.data?.message || "User not found.");
+        setShowError(true);
+    }
+};
+
   
+
+  const handleVerifyOtp = async () => {
+    setError(""); // Clear any previous errors when moving to the next step
+    setShowError(false);
+    try {
+      await axios.post('http://localhost:8000/api/users/verify', { username, otp });
+      setStep(3);
+    } catch (error) {
+      setError("Invalid OTP.");
+      setShowError(true);
+    }
+  };
+
+  const handleResetPassword = async () => {
+    setError(""); // Clear any previous errors when moving to the next step
+    setShowError(false);
+    try {
+      await axios.post('http://localhost:8000/api/users/reset-password', { username, newPassword });
+      setShowForgotPassword(false);
+      setStep(1);
+    } catch (error) {
+      setError("Password reset failed.");
+      setShowError(true);
+    }
+  };
 
   return (
     <div className="main">
       <div className="container logmain">
-        <div className="panel sign-in-panel">
-          <h1 className="titleleft">Welcome to Asset Management System</h1>
-        </div>
-        <div className="panel sign-up-panel">
-          <h1 className="titleright">Log In to Your Account</h1>
-          <form className="signup-form" onSubmit={handleSubmit}>
+        {!showForgotPassword ? (
+          <>
+            <div className="panel sign-in-panel">
+              <h1 className="titleleft">Welcome to Asset Management System</h1>
+            </div>
+            <div className="panel sign-up-panel">
+              <h1 className="titleright">Log In to Your Account</h1>
+              <form className="signup-form" onSubmit={handleSubmit}>
+                {showError && <p className="error-message">{error}</p>}
+                <input
+                  type="text"
+                  placeholder="Username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+                <input
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <p
+                  className="forgot-password"
+                  style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}
+                  onClick={() => setShowForgotPassword(true)}
+                >
+                  Forgot Password?
+                </p>
+                <button type="submit" className="sign-up-button">
+                  LOGIN
+                </button>
+              </form>
+            </div>
+          </>
+        ) : (
+          <div className="panel1 resetpanel">
+            <h2 className='resethead'>Reset Your Password</h2><hr></hr>
             {showError && <p className="error-message">{error}</p>}
-            <input
-              type="text"
-              placeholder="Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            
-            <button type="submit" className="sign-up-button">
-              LOGIN
-            </button>
-          </form>
-        </div>
+            {step === 1 && (
+              <>
+                <input className='userinput'
+                  type="text"
+                  placeholder="Enter Your Username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+                <button  className="btnrequest" onClick={handleForgotPassword}>Request OTP</button>
+              </>
+            )}
+            {step === 2 && (
+              <>
+              
+                <input
+                  type="text"
+                  placeholder="Enter OTP"
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value)}
+                />
+                <button onClick={handleVerifyOtp}>Verify OTP</button>
+              </>
+            )}
+            {step === 3 && (
+              <>
+                <input
+                  type="password"
+                  placeholder="New Password"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                />
+                <button onClick={handleResetPassword}>Reset Password</button>
+              </>
+            )}
+            {/*<button onClick={() => setShowForgotPassword(false)}>Back to Login</button>*/}
+          </div>
+        )}
       </div>
     </div>
   );
 };
+
 
 export default Login;

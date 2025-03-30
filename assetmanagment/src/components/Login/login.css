@@ -21,14 +21,44 @@
   padding: 20px;
 }
 
+.panel1 {
+  height: 500px;
+  width: 550px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+}
 
-
+.resethead{
+  font-size: 30px;
+  font-weight: bold;
+}
+.btnrequest{
+  background-color: #034749;
+}
+.userinput{
+  width: 75%;
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #10321e;
+  border-radius: 5px;
+  font-size: 16px;
+}
 /* Left Panel */
 .sign-in-panel {
   background-color: #06350ca1; /* Dark Blue */
   color: #fff;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
+}
+
+.resetpanel{
+  background-color: #06350ca1; /* Dark Blue */
+  color: #fff;
+  border-radius: 20px;
 }
 .titleleft{
   font-weight: bold;
