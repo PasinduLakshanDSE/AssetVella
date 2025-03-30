@@ -90,6 +90,15 @@ const Users = () => {
     return [searchQuery, searchQuery1, searchQuery2].every(query => !query || queryMatch(query, usersf));
   });
 
+
+  // Helper function to check OTP expiration
+  const isOtpExpired = (expiresAt) => {
+    const expireDate = new Date(expiresAt);
+    const now = new Date();
+    return expireDate < now;
+  };
+
+
   return (
     <div className="row">
       <h1 className="assethead">User Details</h1>
@@ -120,6 +129,7 @@ const Users = () => {
               <th>Status</th>
               <th>Actions</th>
               <th>OTP</th>
+              {/*<th>Expaire Time</th>*/}
             </tr>
           </thead>
           <tbody>
@@ -151,7 +161,17 @@ const Users = () => {
                       </button>
                     )}
                   </td>
-                  <td>{user.otp}</td>
+                  
+                  <td className="otp">{user.otp} <br></br>{user.otp ? (
+            isOtpExpired(user.expiresAt) ? (
+              <span className="text-danger1">Expired</span>
+            ) : (
+              <span className="activeOTP">Active</span> // Or you can leave it as empty or null depending on your requirement
+            )
+          ) : (
+            <span>null</span> // No OTP available
+          )}</td>
+                 
                 </tr>
               ))
             ) : (
@@ -217,8 +237,7 @@ const EditUserModal = ({ show, onClose, user, onUpdate }) => {
             <label className="form-label">Username</label>
             <input type="text" className="form-control" name="username" value={updatedUser.username || ''} onChange={handleChange} />
 
-            <label className="form-label">Password</label>
-            <input type="text" className="form-control" name="password" value={updatedUser.password || ''} onChange={handleChange} />
+           
             {/* Company Name (Fixed: Using Select) */}
             <label className="form-label">Company Name</label>
             <select

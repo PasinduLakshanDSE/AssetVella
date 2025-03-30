@@ -174,23 +174,25 @@ const Login = () => {
               <>
               
                 <input
+                className='userinput'
                   type="text"
                   placeholder="Enter OTP"
                   value={otp}
                   onChange={(e) => setOtp(e.target.value)}
                 />
-                <button onClick={handleVerifyOtp}>Verify OTP</button>
+                <button className="btnrequest" onClick={handleVerifyOtp}>Verify OTP</button>
               </>
             )}
             {step === 3 && (
               <>
                 <input
+                className='userinput'
                   type="password"
                   placeholder="New Password"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
                 />
-                <button onClick={handleResetPassword}>Reset Password</button>
+                <button className="btnrequest" onClick={handleResetPassword}>Reset Password</button>
               </>
             )}
             {/*<button onClick={() => setShowForgotPassword(false)}>Back to Login</button>*/}
