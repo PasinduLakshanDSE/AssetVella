@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const About = () => {
   return (
-    <div className="homepage" style={{ backgroundImage: `url('./Vella.jpg')` }}>
+    <div className="homepage1" style={{ backgroundImage: `url('./Vella.jpg')` }}>
          
     <div className="about-container colorful-bg">
       <div className="about-content colorful-card">
