@@ -11,19 +11,35 @@ const Contact = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setSuccess("");
-
+  
     if (!formData.name || !formData.email || !formData.subject || !formData.message) {
       setError("All fields are required");
       return;
     }
-
-    setSuccess("Message sent successfully!");
-    setFormData({ name: "", email: "", subject: "", message: "" });
+  
+    try {
+      const response = await fetch("http://localhost:8000/send-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+  
+      const data = await response.json();
+      if (data.success) {
+        setSuccess("Message sent successfully!");
+        setFormData({ name: "", email: "", subject: "", message: "" });
+      } else {
+        setError("Failed to send message.");
+      }
+    } catch (error) {
+      setError("Something went wrong.");
+    }
   };
+  
 
   return (
     <div className='main'>

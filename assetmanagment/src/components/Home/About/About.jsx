@@ -30,19 +30,20 @@ const About = () => {
         
         <div className="about-team">
           <div className="team-member zoom-in colorful-card">
-            <h3>Chamara Abeyratna</h3>
+            <h3 className="t1">Chamara Abeyratna</h3>
             <p>Director & Co-Founder</p>
           </div>
           <div className="team-member zoom-in colorful-card">
-            <h3>Ranga Abeyrathne</h3>
+            
+            <h3 className="t1">Ranga Abeyrathne</h3>
             <p>Director & Co-Founder</p>
           </div>
           <div className="team-member zoom-in colorful-card">
-            <h3>Eranda Aberathna</h3>
+            <h3 className="t1">Eranda Aberathna</h3>
             <p>Director & Co-Founder</p>
           </div>
           <div className="team-member zoom-in colorful-card">
-            <h3>Dr.Kumudu Gunasekera</h3>
+            <h3 className="t1">Dr.Kumudu Gunasekera</h3>
             <p>Deputy Chairman</p>
           </div>
         </div>

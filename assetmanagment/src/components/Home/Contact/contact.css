@@ -7,27 +7,34 @@
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(15, 72, 15, 0.786);
-    width: 100%;
-    max-width: 400px;
+    width: 700px;
+    
+    
+   
   }
   
   .contact-title {
-    font-size: 24px;
+    font-size: 34px;
     font-weight: bold;
     color: #ffffff;
     margin-bottom: 20px;
+    
   }
   
   .contact-input {
-    width: 100%;
+  
+    width: 75%;
     padding: 10px;
     border: 1px solid #b2191955;
     border-radius: 5px;
     margin-bottom: 10px;
+    margin-left: 80px;
+    margin-right: 80px;
+    font-size: 15px;
   }
   
   .contact-textarea {
-    width: 100%;
+    width: 75%;
     padding: 10px;
     border: 1px solid #dbd3d3;
     border-radius: 5px;
@@ -42,13 +49,13 @@
 }
 
 .contact-button {
-    width: 100%;
+    width: 75%;
     max-width: 300px; /* Set a max width to avoid stretching */
-    background-color: #3b83f6d0;
+    background-color: #075f75d0;
     color: rgb(234, 229, 229);
     padding: 10px;
     border: none;
-    border-radius: 5px;
+    border-radius: 15px;
     cursor: pointer;
 }
   

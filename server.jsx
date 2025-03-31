@@ -4,6 +4,10 @@ const app = express();
 require("dotenv").config();
 const cors = require("cors");
 
+const sendMail = require("../AssetManagmentSystemVella/assetmanagment/src/components/Home/Email/emailService.jsx");
+
+require("dotenv").config();
+
 // Middleware
 app.use(bodyParser.json()); // Parse incoming JSON data
 app.use(cors()); // Enable CORS
@@ -22,6 +26,19 @@ const AssetDetails = require("./Routes/AssetRegisterRoute.jsx");
 app.use("/api/categories", categoryRoute);
 app.use("/api/AssetRegisterDetails", AssetDetails);
 
+
+
+app.post("/send-email", async (req, res) => {
+    const { name, email, subject, message } = req.body;
+  
+    try {
+      await sendMail(name, email, subject, message);
+      res.json({ success: true, message: "Email sent successfully!" });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: "Email sending failed!" });
+    }
+  });
 
 
 // Register routes

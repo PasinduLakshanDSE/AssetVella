@@ -15,6 +15,8 @@ const Home = () => {
 
       <header className="navbar">
       <div className="logo">Asset Management System</div>
+      
+
       <nav>
         <ul className="nav-links">
           <li>
@@ -48,9 +50,9 @@ const Home = () => {
       <p>Keep track of all assets in one place.</p>
     </div>
     <div className="feature-card">
-      <img src="/home2.jpg" alt="Ownership Transfer" className="feature-icon" />
-      <h3>Ownership Transfer</h3>
-      <p>Easily transfer asset ownership securely.</p>
+      <img src="/home5.jpg" alt="Asset Transfer" className="feature-icon" />
+      <h3>AssetTransfer</h3>
+      <p>Easily transfer asset.</p>
     </div>
     <div className="feature-card">
       <img src="/home3.jpg" alt="Real-time Dashboard" className="feature-icon" />

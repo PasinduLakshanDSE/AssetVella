@@ -170,6 +170,10 @@ body {
   min-height: 100vh;
 }
 
+.version{
+  font-size: 15px;
+}
+
 /* Navigation Bar */
 
 .navbar {
