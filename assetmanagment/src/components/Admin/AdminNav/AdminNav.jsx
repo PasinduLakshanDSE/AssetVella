@@ -73,6 +73,12 @@ const AdminNavBar = () => {
               Users
             </a>
           </div>
+          <div className="nav-button">
+            <i className="fas fa-file"></i>
+            <a href="/GetReport" className="nav-link">
+              Get Report
+            </a>
+          </div>
           <hr />
 
 

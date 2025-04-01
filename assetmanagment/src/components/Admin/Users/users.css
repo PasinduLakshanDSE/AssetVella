@@ -33,3 +33,28 @@
     color: rgb(7, 93, 119);
 
   }
+
+  
+
+
+
+  .table th, .table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  .table th {
+    background-color: #07585e;
+    color: white;
+    position: sticky;
+    top: 0;
+  }
+  
+  .table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .table tr:hover {
+    background-color: #d1ecf1;
+  }

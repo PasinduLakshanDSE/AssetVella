@@ -38,6 +38,7 @@ import DepartmentTransfer from "./components/Department/DepAssetTranfer/DepAsset
 
 //import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 //import Users from "./components/Users/Users";
+import Report from "./components/Report/Report";
 
 
 function App() {
@@ -74,6 +75,7 @@ function App() {
         <Route path="/DepartmentCatergrization" element={<DepAssetCategorization/>} />
         <Route path="/DepartmentAssetDetails" element={<DepAssetDetails/>} />
         <Route path="/DepartmnetAssetTranfer" element={<DepartmentTransfer/>} />
+        <Route path="/GetReport"  element={<Report/>} />
         
       </Routes>
     </div>
