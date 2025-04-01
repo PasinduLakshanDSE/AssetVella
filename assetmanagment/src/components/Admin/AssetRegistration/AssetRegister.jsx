@@ -120,15 +120,30 @@ const AssetRegister = () => {
     if (!name || !company || !department || !mainCategory || !assetUpdateDate || !type || !assetUserName) {
       alert("Please fill in all required fields before submitting.");
       return;
-    } else if (mainCategory === "Electronic items" && (!name || !company || !department || !mainCategory || !assetUpdateDate || !type || !assetUserName || !(assetModel || serialNumber))) {
-      alert("Please fill in Serial Number or Model Number.");
-      return;
-    } else if (computerComponents === "fullSet" && (!MoniterassetName || !(MoniterserialNumber || MoniterassetModel) ||
-      !CPUassetName || !(CPUserialNumber || CPUassetModel) || !MouseassetName || !(MoniterserialNumber || MouseassetModel) || !KeyboardassetName || !(KeyboardserialNumber || KeyboardassetModel) || !assetUserName || !assetUpdateDate)) {
-      alert("Please fill in all required fields for computer components before submitting.");
-      return;
-
     }
+
+    // Full Set validation: ensure each component has either serial number or model number
+    if (mainCategory === "Electronic items" && computerComponents === "fullSet") {
+      if (
+        !MoniterassetName || (!MoniterserialNumber && !MoniterassetModel) ||
+        !CPUassetName || (!CPUserialNumber && !CPUassetModel) ||
+        !MouseassetName || (!MouseserialNumber && !MouseassetModel) ||
+        !KeyboardassetName || (!KeyboardserialNumber && !KeyboardassetModel) ||
+        !assetUserName || !assetUpdateDate
+      ) {
+        alert("Please fill in all required fields for computer components before submitting.");
+        return;
+      }
+    }
+    // Ensure at least one of serialNumber or assetModel is provided for Electronic items (when not Full Set)
+    else if (mainCategory === "Electronic items" && (!serialNumber && !assetModel)) {
+      alert("Please fill in either Serial Number or Model Number.");
+      return;
+    }
+
+    
+    
+    
 
     let qrDataArray = [];
 
@@ -263,14 +278,25 @@ const AssetRegister = () => {
     if (!name || !company || !department || !mainCategory || !assetUpdateDate || !type || !assetUserName) {
       alert("Please fill in all required fields before submitting.");
       return;
-    } else if (mainCategory === "Electronic items" && (!name || !company || !department || !mainCategory || !assetUpdateDate || !type || !assetUserName || !(assetModel || serialNumber))) {
-      alert("Please fill in  Serial Number or Model Number.");
-      return;
-    } else if (computerComponents === "fullSet" && (!MoniterassetName || !(MoniterserialNumber || MoniterassetModel) ||
-      !CPUassetName || !(CPUserialNumber || CPUassetModel) || !MouseassetName || !(MoniterserialNumber || MouseassetModel) || !KeyboardassetName || !(KeyboardserialNumber || KeyboardassetModel) || !assetUserName || !assetUpdateDate)) {
-      alert("Please fill in all required fields for computer components before submitting.");
-      return;
+    }
 
+    // Full Set validation: ensure each component has either serial number or model number
+    if (mainCategory === "Electronic items" && computerComponents === "fullSet") {
+      if (
+        !MoniterassetName || (!MoniterserialNumber && !MoniterassetModel) ||
+        !CPUassetName || (!CPUserialNumber && !CPUassetModel) ||
+        !MouseassetName || (!MouseserialNumber && !MouseassetModel) ||
+        !KeyboardassetName || (!KeyboardserialNumber && !KeyboardassetModel) ||
+        !assetUserName || !assetUpdateDate
+      ) {
+        alert("Please fill in all required fields for computer components before submitting.");
+        return;
+      }
+    }
+    // Ensure at least one of serialNumber or assetModel is provided for Electronic items (when not Full Set)
+    else if (mainCategory === "Electronic items" && (!serialNumber && !assetModel)) {
+      alert("Please fill in either Serial Number or Model Number.");
+      return;
     }
 
 
