@@ -39,6 +39,34 @@
     border-radius: 4px;
     font-size: 14px;
   }
+
+  .download-btn1{
+    padding: 15px;
+    border-radius: 20px;
+    background-color: #034252;
+  }
+
+  .download-container {
+    text-align: left;
+    margin: 5px 0;
+    width: 500px;
+    margin-left: 30px;
+  }
+  
+  .download-btn1 {
+    padding: 15px 15px;
+    background-color: #0a686b;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    border-radius: 20px;
+  }
+  
+  .download-btn1:hover {
+    background-color: #032a30;
+  }
+  
   
  
   
