@@ -10,7 +10,7 @@
     
 }
 
-/* Add an overlay for transparency */
+
 .MainView::before {
     content: "";
     position: absolute;
