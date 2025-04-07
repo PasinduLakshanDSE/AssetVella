@@ -4,11 +4,11 @@ const app = express();
 require("dotenv").config();
 const cors = require("cors");
 
-const sendMail = require("../AssetManagmentSystemVella/assetmanagment/src/components/Home/Email/emailService.jsx");
+const sendMail = require("../AssetVella/assetmanagment/src/components/Home/Email/emailService.jsx");
 
 require("dotenv").config();
 
-// Middleware
+
 app.use(bodyParser.json()); // Parse incoming JSON data
 app.use(cors()); // Enable CORS
 
