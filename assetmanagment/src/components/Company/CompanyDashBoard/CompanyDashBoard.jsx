@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import './CompanyDashBoard.css'
+import './companyDashBoard.css'
 import CompanyNavBar from "../CompanyNav/CompanyNav";
 import { Link } from "react-router-dom";
 
