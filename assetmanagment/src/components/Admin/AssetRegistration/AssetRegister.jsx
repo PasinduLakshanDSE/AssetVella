@@ -60,7 +60,7 @@ const AssetRegister = () => {
   ];
 
   const companies = ["Vella", "98 Acers", "Ravana Pool Club", "Flying Ravana", "Le Maas Tota", "Tea Factory", "Walaa kulu", "kiri kopi"];
-  const departments = ["ICT", "HR", "Kitchen", "Front Office", "Store", "Account", "Audit"];
+  const departments = ["ICT", "HR", "Kitchen", "Front Office", "Store", "Account", "Audit","F&B"];
 
   useEffect(() => {
     fetchCategories();
@@ -90,7 +90,7 @@ const AssetRegister = () => {
 
   const generateTrackingId = (serialNumber) => {
     const companyCodes = { Vella: "VE", "98 Acers": "98", "Ravana Pool Club": "RPC", "Flying Ravana": "FR", "Le Maas Tota": "LMT", "Tea Factory": "TF", "Walaa kulu": "WK", "kiri kopi": "KK" };
-    const departmentCodes = { ICT: "IT", HR: "HR", Kitchen: "KT", Store: "ST", "Front Office": "FO", Account: "AC", Audit: "AU" };
+    const departmentCodes = { ICT: "IT", HR: "HR", Kitchen: "KT", Store: "ST", "Front Office": "FO", Account: "AC", Audit: "AU", "F&B": "F&B" };
 
     const companyCode = companyCodes[company] || "XX";
     const departmentCode = departmentCodes[department] || "XX";

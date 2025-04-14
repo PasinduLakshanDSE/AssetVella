@@ -42,6 +42,7 @@ const Transfer = () => {
     "Store",
     "Account",
     "Audit",
+    "F&B",
   ];
 
 
@@ -66,6 +67,7 @@ const Transfer = () => {
       "Front Office": "FO",
       Account: "AC",
       Audit: "AU",
+      "F&B" : "F&B"
     };
 
     const companyCode = companyCodes[company] || "XX";

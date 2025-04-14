@@ -33,6 +33,7 @@ const DepartmentTransfer = () => {
     "Store",
     "Account",
     "Audit",
+    "F&B",
   ];
 
 
@@ -57,6 +58,7 @@ const DepartmentTransfer = () => {
       "Front Office": "FO",
       Account: "AC",
       Audit: "AU",
+      "F&B": "F&B",
     };
 
     const companyCode = companyCodes[company] || "XX";
