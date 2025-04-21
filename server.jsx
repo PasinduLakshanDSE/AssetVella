@@ -27,6 +27,11 @@ app.use("/api/categories", categoryRoute);
 app.use("/api/AssetRegisterDetails", AssetDetails);
 
 
+const verifyRoute = require("./Routes/VerifyAssetRoute.jsx");
+app.use("/api/verify", verifyRoute);
+
+
+
 
 app.post("/send-email", async (req, res) => {
     const { name, email, subject, message } = req.body;

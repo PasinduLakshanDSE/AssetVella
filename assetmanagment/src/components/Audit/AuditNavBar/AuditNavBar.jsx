@@ -1,8 +1,8 @@
 import React from 'react';
-import './adminnav.css';
+import './auditNavBar.css';
 import { Link, useNavigate } from 'react-router-dom';
 
-const AdminNavBar = () => {
+const AuditNavBar = () => {
   const navigate = useNavigate();
 
   // Retrieve the logged-in user
@@ -28,7 +28,7 @@ const AdminNavBar = () => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Admin
+            Audit
           </a>
           <label htmlFor="nav-toggle" style={{ marginRight: '30px' }}>
             <span id="nav-toggle-burger"></span>
@@ -38,11 +38,11 @@ const AdminNavBar = () => {
         <div id="nav-content">
           <div className="nav-button">
             <i className="fas fa-palette"></i>
-            <Link to="/AdminDashboardPage" className="nav-link">
+            <Link to="/AuditDashBoard" className="nav-link">
               Dashboard
             </Link>
           </div>
-          <div className="nav-button">
+          {/*<div className="nav-button">
             <i className="fas fa-handshake "></i>
             <Link to="/UsersRole" className="nav-link">
               Add Users Role
@@ -53,10 +53,6 @@ const AdminNavBar = () => {
             <a href="/AssetRegister" className="nav-link">
               Asset Registration
             </a>
-          </div>
-          <div className='nav-button'>
-          <i className="fas fa-hourglass-half "></i>
-          <a href="/pendingRegisterasset" className='nav-link'>Pending  Asset</a>
           </div>
           <hr />
           <div className="nav-button">
@@ -82,7 +78,7 @@ const AdminNavBar = () => {
             <a href="/GetReport" className="nav-link">
               Get Report
             </a>
-          </div>
+          </div>*/}
           <hr />
 
 
@@ -136,4 +132,4 @@ const AdminNavBar = () => {
   );
 };
 
-export default AdminNavBar;
+export default AuditNavBar;

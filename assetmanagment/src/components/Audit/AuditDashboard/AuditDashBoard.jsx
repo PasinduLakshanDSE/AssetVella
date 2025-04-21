@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import './admindashboard.css'
-import AdminNavBar from "../AdminNav/AdminNav";
+import './auditDashBoard.css'
+
 import { Link } from "react-router-dom";
+import AuditNavBar from "../AuditNavBar/AuditNavBar";
 
 
-const DashBoard = () => {
+const AuditDashBoard = () => {
   const [Asset, setAsset] = useState([]);
   const [Admin, setAdmin] = useState(0);
   const [Companyadmin, setCompanyAdmin] = useState(0);
@@ -49,18 +50,17 @@ const DashBoard = () => {
     { count: Admin, label: "Total Admin ", color: "green", icon: <i className="fas fa-user-tie si"></i> },
     { count: Companyadmin, label: "Total Company Users ", color: "teal", icon: <i className="fas fa-user si"></i> },
     { count: DepartmentAdmin, label: "Total Department Users", color: "red", icon: <i className="fas fa-users si"></i> },
-    { count: DepartmentAdmin, label: "Pending Register Asset", color: "DarkSlateGray", icon: <i className="fas fa-hourglass-half si"></i> },
   ];
 
   return (
     <div>
-      <AdminNavBar />
+      <AuditNavBar/>
 
       <div className="dashboard">
         <div className="dashboard-header">
           <h1 className="title">Dashboard</h1>
           <p>
-            <Link to="/">Home</Link> / <Link to="/AdminDashboardPage">DashBoard</Link>
+            <Link to="/">Home</Link> / <Link to="/AuditDashBoard">DashBoard</Link>
           </p>
         </div>
 
@@ -86,4 +86,4 @@ const DashBoard = () => {
   );
 };
 
-export default DashBoard;
+export default AuditDashBoard;

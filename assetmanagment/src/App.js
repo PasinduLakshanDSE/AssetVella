@@ -39,6 +39,10 @@ import DepartmentTransfer from "./components/Department/DepAssetTranfer/DepAsset
 //import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 //import Users from "./components/Users/Users";
 import Report from "./components/Report/Report";
+import AuditDashBoard from "./components/Audit/AuditDashboard/AuditDashBoard";
+import AuditNavBar from "./components/Audit/AuditNavBar/AuditNavBar";
+
+import PendingAssetDetails from "./components/Admin/PendingRegisterAsset/PendingRegisterAsset";
 
 
 function App() {
@@ -76,6 +80,9 @@ function App() {
         <Route path="/DepartmentAssetDetails" element={<DepAssetDetails/>} />
         <Route path="/DepartmnetAssetTranfer" element={<DepartmentTransfer/>} />
         <Route path="/GetReport"  element={<Report/>} />
+        <Route path="/AuditDashBoard" element={<AuditDashBoard/>} />
+        <Route path="/AuditNavBar" element={<AuditNavBar/>} />
+        <Route path="/pendingRegisterasset" element={<PendingAssetDetails/>} />
         
       </Routes>
     </div>

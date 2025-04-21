@@ -198,6 +198,7 @@ const AddUsersRole = () => {
                         <option value="Admin">Admin</option>
                         <option value="CompanyAdmin">Company Admin</option>
                         <option value="DepartmentAdmin">Department Admin (HOD)</option>
+                        <option value="Audit">Audit</option>
                     </select>
                     {selectedOption === "DepartmentAdmin" && (
                         <div className="mb-3">
