@@ -7,12 +7,12 @@ const PendingAssetRegisterDetails = require("../Module/PendingAssetRegisterDetai
 // POST to verify and move asset
 router.post("/verifyAsset/:id", async (req, res) => {
   try {
-    const asset = await AssetRegisterDetails.findById(req.params.id);
+    const asset = await PendingAssetRegisterDetails.findById(req.params.id);
     if (!asset) return res.status(404).json({ message: "Asset not found" });
 
-    const verifiedAsset = new PendingAssetRegisterDetails(asset.toObject());
+    const verifiedAsset = new AssetRegisterDetails(asset.toObject());
     await verifiedAsset.save();
-    await AssetRegisterDetails.findByIdAndDelete(req.params.id);
+    await PendingAssetRegisterDetails.findByIdAndDelete(req.params.id);
 
     res.status(200).json({ message: "Asset verified successfully" });
   } catch (err) {
@@ -75,6 +75,18 @@ router.post("/", async (req, res) => {
     res.status(500).json({ error: "Server error. Unable to save Asset Detailsy." });
   }
 });
+
+
+router.get("/getPendingAssetDetails",async(req,res)=>{
+  try{
+    const asset = await PendingAssetRegisterDetails.find();
+    res.status(200).json(asset);
+  }catch(error){
+    console.error("Error fetching asset details:", error);
+    res.status(500).json({ error: "Server error. Unable to retrieve assets." });
+  }
+})
+
 
 
 module.exports = router;

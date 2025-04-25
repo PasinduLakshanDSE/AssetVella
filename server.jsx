@@ -28,7 +28,7 @@ const registerAsset = require("./Routes/PendingAssetRoute.jsx")
 app.use("/api/categories", categoryRoute);
 app.use("/api/AssetRegisterDetails", AssetDetails);
 
-app.use("/api/AssetRegisterDetails",registerAsset)
+app.use("/api/PendingAssetRegisterDetails",registerAsset)
 
 const verifyRoute = require("./Routes/PendingAssetRoute.jsx");
 app.use("/api/verify", verifyRoute);

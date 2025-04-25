@@ -42,13 +42,13 @@ const AuditNavBar = () => {
               Dashboard
             </Link>
           </div>
-          {/*<div className="nav-button">
-            <i className="fas fa-handshake "></i>
-            <Link to="/UsersRole" className="nav-link">
-              Add Users Role
+          <div className="nav-button">
+          <i className="fas fa-hourglass-half "></i>
+            <Link to="/PendingAsset" className="nav-link">
+              Pending Asset
             </Link>
           </div>
-          <div className="nav-button">
+          {/*<div className="nav-button">
             <i className="fas   fa-pen-to-square"></i>
             <a href="/AssetRegister" className="nav-link">
               Asset Registration

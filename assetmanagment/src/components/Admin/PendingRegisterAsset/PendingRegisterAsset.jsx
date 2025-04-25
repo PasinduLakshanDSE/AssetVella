@@ -19,72 +19,21 @@ const PendingAssetDetails = () => {
     }, []);
 
     const fetchAssets = () => {
-        axios.get("http://localhost:8000/api/AssetRegisterDetails/getAssetDetails")
+        axios.get("http://localhost:8000/api/PendingAssetRegisterDetails/getPendingAssetDetails")
             .then(response => setAssetRegisterDetails(response.data))
             .catch(error => console.error("Error fetching asset details:", error));
     };
 
     const navigate = useNavigate();
 
-    const handleTransferClick = (asset) => {
-        navigate("/transfer-form", { state: { asset } }); // Pass asset data via state
-    };
+  
 
 
-    // Update an existing asset
-    const handleUpdateAsset = (id, updatedAsset) => {
-        axios.put(`http://localhost:8000/api/AssetRegisterDetails/updateAsset/${id}`, updatedAsset)
-            .then(() => {
-                fetchAssets();
-                setEditingAsset(null);
-            })
-            .catch(error => console.error("Error updating asset:", error));
-    };
+   
 
-    // Delete an asset
-    const handleDeleteAsset = (id) => {
-        if (window.confirm("Are you sure you want to delete this asset?")) {
-            axios.delete(`http://localhost:8000/api/AssetRegisterDetails/deleteAsset/${id}`)
-                .then(() => fetchAssets())
-                .catch(error => console.error("Error deleting asset:", error));
-        }
-    };
+    
 
-
-    const handleDownloadQR = (trackingId) => {
-        const URL = `http://localhost:3000/QRView/${trackingId}`;
-        const canvas = document.createElement("canvas");
-        const ctx = canvas.getContext("2d");
-        const qrSize = 80;
-        const borderSize = 10;
-        const textHeight = 20;
-
-        canvas.width = qrSize + borderSize * 2;
-        canvas.height = qrSize + borderSize * 2 + textHeight;
-
-        ctx.fillStyle = "#0b4c55";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        ctx.fillStyle = "#ffffff";
-        ctx.fillRect(borderSize, borderSize, qrSize, qrSize);
-
-        const qrCanvas = document.createElement("canvas");
-        QRCode.toCanvas(qrCanvas, URL, { width: qrSize }, (error) => {
-            if (error) return console.error(error);
-            ctx.drawImage(qrCanvas, borderSize, borderSize, qrSize, qrSize);
-
-            ctx.fillStyle = "#ffffff";
-            ctx.font = "bold 10px Arial";
-            ctx.textAlign = "center";
-            ctx.fillText(trackingId, canvas.width / 2, canvas.height - 10);
-
-            const link = document.createElement("a");
-            link.href = canvas.toDataURL("image/png");
-            link.download = `QR_Code_${trackingId}.png`;
-            link.click();
-        });
-    };
-
+   
 
     // Filter logic
     const filteredAssets = assetRegisterDetails.filter(asset => {
@@ -150,7 +99,7 @@ const PendingAssetDetails = () => {
                             <th>Tracking ID</th>
                             <th>Special Note</th>
                             <th>Components</th>
-                            <th>Actions</th>
+                            <th>Status</th>
 
                             
                         </tr>
@@ -161,12 +110,7 @@ const PendingAssetDetails = () => {
                                 <tr key={asset._id}>
                                     {editingAsset === asset._id ? (
                                         <>
-                                            <td><input type="text" value={asset.name} onChange={(e) => setEditingAsset({ ...asset, name: e.target.value })} /></td>
-                                            <td><input type="text" value={asset.company} onChange={(e) => setEditingAsset({ ...asset, company: e.target.value })} /></td>
-                                            <td colSpan="10">
-                                                <button className="btn btn-primary" onClick={() => handleUpdateAsset(asset._id, editingAsset)}>Save</button>
-                                                <button className="btn btn-secondary" onClick={() => setEditingAsset(null)}>Cancel</button>
-                                            </td>
+                                            
                                         </>
                                     ) : (
                                         <>
@@ -184,11 +128,10 @@ const PendingAssetDetails = () => {
                                             <td>{asset.specialNote}</td>
                                             <td>{asset.computerComponents}</td>
                                             <td>
-  <button
-    className="btn btn-success btn-sm"
-    onClick={() => handleVerifyAsset(asset._id)}
+  <button className="status"
+   
   >
-    Verify
+  Pending
   </button>
 </td>
 

@@ -1,0 +1,8 @@
+.status{
+    padding: 5px;
+    width: 80px;
+    margin: 0px;
+    background-color: rgb(196, 8, 49);
+    color: rgb(250, 244, 244);
+    gap: 6px; /* Optional space between text and icon */
+}
