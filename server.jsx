@@ -23,11 +23,14 @@ const userRoute = require("./Routes/AdminRoute.jsx");
 const categoryRoute = require("./Routes/CategoryRoute.jsx");
 
 const AssetDetails = require("./Routes/AssetRegisterRoute.jsx");
+
+const registerAsset = require("./Routes/PendingAssetRoute.jsx")
 app.use("/api/categories", categoryRoute);
 app.use("/api/AssetRegisterDetails", AssetDetails);
 
+app.use("/api/AssetRegisterDetails",registerAsset)
 
-const verifyRoute = require("./Routes/VerifyAssetRoute.jsx");
+const verifyRoute = require("./Routes/PendingAssetRoute.jsx");
 app.use("/api/verify", verifyRoute);
 
 

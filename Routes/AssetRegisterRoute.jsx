@@ -4,7 +4,7 @@ const AssetRegisterDetails = require("../Module/AssetRegisterModule.jsx");
 
 const router = express.Router();
 
-router.post("/", async (req, res) => {
+{/*router.post("/", async (req, res) => {
   const { name,
     company,
     department,
@@ -56,7 +56,7 @@ router.post("/", async (req, res) => {
     console.error("Error Asset Details save:", error);
     res.status(500).json({ error: "Server error. Unable to save Asset Detailsy." });
   }
-});
+});*/}
 
 
 router.get("/getAssetDetails",async(req,res)=>{
