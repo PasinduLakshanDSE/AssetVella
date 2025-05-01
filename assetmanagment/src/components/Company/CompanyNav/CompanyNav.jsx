@@ -23,7 +23,7 @@ const CompanyNavBar = () => {
         <input id="nav-toggle" type="checkbox" />
         <div id="nav-header">
           <a
-            id="nav-title"
+           className='navhead'
             href="https://www.vellaglobal.com/"
             target="_blank"
             rel="noopener noreferrer"

@@ -125,10 +125,11 @@ html, body {
   bottom: 0;
 }
 
-#nav-title {
+.navhead {
   font-size: 1.4rem;
   transition: opacity 1s;
-  margin-right: 17px;
+  margin-right: 14px;
+  
 }
 
 label[for="nav-toggle"] {

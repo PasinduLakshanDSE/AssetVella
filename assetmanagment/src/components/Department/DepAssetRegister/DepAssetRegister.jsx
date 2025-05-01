@@ -366,7 +366,7 @@ const DepAssetRegister = () => {
               computerComponents: component.label, // Label component type
             };
 
-            await axios.post("http://localhost:8000/api/AssetRegisterDetails", assetData);
+            await axios.post("http://localhost:8000/api/PendingAssetRegisterDetails", assetData);
           }
         }
       } else {
@@ -386,7 +386,7 @@ const DepAssetRegister = () => {
           computerComponents,
         };
 
-        await axios.post("http://localhost:8000/api/AssetRegisterDetails", assetData);
+        await axios.post("http://localhost:8000/api/PendingAssetRegisterDetails", assetData);
       }
 
       alert("Assets submitted successfully!");
