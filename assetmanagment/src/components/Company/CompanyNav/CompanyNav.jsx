@@ -53,12 +53,12 @@ const CompanyNavBar = () => {
             </a>
           </div>
           <hr />
-          <div className="nav-button">
+          {/*<div className="nav-button">
             <i className="fas fa-network-wired"></i>
             <a href="/ComapnyassetCatergorization" className="nav-link">
             Asset Categorize
             </a>
-          </div>
+          </div>*/}
           <div className="nav-button">
             <i className="fas  fa-building"></i>
             <a href="/Comasset" className="nav-link">

@@ -22,8 +22,8 @@ const DepartmentNavBar = () => {
       <div id="nav-bar">
         <input id="nav-toggle" type="checkbox" />
         <div id="nav-header">
-          <a className='a'
-            id="nav-title"
+          <a className='abc'
+          
             href="https://www.vellaglobal.com/"
             target="_blank"
             rel="noopener noreferrer"
@@ -53,12 +53,12 @@ const DepartmentNavBar = () => {
             </a>
           </div>
           <hr />
-          <div className="nav-button">
+         {/* <div className="nav-button">
             <i className="fas fa-network-wired"></i>
             <a href="/DepartmentCatergrization" className="nav-link">
             Asset Categorize
             </a>
-          </div>
+          </div>*/}
           <div className="nav-button">
             <i className="fas  fa-building"></i>
             <a href="/DepartmentAssetDetails" className="nav-link">

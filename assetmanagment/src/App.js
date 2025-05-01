@@ -25,13 +25,13 @@ import About from "./components/Home/About/About";
 import CompanyAddUsersRole from "./components/Company/ComAddUserRole/ComAddUser";
 import ComAssetDetails from "./components/Company/ComAssetDetails/ComAssetDetails";
 import ComAssetRegister from "./components/Company/CompanyAssetRegistration/ComAssetRegister";
-import ComAssetCategorization from "./components/Company/ComAssetCategorization/ComAssetCategorization";
+
 import ComapnyUsers from "./components/Company/CompanyUsersDetails/CompanyUserDetails";
 import ComapnyTransfer from "./components/Company/CompanyAssetTranfer/CompanyAssetTranfer";
 import DepartmentNavBar from "./components/Department/DepartmentNav/DepartmentNav";
 import DepartmentDashBoard from "./components/Department/DepartmentDashBoard/DepartmentDashBoard";
 import DepAssetRegister from "./components/Department/DepAssetRegister/DepAssetRegister";
-import DepAssetCategorization from "./components/Department/DepAssetCategory/DepCatergory";
+
 import DepAssetDetails from "./components/Department/DepAssetDetails/DepAssetDetails";
 import DepartmentTransfer from "./components/Department/DepAssetTranfer/DepAssetTranfer";
 //import DepartmentAddUsersRole from "./components/Department/DepartmentAddUser/DepAddUser";
@@ -71,13 +71,13 @@ function App() {
         <Route path="/companyUserRole" element={<CompanyAddUsersRole/>} />
         <Route path="/Comasset" element={<ComAssetDetails/>} />
         <Route path="/ComapnyAssetRegister" element={<ComAssetRegister/>} />
-        <Route path="/ComapnyassetCatergorization" element={<ComAssetCategorization/>} />
+        
         <Route path="/CompanyUsers" element={<ComapnyUsers/>} />
         <Route path="/CompanyAssetTranfer" element={<ComapnyTransfer/>} />
         <Route path="/DepartmentNav" element={<DepartmentNavBar/>} />
         <Route path="/DepartmentDashBoard" element={<DepartmentDashBoard/>} />
         <Route path="/DepartmentAssetRegister" element={<DepAssetRegister/>} />
-        <Route path="/DepartmentCatergrization" element={<DepAssetCategorization/>} />
+       
         <Route path="/DepartmentAssetDetails" element={<DepAssetDetails/>} />
         <Route path="/DepartmnetAssetTranfer" element={<DepartmentTransfer/>} />
         <Route path="/GetReport"  element={<Report/>} />
