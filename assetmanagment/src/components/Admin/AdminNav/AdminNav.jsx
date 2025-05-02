@@ -83,6 +83,13 @@ const AdminNavBar = () => {
               Get Report
             </a>
           </div>
+          
+          <div className="nav-button">
+          <i class="fas fa-trash"></i>
+            <a href="/PendingDiscardAsset" className="nav-link">
+              Discard Asset
+            </a>
+          </div>
           <hr />
 
 

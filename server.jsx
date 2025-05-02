@@ -34,6 +34,10 @@ const verifyRoute = require("./Routes/PendingAssetRoute.jsx");
 app.use("/api/verify", verifyRoute);
 
 
+const deletedAssetRoutes = require('./Routes/AssetRegisterRoute.jsx');
+app.use("/api/DeletedAssets",deletedAssetRoutes);
+
+
 
 
 app.post("/send-email", async (req, res) => {

@@ -1,6 +1,7 @@
 const express = require("express");
 const AssetDetails = require("../Module/AssetRegisterModule.jsx"); // Updated path
 const AssetRegisterDetails = require("../Module/AssetRegisterModule.jsx");
+const DeletedAssetModel = require("../Module/PendingDeleteAsset.jsx")
 
 const router = express.Router();
 
@@ -130,6 +131,18 @@ router.delete('/deleteAsset/:id', async (req, res) => {
   } catch (error) {
     console.error("Error deleting Asset:", error);
     res.status(500).send({ error: "Failed to delete Asset." });
+  }
+});
+
+
+// Express backend route (example)
+router.post("/add", async (req, res) => {
+  try {
+      const deletedAsset = new DeletedAssetModel(req.body);
+      await deletedAsset.save();
+      res.status(201).send("Asset archived successfully");
+  } catch (err) {
+      res.status(500).send("Error archiving asset");
   }
 });
 

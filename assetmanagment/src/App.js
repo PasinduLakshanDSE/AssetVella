@@ -44,6 +44,8 @@ import AuditNavBar from "./components/Audit/AuditNavBar/AuditNavBar";
 
 import PendingAssetDetails from "./components/Admin/PendingRegisterAsset/PendingRegisterAsset";
 import PendingAsset from "./components/Audit/PendingAsset/PendingAsset";
+import PendingDiscardAsset from "./components/Admin/PendingDiscardItem/PendingDiscard";
+import PendingDiscardItem from "./components/Audit/PendingDiscardItem/PendingDiscardItem";
 
 
 function App() {
@@ -85,6 +87,8 @@ function App() {
         <Route path="/AuditNavBar" element={<AuditNavBar/>} />
         <Route path="/pendingRegisterasset" element={<PendingAssetDetails/>} />
         <Route path="/PendingAsset" element={<PendingAsset/>} />
+        <Route path="/PendingDiscardAsset" element={<PendingDiscardAsset/>} />
+        <Route path="/PendingDiscardItem" element={<PendingDiscardItem/>} />
         
       </Routes>
     </div>
