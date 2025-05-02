@@ -38,6 +38,9 @@ const deletedAssetRoutes = require('./Routes/AssetRegisterRoute.jsx');
 app.use("/api/DeletedAssets",deletedAssetRoutes);
 
 
+const pendingAsset = require("./Routes/PendingDiscardAssetRoute.jsx")
+app.use("/api/PendingAsset",pendingAsset)
+
 
 
 app.post("/send-email", async (req, res) => {

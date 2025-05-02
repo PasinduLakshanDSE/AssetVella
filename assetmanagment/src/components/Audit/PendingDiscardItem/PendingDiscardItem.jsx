@@ -19,7 +19,7 @@ const PendingDiscardItem = () => {
     }, []);
 
     const fetchAssets = () => {
-        axios.get("http://localhost:8000/api/PendingAssetRegisterDetails/getPendingAssetDetails")
+        axios.get("http://localhost:8000/api/PendingAsset/getPendingDiscardAsset")
             .then(response => setAssetRegisterDetails(response.data))
             .catch(error => console.error("Error fetching asset details:", error));
     };
@@ -54,16 +54,16 @@ const PendingDiscardItem = () => {
 
 
 
-    const handleVerifyAsset = (id) => {
-        if (window.confirm("Are you sure you want to verify this asset?")) {
-          axios.post(`http://localhost:8000/api/verify/verifyAsset/${id}`)
+    const handleVerifyDeleteAsset = (id) => {
+        if (window.confirm("Are you sure you want to Discard this asset?")) {
+          axios.delete(`http://localhost:8000/api/PendingAsset/discardAsset/${id}`)
             .then(() => {
-              alert("Asset verified successfully!");
+              alert("Asset Discard successfully!");
               fetchAssets(); // Refresh the pending list
             })
             .catch(error => {
-              console.error("Error verifying asset:", error);
-              alert("Failed to verify asset.");
+              console.error("Error Discard asset:", error);
+              alert("Failed to Discard asset.");
             });
         }
       };
@@ -99,7 +99,7 @@ const PendingDiscardItem = () => {
                             <th>Tracking ID</th>
                             <th>Special Note</th>
                             <th>Components</th>
-                            <th>Status</th>
+                            <th>Action</th>
 
                             
                         </tr>
@@ -129,9 +129,9 @@ const PendingDiscardItem = () => {
                                             <td>{asset.computerComponents}</td>
                                             <td>
   <button className="status"
-   
+    onClick={() => handleVerifyDeleteAsset(asset._id)}
   >
-  Pending
+  Verify
   </button>
 </td>
 

@@ -48,14 +48,14 @@ const AuditNavBar = () => {
               Pending Asset
             </Link>
           </div>
-          {/*<div className="nav-button">
-            <i className="fas   fa-pen-to-square"></i>
-            <a href="/AssetRegister" className="nav-link">
-              Asset Registration
+          <div className="nav-button">
+          <i class="fas fa-trash"></i>
+            <a href="/PendingDiscardItem" className="nav-link">
+              Discard Asset
             </a>
           </div>
           <hr />
-          <div className="nav-button">
+          {/*<div className="nav-button">
             <i className="fas fa-network-wired"></i>
             <a href="/category" className="nav-link">
               Asset Categorize

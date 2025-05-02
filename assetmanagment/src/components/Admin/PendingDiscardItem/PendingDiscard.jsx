@@ -19,7 +19,7 @@ const PendingDiscardAsset = () => {
     }, []);
 
     const fetchAssets = () => {
-        axios.get("http://localhost:8000/api/PendingAssetRegisterDetails/getPendingAssetDetails")
+        axios.get("http://localhost:8000/api/PendingAsset/getPendingDiscardAsset")
             .then(response => setAssetRegisterDetails(response.data))
             .catch(error => console.error("Error fetching asset details:", error));
     };
@@ -54,19 +54,7 @@ const PendingDiscardAsset = () => {
 
 
 
-    const handleVerifyAsset = (id) => {
-        if (window.confirm("Are you sure you want to verify this asset?")) {
-          axios.post(`http://localhost:8000/api/verify/verifyAsset/${id}`)
-            .then(() => {
-              alert("Asset verified successfully!");
-              fetchAssets(); // Refresh the pending list
-            })
-            .catch(error => {
-              console.error("Error verifying asset:", error);
-              alert("Failed to verify asset.");
-            });
-        }
-      };
+    
       
 
     return (

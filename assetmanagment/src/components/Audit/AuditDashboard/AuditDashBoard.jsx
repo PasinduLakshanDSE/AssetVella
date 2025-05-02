@@ -9,7 +9,7 @@ import AuditNavBar from "../AuditNavBar/AuditNavBar";
 const AuditDashBoard = () => {
   const [Asset, setAsset] = useState([]);
   const [PendingAsset, setPendingAsset] = useState(0);
-  //const [Companyadmin, setCompanyAdmin] = useState(0);
+  const [PendingDiscardAsset,  setPendingDiscardAsset] = useState(0);
   //const [DepartmentAdmin, setDepartmentAdmin] = useState(0);
 
 
@@ -25,6 +25,9 @@ const AuditDashBoard = () => {
         const PendingAsset = await axios.get("http://localhost:8000/api/PendingAssetRegisterDetails/getPendingAssetDetails");
         setPendingAsset(PendingAsset.data.length);
 
+
+        const PendingDiscardAsset = await axios.get("http://localhost:8000/api/PendingAsset/getPendingDiscardAsset");
+        setPendingDiscardAsset(PendingDiscardAsset.data.length);
 
 
 
@@ -42,7 +45,7 @@ const AuditDashBoard = () => {
   const cards = [
     { count: Asset.length, label: "Total Asset", color: "blue", icon: <i className="fas fa-house-laptop si"></i> },
     { count: PendingAsset, label: "Pending Asset ", color: "teal", icon: <i className="fas fa-hourglass-half si"></i> },
-    //{ count: Companyadmin, label: "Total Company Users ", color: "teal", icon: <i className="fas fa-user si"></i> },
+    { count: PendingDiscardAsset, label: "Pending Discard Asset ", color: "red", icon: <i class="fas fa-trash si"></i> },
     //{ count: DepartmentAdmin, label: "Total Department Users", color: "red", icon: <i className="fas fa-users si"></i> },
   ];
 
