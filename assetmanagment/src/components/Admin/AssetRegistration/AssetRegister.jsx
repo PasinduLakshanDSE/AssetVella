@@ -6,6 +6,7 @@ import axios from "axios";
 import { model } from "mongoose";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
+import Select from 'react-select';
 
 const AssetRegister = () => {
   const user = JSON.parse(localStorage.getItem("currentUser"));
@@ -60,7 +61,7 @@ const AssetRegister = () => {
   ];
 
   const companies = ["Vella", "98 Acers", "Ravana Pool Club", "Flying Ravana", "Le Maas Tota", "Tea Factory", "Walaa kulu", "kiri kopi"];
-  const departments = ["ICT", "HR", "Kitchen", "Front Office", "Store", "Account", "Audit","F&B"];
+  const departments = ["ICT", "HR", "Kitchen", "Front Office", "Store", "Account", "Audit", "F&B"];
 
   useEffect(() => {
     fetchCategories();
@@ -141,9 +142,9 @@ const AssetRegister = () => {
       return;
     }
 
-    
-    
-    
+
+
+
 
     let qrDataArray = [];
 
@@ -399,6 +400,8 @@ const AssetRegister = () => {
 
   };
 
+
+
   return (
     <div className="asset-register">
       <div className="form-container">
@@ -420,39 +423,104 @@ const AssetRegister = () => {
             readOnly={Boolean(user)}
           />
           <div className="row">
-            <div className="col-md-6">
+            <div className="col-md-6" style={{ marginBottom: "20px" }}>
 
-              <select value={company} onChange={(e) => setCompany(e.target.value)}>
+              {/*} <select value={company} onChange={(e) => setCompany(e.target.value)}>
                 <option value="">Select Company</option>
                 {companies.map((com) => (
                   <option key={com} value={com}>{com}</option>
                 ))}
-              </select>
+              </select>*/}
+
+
+
+              <input
+                className="cat1"
+                list="company-list"
+                value={company}
+                onChange={(e) => setCompany(e.target.value)}
+                placeholder="Select Company"
+              />
+              <datalist id="company-list">
+                {companies.map((com) => (
+                  <option key={com} value={com}>{com}</option>
+                ))}
+
+              </datalist>
+
+
             </div>
 
             <div className="col-md-6">
-              <select value={department} onChange={(e) => setDepartment(e.target.value)}>
+              {/*<select value={department} onChange={(e) => setDepartment(e.target.value)}>
                 <option value="">Select Department</option>
                 {departments.map((dep) => (
                   <option key={dep} value={dep}>{dep}</option>
                 ))}
-              </select>
+              </select>*/}
+
+
+              <input
+                className="cat1"
+                list="department-list"
+                value={department}
+                onChange={(e) => setDepartment(e.target.value)}
+                placeholder="Select Department"
+              />
+              <datalist id="department-list">
+                {departments.map((dep) => (
+                  <option key={dep} value={dep}>{dep}</option>
+                ))}
+
+              </datalist>
+
             </div>
-
-
-
             <div className="col-md-6">
 
-              <select value={mainCategory} onChange={(e) => setMainCategory(e.target.value)}>
+              {/*<select value={mainCategory} onChange={(e) => setMainCategory(e.target.value)}>
                 <option value="">Select Category</option>
                 {mainCategories.map((cat) => (
                   <option key={cat} value={cat}>{cat}</option>
                 ))}
-              </select>
-            </div>
+              </select>*/}
+
+
+              <input className="cat1"
+                list="mainCategory-list"
+                value={mainCategory}
+                onChange={(e) => setMainCategory(e.target.value)}
+                placeholder="Select Categories"
+              />
+              <datalist id="mainCategory-list" >
+                {mainCategories.map((cat) => (
+                  <option key={cat} value={cat}>{cat}</option>
+                ))}
+              </datalist></div>
+
 
 
             {mainCategory && (
+              <div className="col-md-6">
+                <input
+                  className="cat1"
+                  list="type-list"
+                  value={type}
+                  onChange={(e) => setType(e.target.value)}
+                  placeholder="Select Types"
+                />
+                <datalist id="type-list">
+                  {types.map((t, index) => (
+                    <option key={index} value={t} />
+                  ))}
+                  <option value="Other">Other</option>
+                </datalist>
+              </div>
+            )}
+
+          </div>
+
+
+          {/*{mainCategory && (
               <div className="col-md-6">
                 <select value={type} onChange={(e) => setType(e.target.value)}>
                   <option value="">Select Type</option>
@@ -462,8 +530,8 @@ const AssetRegister = () => {
                   ))}
                   <option value="Other">Other</option>
                 </select></div>
-            )}
-          </div>
+            )}*/}
+
           {type === "Other" && (
             <div className="mb-3">
               <input
