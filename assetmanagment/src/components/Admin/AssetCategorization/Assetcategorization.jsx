@@ -87,9 +87,19 @@ const Categorization = () => {
             <Link to="/AdminDashboardPage">DashBoard</Link> / <Link to="/category">Asset Categorization</Link>
           </p>
           <form onSubmit={handleSubmit}>
-            <div className="input-box">
-              {/* Category Dropdown */}
-              <select
+
+
+
+
+
+           <div className="input-box">
+              
+
+
+
+
+              <input className="cat1"
+                list="Category-list"
                 value={category}
                 onChange={(e) => {
                   setCategory(e.target.value); // Update category
@@ -97,36 +107,45 @@ const Categorization = () => {
 
 
                   setCustomType(""); // Reset custom type
-                }}
-              >
-                <option value="">Select Category</option>
+                }} placeholder="Enter Category"
+
+              />
+              <datalist id="Category-list" >
                 {categories.map((cat) => (
-                  <option key={cat} value={cat}>
-                    {cat}
-                  </option>
+                  <option key={cat} value={cat}>{cat}</option>
                 ))}
-              </select>
+              </datalist>
+
 
               {/* Input for custom category */}
 
 
               {/* Type Input or Dropdown */}
+              {/* Type Input or Dropdown */}
               {category && (
-                <select
-                  value={types}
-                  onChange={(e) => {
-                    setTypes(e.target.value);
-                    setCustomType(""); // Reset custom type when type changes
-                  }}
-                >
-                  <option value="">Select Type</option>
-                  {typesList.map((typ) => (
-                    <option key={typ} value={typ}>
-                      {typ}
-                    </option>
-                  ))}
-                </select>
+                <>
+                  <input
+                    className="cat1"
+                    list="types-list"
+                    value={types}
+                    onChange={(e) => {
+                      setTypes(e.target.value);
+                      setCustomType(""); // Reset custom type when type changes
+                    }}
+                    placeholder="Select Types"
+                  />
+                  <datalist id="types-list">
+                    {typesList.map((typ) => (
+                      <option key={typ} value={typ}>
+                        {typ}
+                      </option>
+                    ))}
+                  </datalist>
+                </>
               )}
+
+
+
 
 
 

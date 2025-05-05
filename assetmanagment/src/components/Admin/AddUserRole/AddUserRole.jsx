@@ -56,7 +56,7 @@ const AddUsersRole = () => {
         return strongPasswordRegex.test(password);
     };
 
-    const companies = ["Vella", "98 Acers", "Ravana Pool Club", "Flying Ravana", "Le Maas Tota", "Tea Factory", "Walaa kulu", "Kiri Kopi"];
+    const companies = ["Vella", "98 Acres", "Ravana Pool Club", "Flying Ravana", "Le Maas Tota", "Tea Factory", "Walaa kulu", "Kiri Kopi"];
 
     const handleSubmit = async (e) => {
         e.preventDefault();

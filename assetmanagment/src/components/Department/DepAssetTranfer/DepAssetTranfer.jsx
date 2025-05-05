@@ -42,7 +42,7 @@ const DepartmentTransfer = () => {
   const generateTrackingId = (serialNumber) => {
     const companyCodes = {
       Vella: "VE",
-      "98 Acers": "98",
+      "98 Acres": "98",
       "Ravana Pool Club": "RPC",
       "Flying Ravana": "FR",
       "Le Maas Tota": "LMT",

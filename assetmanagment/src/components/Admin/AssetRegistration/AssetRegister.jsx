@@ -60,7 +60,7 @@ const AssetRegister = () => {
     "Stationery",
   ];
 
-  const companies = ["Vella", "98 Acers", "Ravana Pool Club", "Flying Ravana", "Le Maas Tota", "Tea Factory", "Walaa kulu", "kiri kopi"];
+  const companies = ["Vella", "98 Acres", "Ravana Pool Club", "Flying Ravana", "Le Maas Tota", "Tea Factory", "Walaa kulu", "kiri kopi"];
   const departments = ["ICT", "HR", "Kitchen", "Front Office", "Store", "Account", "Audit", "F&B"];
 
   useEffect(() => {
@@ -90,7 +90,7 @@ const AssetRegister = () => {
   };
 
   const generateTrackingId = (serialNumber) => {
-    const companyCodes = { Vella: "VE", "98 Acers": "98", "Ravana Pool Club": "RPC", "Flying Ravana": "FR", "Le Maas Tota": "LMT", "Tea Factory": "TF", "Walaa kulu": "WK", "kiri kopi": "KK" };
+    const companyCodes = { Vella: "VE", "98 Acres": "98", "Ravana Pool Club": "RPC", "Flying Ravana": "FR", "Le Maas Tota": "LMT", "Tea Factory": "TF", "Walaa kulu": "WK", "kiri kopi": "KK" };
     const departmentCodes = { ICT: "IT", HR: "HR", Kitchen: "KT", Store: "ST", "Front Office": "FO", Account: "AC", Audit: "AU", "F&B": "F&B" };
 
     const companyCode = companyCodes[company] || "XX";
@@ -404,7 +404,7 @@ const AssetRegister = () => {
 
   return (
     <div className="asset-register">
-      <div className="form-container">
+      <div className="form-containe con">
 
         <h2 className="registerhead">Asset Registration</h2>
         <p>
