@@ -474,36 +474,39 @@ const DepAssetRegister = () => {
           <div className="row r1">
             <div className="col-md-6 r1">
 
-              <select value={mainCategory} onChange={(e) => setMainCategory(e.target.value)}>
-                <option value="">Select Category</option>
+            <input className="cat1"
+                list="mainCategory-list"
+                value={mainCategory}
+                onChange={(e) => setMainCategory(e.target.value)}
+                placeholder="Select Categories"
+              />
+              <datalist id="mainCategory-list" >
                 {mainCategories.map((cat) => (
                   <option key={cat} value={cat}>{cat}</option>
                 ))}
-              </select>
-            </div>
+              </datalist></div>
+
 
 
             {mainCategory && (
               <div className="col-md-6">
-                <select value={type} onChange={(e) => setType(e.target.value)}>
-                  <option value="">Select Type</option>
+                <input
+                  className="cat1"
+                  list="type-list"
+                  value={type}
+                  onChange={(e) => setType(e.target.value)}
+                  placeholder="Select Types"
+                />
+                <datalist id="type-list">
                   {types.map((t, index) => (
-                    <option key={index} value={t}>{t}</option>
-
+                    <option key={index} value={t} />
                   ))}
-                  <option value="Other">Other</option>
-                </select></div>
+                  
+                </datalist>
+              </div>
             )}
           </div>
-          {type === "Other" && (
-            <div className="mb-3">
-              <input
-                type="text"
-                value={customType}
-                onChange={(e) => setCustomType(e.target.value)}
-                placeholder="Enter Custom Type"
-              /></div>
-          )}
+          
 
           {type === "Computer" && (
             <div className="computer-options">
@@ -528,13 +531,14 @@ const DepAssetRegister = () => {
                         type="text"
                         value={CPUassetName}
                         onChange={(e) => setCPUAssetName(e.target.value)}
-                        placeholder="Enter Asset Name/Brand"
+                        placeholder="Enter Asset Name/Brand"  style={{ marginBottom: "5px" }}
                       />
                       <input
                         type="text"
                         value={CPUassetModel}
                         onChange={(e) => setCPUAssetModel(e.target.value)}
                         placeholder="Enter Asset Model Number"
+                        style={{ marginBottom: "5px" }}
                       />
 
                       <input
@@ -542,6 +546,7 @@ const DepAssetRegister = () => {
                         value={CPUserialNumber}
                         onChange={(e) => setCPUSerialNumber(e.target.value)}
                         placeholder="Enter Serial Number"
+                        style={{ marginBottom: "5px" }}
                       />
                     </label>
                     <div className="button-group">
@@ -557,19 +562,19 @@ const DepAssetRegister = () => {
                         type="text"
                         value={MoniterassetName}
                         onChange={(e) => setMoniterAssetName(e.target.value)}
-                        placeholder="Enter Asset Name / Brand"
+                        placeholder="Enter Asset Name / Brand" style={{ marginBottom: "5px" }}
                       />
                       <input
                         type="text"
                         value={MoniterassetModel}
                         onChange={(e) => setMoniterAssetModel(e.target.value)}
-                        placeholder="Enter Asset Model Number"
+                        placeholder="Enter Asset Model Number" style={{ marginBottom: "5px" }}
                       />
                       <input
                         type="text"
                         value={MoniterserialNumber}
                         onChange={(e) => setMoniterSerialNumber(e.target.value)}
-                        placeholder="Enter Serial Number"
+                        placeholder="Enter Serial Number" style={{ marginBottom: "5px" }}
                       />
                     </label>
                     <div className="button-group">
@@ -583,43 +588,43 @@ const DepAssetRegister = () => {
                         type="text"
                         value={MouseassetName}
                         onChange={(e) => setMouseAssetName(e.target.value)}
-                        placeholder="Enter Asset Name / Brand"
+                        placeholder="Enter Asset Name / Brand" style={{ marginBottom: "5px" }}
                       />
                       <input
                         type="text"
                         value={MouseassetModel}
                         onChange={(e) => setMouseAssetModel(e.target.value)}
-                        placeholder="Enter Asset Model Number"
+                        placeholder="Enter Asset Model Number" style={{ marginBottom: "5px" }}
                       />
                       <input
                         type="text"
                         value={MouseserialNumber}
                         onChange={(e) => setMouseSerialNumber(e.target.value)}
-                        placeholder="Enter Serial Number"
+                        placeholder="Enter Serial Number" style={{ marginBottom: "5px" }}
                       />
                     </label><div className="button-group">
                       <button className="button generate-btn" onClick={handleGenerateQR}>QR</button>
                     </div></div>
 
                   <div className="col-md-6">
-                    <label className="l">
-                      <input type="checkbox" checked readOnly /> Keyboard <input
+                    <label className="l" >
+                      <input type="checkbox" checked readOnly  /> Keyboard <input
                         type="text"
                         value={KeyboardassetName}
                         onChange={(e) => setKeyboardAssetName(e.target.value)}
-                        placeholder="Enter Asset Name / Brand"
+                        placeholder="Enter Asset Name / Brand" style={{ marginBottom: "5px" }}
                       />
                       <input
                         type="text"
                         value={KeyboardassetModel}
                         onChange={(e) => setKeyboardAssetModel(e.target.value)}
-                        placeholder="Enter Asset Model Number"
+                        placeholder="Enter Asset Model Number" style={{ marginBottom: "5px" }}
                       />
                       <input
                         type="text"
                         value={KeyboardserialNumber}
                         onChange={(e) => setKeyboardSerialNumber(e.target.value)}
-                        placeholder="Enter Serial Number"
+                        placeholder="Enter Serial Number" style={{ marginBottom: "5px" }}
                       />
                     </label>
                     <div className="button-group">

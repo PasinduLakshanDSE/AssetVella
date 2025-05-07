@@ -453,55 +453,66 @@ const ComAssetRegister = () => {
             readOnly={Boolean(user)}
           />
           <div className="row">
-            <div className="col-md-6">
+            <div className="col-md-6" style={{ marginBottom: "20px" }}>
 
                
         <input type="text" value={company} onChange={(e) => setCompany(e.target.value)} readOnly />
             </div>
 
             <div className="col-md-6">
-              <select value={department} onChange={(e) => setDepartment(e.target.value)}>
-                <option value="">Select Department</option>
+            <input
+                className="cat1"
+                list="department-list"
+                value={department}
+                onChange={(e) => setDepartment(e.target.value)}
+                placeholder="Select Department"
+              />
+              <datalist id="department-list">
                 {departments.map((dep) => (
                   <option key={dep} value={dep}>{dep}</option>
                 ))}
-              </select>
+
+              </datalist>
+
             </div>
-
-
-
             <div className="col-md-6">
 
-              <select value={mainCategory} onChange={(e) => setMainCategory(e.target.value)}>
-                <option value="">Select Category</option>
+             
+
+
+              <input className="cat1"
+                list="mainCategory-list"
+                value={mainCategory}
+                onChange={(e) => setMainCategory(e.target.value)}
+                placeholder="Select Categories"
+              />
+              <datalist id="mainCategory-list" >
                 {mainCategories.map((cat) => (
                   <option key={cat} value={cat}>{cat}</option>
                 ))}
-              </select>
-            </div>
+              </datalist></div>
+
 
 
             {mainCategory && (
               <div className="col-md-6">
-                <select value={type} onChange={(e) => setType(e.target.value)}>
-                  <option value="">Select Type</option>
+                <input
+                  className="cat1"
+                  list="type-list"
+                  value={type}
+                  onChange={(e) => setType(e.target.value)}
+                  placeholder="Select Types"
+                />
+                <datalist id="type-list">
                   {types.map((t, index) => (
-                    <option key={index} value={t}>{t}</option>
-
+                    <option key={index} value={t} />
                   ))}
-                  <option value="Other">Other</option>
-                </select></div>
+                  
+                </datalist>
+              </div>
             )}
           </div>
-          {type === "Other" && (
-            <div className="mb-3">
-              <input
-                type="text"
-                value={customType}
-                onChange={(e) => setCustomType(e.target.value)}
-                placeholder="Enter Custom Type"
-              /></div>
-          )}
+        
 
           {type === "Computer" && (
             <div className="computer-options">
@@ -526,20 +537,20 @@ const ComAssetRegister = () => {
                         type="text"
                         value={CPUassetName}
                         onChange={(e) => setCPUAssetName(e.target.value)}
-                        placeholder="Enter Asset Name/Brand"
+                        placeholder="Enter Asset Name/Brand" style={{ marginBottom: "5px" }}
                       />
                       <input
                         type="text"
                         value={CPUassetModel}
                         onChange={(e) => setCPUAssetModel(e.target.value)}
-                        placeholder="Enter Asset Model Number"
+                        placeholder="Enter Asset Model Number" style={{ marginBottom: "5px" }}
                       />
 
                       <input
                         type="text"
                         value={CPUserialNumber}
                         onChange={(e) => setCPUSerialNumber(e.target.value)}
-                        placeholder="Enter Serial Number"
+                        placeholder="Enter Serial Number" style={{ marginBottom: "5px" }}
                       />
                     </label>
                     <div className="button-group">
@@ -555,19 +566,19 @@ const ComAssetRegister = () => {
                         type="text"
                         value={MoniterassetName}
                         onChange={(e) => setMoniterAssetName(e.target.value)}
-                        placeholder="Enter Asset Name / Brand"
+                        placeholder="Enter Asset Name / Brand" style={{ marginBottom: "5px" }}
                       />
                       <input
                         type="text"
                         value={MoniterassetModel}
                         onChange={(e) => setMoniterAssetModel(e.target.value)}
-                        placeholder="Enter Asset Model Number"
+                        placeholder="Enter Asset Model Number" style={{ marginBottom: "5px" }}
                       />
                       <input
                         type="text"
                         value={MoniterserialNumber}
                         onChange={(e) => setMoniterSerialNumber(e.target.value)}
-                        placeholder="Enter Serial Number"
+                        placeholder="Enter Serial Number" style={{ marginBottom: "5px" }}
                       />
                     </label>
                     <div className="button-group">
@@ -581,19 +592,19 @@ const ComAssetRegister = () => {
                         type="text"
                         value={MouseassetName}
                         onChange={(e) => setMouseAssetName(e.target.value)}
-                        placeholder="Enter Asset Name / Brand"
+                        placeholder="Enter Asset Name / Brand" style={{ marginBottom: "5px" }}
                       />
                       <input
                         type="text"
                         value={MouseassetModel}
                         onChange={(e) => setMouseAssetModel(e.target.value)}
-                        placeholder="Enter Asset Model Number"
+                        placeholder="Enter Asset Model Number" style={{ marginBottom: "5px" }}
                       />
                       <input
                         type="text"
                         value={MouseserialNumber}
                         onChange={(e) => setMouseSerialNumber(e.target.value)}
-                        placeholder="Enter Serial Number"
+                        placeholder="Enter Serial Number" style={{ marginBottom: "5px" }}
                       />
                     </label><div className="button-group">
                       <button className="button generate-btn" onClick={handleGenerateQR}>QR</button>
@@ -605,13 +616,13 @@ const ComAssetRegister = () => {
                         type="text"
                         value={KeyboardassetName}
                         onChange={(e) => setKeyboardAssetName(e.target.value)}
-                        placeholder="Enter Asset Name / Brand"
+                        placeholder="Enter Asset Name / Brand" style={{ marginBottom: "5px" }}
                       />
                       <input
                         type="text"
                         value={KeyboardassetModel}
                         onChange={(e) => setKeyboardAssetModel(e.target.value)}
-                        placeholder="Enter Asset Model Number"
+                        placeholder="Enter Asset Model Number" style={{ marginBottom: "5px" }}
                       />
                       <input
                         type="text"
