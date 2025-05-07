@@ -34,7 +34,7 @@ const QRVIEW = () => {
   const viewStyle = {
     backgroundImage: qrData?.company === "Vella" 
     ? `url('/vellalogo.jpg')` 
-    : qrData?.company === "98 Acers" 
+    : qrData?.company === "98 Acres" 
     ? `url('/98.png')`
     : qrData?.company === "Ravana Pool Club" 
     ? `url('/RPC.png')` 

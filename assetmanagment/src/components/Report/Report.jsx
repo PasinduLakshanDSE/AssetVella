@@ -128,44 +128,138 @@ const Report = () => {
 
       {/* Filters Section */}
       <div className="filters">
-        <select value={company} onChange={(e) => setCompany(e.target.value)}>
+        {/*<select value={company} onChange={(e) => setCompany(e.target.value)}>
           <option value="">Select Company</option>
           {companies.map((com, index) => (
             <option key={index} value={com}>{com}</option>
           ))}
-        </select>
+        </select>*/}
 
-        <select value={department} onChange={(e) => setDepartment(e.target.value)}>
+
+
+
+        <input
+                className="cat1"
+                list="company-list"
+                value={company}
+                onChange={(e) => setCompany(e.target.value)}
+                placeholder="Select company"
+              />
+              <datalist id="company-list">
+                {companies.map((com, index) => (
+                  <option key={index} value={com}>{com}</option>
+                ))}
+
+              </datalist>
+
+
+
+        {/*<select value={department} onChange={(e) => setDepartment(e.target.value)}>
           <option value="">Select Department</option>
           {departments.map((dep, index) => (
             <option key={index} value={dep}>{dep}</option>
           ))}
-        </select>
+        </select>*/}
 
-        <select value={mainCategory} onChange={(e) => setMainCategory(e.target.value)}>
+
+
+        <input
+                className="cat1"
+                list="department-list"
+                value={department}
+                onChange={(e) => setDepartment(e.target.value)}
+                placeholder="Select department"
+              />
+              <datalist id="department-list">
+                {departments.map((dep, index) => (
+                  <option key={index} value={dep}>{dep}</option>
+                ))}
+
+              </datalist>
+
+
+
+       {/*} <select value={mainCategory} onChange={(e) => setMainCategory(e.target.value)}>
           <option value="">Select Category</option>
           {mainCategories.map((cat, index) => (
             <option key={index} value={cat}>{cat}</option>
           ))}
-        </select>
+        </select>*/}
 
-        {mainCategory && (
-          <select value={type} onChange={(e) => setType(e.target.value)}>
-            <option value="">Select Type</option>
-            {types.map((t, index) => (
-              <option key={index} value={t}>{t}</option>
-            ))}
-          </select>
-        )}
 
-        {type && (
-          <select value={selectedComputerComponent} onChange={(e) => setSelectedComputerComponent(e.target.value)}>
-            <option value="">Select Computer Component</option>
-            {computerComponentOptions.map((Ccom, index) => (
-              <option key={index} value={Ccom}>{Ccom}</option>
-            ))}
-          </select>
-        )}
+        <input
+                className="cat1"
+                list="mainCategory-list"
+                value={mainCategory}
+                onChange={(e) => setMainCategory(e.target.value)}
+                placeholder="Select Category"
+              />
+              <datalist id="mainCategory-list">
+                {mainCategories.map((cat, index) => (
+                  <option key={index} value={cat}>{cat}</option>
+                ))}
+
+              </datalist>
+
+
+
+
+              {mainCategory && (
+  <>
+    <input
+      className="cat1"
+      list="type-list"
+      value={type}
+      onChange={(e) => setType(e.target.value)}
+      placeholder="Select type"
+    />
+    <datalist id="type-list">
+      {types.map((t, index) => (
+        <option key={index} value={t} />
+      ))}
+    </datalist>
+  </>
+)}
+
+
+
+
+{/*<input
+                className="cat1"
+                list="department-list"
+                value={department}
+                onChange={(e) => setDepartment(e.target.value)}
+                placeholder="Select Department"
+              />
+              <datalist id="department-list">
+                {departments.map((dep) => (
+                  <option key={dep} value={dep}>{dep}</option>
+                ))}
+
+              </datalist>*/}
+
+
+
+
+
+
+{type === "Computer" && (
+  <>
+    <input
+      className="cat1"
+      list="Component-list"
+      value={selectedComputerComponent}
+      onChange={(e) => setSelectedComputerComponent(e.target.value)}
+      placeholder="Select Component"
+    />
+    <datalist id="Component-list">
+      {computerComponentOptions.map((Ccom, index) => (
+        <option key={index} value={Ccom} />
+      ))}
+    </datalist>
+  </>
+)}
+
       </div>
       
       <div className="download-container">
