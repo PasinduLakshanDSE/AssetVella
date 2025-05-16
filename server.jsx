@@ -42,6 +42,15 @@ const pendingAsset = require("./Routes/PendingDiscardAssetRoute.jsx")
 app.use("/api/PendingAsset",pendingAsset)
 
 
+const pendingTransferAsset = require("./Routes/TransferRoute.jsx")
+app.use("/api/transfer",pendingTransferAsset)
+
+
+
+const  beforetransfers = require("./Routes/TransferRoute.jsx")
+app.use("/api/beforeTransfer",beforetransfers)
+
+
 
 app.post("/send-email", async (req, res) => {
     const { name, email, subject, message } = req.body;

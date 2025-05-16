@@ -146,6 +146,24 @@ router.post("/add", async (req, res) => {
   }
 });
 
+// In your delete route (AssetRegisterDetails route)
+router.delete("/deleteAsset/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const asset = await AssetRegisterDetails.findByIdAndDelete(id); // Ensure this is correct
+
+    if (!asset) {
+      return res.status(404).json({ error: "Asset not found." });
+    }
+
+    res.status(200).json({ message: "Asset deleted successfully." });
+  } catch (error) {
+    console.error("Error deleting asset:", error);
+    res.status(500).json({ error: "Failed to delete Asset." });
+  }
+});
+
+
 
 
 
