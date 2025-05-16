@@ -119,6 +119,17 @@ router.post("/beforetransfers", async (req, res) => {
 });
 
 
+router.get("/getPendingTransferAssetDetails",async(req,res)=>{
+  try{
+    const Pendingasset = await PendingTransferAsset.find();
+    res.status(200).json(Pendingasset);
+  }catch(error){
+    console.error("Error fetching asset details:", error);
+    res.status(500).json({ error: "Server error. Unable to retrieve assets." });
+  }
+})
+
+
 
 
 

@@ -28,7 +28,7 @@ const PendingAssetDetails = () => {
 
     const fetchTransferAssets = () => {
         axios
-            .get("http://localhost:8000/api/pendingTransferAsset/getPendingTransferDetails")
+            .get("http://localhost:8000/api/transfer/getPendingTransferAssetDetails")
             .then((response) => setTransferAssetDetails(response.data))
             .catch((error) => console.error("Error fetching transfer asset details:", error));
     };
@@ -161,7 +161,7 @@ const PendingAssetDetails = () => {
                                     <td>{asset.assetUserName}</td>
                                     <td>{asset.assetModel}</td>
                                     <td>{asset.assetUpdateDate}</td>
-                                    {assetDetailsView === "pendingtransferasset" && (<td>{asset.transferDate || "N/A"}</td>)}
+                                    {assetDetailsView === "pendingtransferasset" && (<td>{asset.assetTransferDate || "N/A"}</td>)}
                                     <td>{asset.serialNumber}</td>
                                     <td>{asset.trackingId}</td>
                                     <td>{asset.specialNote}</td>
