@@ -11,6 +11,7 @@ const DashBoard = () => {
   const [Companyadmin, setCompanyAdmin] = useState(0);
   const [DepartmentAdmin, setDepartmentAdmin] = useState(0);
   const[PendingAsset,setPendingAsset] = useState(0);
+  const[PendingTransferAsset , setPendingTransferAsset] = useState(0);
 
 
   useEffect(() => {
@@ -35,6 +36,9 @@ const DashBoard = () => {
         const DepartmentadminUsers = usersResponse.data.filter(user => user.selectedOption === "DepartmentAdmin");
         setDepartmentAdmin(DepartmentadminUsers.length);
 
+        const PendingTransferAsset = await axios.get("http://localhost:8000/api/transfer/getPendingTransferAssetDetails");
+        setPendingTransferAsset(PendingTransferAsset.data.length);
+
 
         
               const PendingAsset = await axios.get("http://localhost:8000/api/PendingAssetRegisterDetails/getPendingAssetDetails");
@@ -51,9 +55,10 @@ const DashBoard = () => {
   const cards = [
     { count: Asset.length, label: "Total Asset", color: "blue", icon: <i className="fas fa-house-laptop si"></i> },
     { count: Admin, label: "Total Admin ", color: "green", icon: <i className="fas fa-user-tie si"></i> },
-    { count: Companyadmin, label: "Total Company Users ", color: "teal", icon: <i className="fas fa-user si"></i> },
+    { count: Companyadmin, label: "Total Company Users ", color: "orange", icon: <i className="fas fa-user si"></i> },
     { count: DepartmentAdmin, label: "Total Department Users", color: "red", icon: <i className="fas fa-users si"></i> },
     { count: PendingAsset, label: "Pending Register Asset", color: "DarkSlateGray", icon: <i className="fas fa-hourglass-half si"></i> },
+    {count: PendingTransferAsset, label: "Pending Transfer Asset", color: "teal" , icon: <i className="fa-solid fa-spinner si"></i> },
   ];
 
   return (

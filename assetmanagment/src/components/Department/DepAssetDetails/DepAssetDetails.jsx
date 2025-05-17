@@ -125,6 +125,7 @@ const DepAssetDetails = () => {
             (asset.mainCategory?.toLowerCase() || "").includes(query.toLowerCase()) ||
             (asset.type?.toLowerCase() || "").includes(query.toLowerCase()) ||
             (asset.assetName?.toLowerCase() || "").includes(query.toLowerCase()) ||
+            (asset.assetUserName?.toLowerCase() || "").includes(query.toLowerCase()) ||
             (asset.assetModel?.toLowerCase() || "").includes(query.toLowerCase()) ||
             (asset.serialNumber?.toLowerCase() || "").includes(query.toLowerCase()) ||
             (asset.trackingId?.toLowerCase() || "").includes(query.toLowerCase()) ||

@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 const AssetRegisterDetails = require("../Module/AssetRegisterModule.jsx");
 const PendingAssetRegisterDetails = require("../Module/PendingAssetRegisterDetails.jsx");
+const PendingTransferAsset = require("../Module/TranferModule.jsx")
 
 // POST to verify and move asset
 router.post("/verifyAsset/:id", async (req, res) => {
@@ -19,6 +20,25 @@ router.post("/verifyAsset/:id", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+
+
+router.post("/verifyTransferAsset/:id", async (req, res) => {
+  try {
+    const asset = await PendingTransferAsset.findById(req.params.id);
+    if (!asset) return res.status(404).json({ message: "Asset not found" });
+
+    const verifiedAsset = new AssetRegisterDetails(asset.toObject());
+    await verifiedAsset.save();
+    await PendingTransferAsset.findByIdAndDelete(req.params.id);
+
+    res.status(200).json({ message: "Transfer Asset verified successfully" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
 
 
 

@@ -10,7 +10,7 @@ const AuditDashBoard = () => {
   const [Asset, setAsset] = useState([]);
   const [PendingAsset, setPendingAsset] = useState(0);
   const [PendingDiscardAsset,  setPendingDiscardAsset] = useState(0);
-  //const [DepartmentAdmin, setDepartmentAdmin] = useState(0);
+  const [PendingTransferAsset, setPendingTransferAsset] = useState(0);
 
 
   useEffect(() => {
@@ -29,7 +29,8 @@ const AuditDashBoard = () => {
         const PendingDiscardAsset = await axios.get("http://localhost:8000/api/PendingAsset/getPendingDiscardAsset");
         setPendingDiscardAsset(PendingDiscardAsset.data.length);
 
-
+const PendingTransferAsset = await axios.get("http://localhost:8000/api/transfer/getPendingTransferAssetDetails");
+setPendingTransferAsset(PendingTransferAsset.data.length);
 
 
 
@@ -45,8 +46,9 @@ const AuditDashBoard = () => {
   const cards = [
     { count: Asset.length, label: "Total Asset", color: "blue", icon: <i className="fas fa-house-laptop si"></i> },
     { count: PendingAsset, label: "Pending Asset ", color: "teal", icon: <i className="fas fa-hourglass-half si"></i> },
+    { count: PendingTransferAsset, label: "Pending Transfer Asset", color: "green", icon: <i className="fa-solid fa-spinner si"></i> },
     { count: PendingDiscardAsset, label: "Pending Discard Asset ", color: "red", icon: <i class="fas fa-trash si"></i> },
-    //{ count: DepartmentAdmin, label: "Total Department Users", color: "red", icon: <i className="fas fa-users si"></i> },
+    
   ];
 
   return (
