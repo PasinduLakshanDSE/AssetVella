@@ -15,6 +15,7 @@ const ComapnyTransfer = () => {
   const [assetUserName, setUserName] = useState("");
   const [assetUpdateDate, setAssetUpdateDate] = useState("");
   const [specialNote, setSpecialNote] = useState("");
+  const [assetTransferDate, setTransferDate] = useState("");
 
   const [qrCodeData, setQrCodeData] = useState([]); // State to store QR codes
   const navigate = useNavigate();
@@ -96,47 +97,79 @@ const ComapnyTransfer = () => {
   // useEffect(() => { fetchUsers(); }, []);
 
   const handleUpdate = async () => {
-    
-    if (!company || !department ) {
-      alert("Please select both company and department.");
-      return;
-    }
+  if (!asset) {
+    alert("Asset not found.");
+    return;
+  }
 
-    if (!assetUserName.trim()) {
-      alert("Please enter the user name.");
-      return;
-    }
-  
-    if (!assetUpdateDate) {
-      alert("Please enter the asset transfer date.");
-      return;
-    }
-   
+  if (!company || !department) {
+    alert("Please select both company and department.");
+    return;
+  }
 
-    const updatedAsset = {
-      ...asset,
-      company,
-      department,
-      assetUserName,
-      assetUpdateDate,
-      specialNote,
-      trackingId: qrCodeData[0]?.trackingId, // Update tracking ID
-    };
+  if (!assetUserName.trim()) {
+    alert("Please enter the user name.");
+    return;
+  }
 
-    try {
-      const response = await axios.put(
-        `http://localhost:8000/api/AssetRegisterDetails/updateAsset/${asset._id}`,
-        updatedAsset
-      );
-      if (response.status === 200) {
-        alert("Asset transferred successfully!");
-        navigate("/Comasset");
-      }
-    } catch (error) {
-      console.error("Error transferring asset:", error);
-      alert("An error occurred while transferring the asset.");
-    }
+  if (!assetTransferDate) {
+    alert("Please enter the asset transfer date.");
+    return;
+  }
+const newtrackingId = qrCodeData[0]?.trackingId;
+  const transferAsset = {
+    ...asset,
+    name,
+    company,
+    department,
+    assetUserName,
+    assetTransferDate,
+    specialNote,
+    trackingId: newtrackingId,
   };
+
+  try {
+    // 1. Post to transfer database
+    const response = await axios.post(
+      `http://localhost:8000/api/transfer/transfers`,
+      transferAsset
+    );
+
+    if (response.status === 200 || response.status === 201) {
+      // 2. Save original asset to beforeTransfer
+      const beforeTransferAsset = { ...asset,newtrackingId };
+
+      const backupResponse = await axios.post(
+        `http://localhost:8000/api/beforeTransfer/beforetransfers`,
+        beforeTransferAsset
+      );
+
+      if (backupResponse.status === 200 || backupResponse.status === 201) {
+        // 3. Delete from original asset register
+        const id = asset._id
+        const deleteResponse = await axios.delete(
+          `http://localhost:8000/api/AssetRegisterDetails/deleteAsset/${id}`
+        );
+
+        if (deleteResponse.status === 200) {
+          alert("Asset transferred successfully!");
+          navigate("/Comasset");
+        } else {
+          alert("Asset backed up but deletion failed.");
+          console.error("Delete failed:", deleteResponse);
+        }
+      } else {
+        alert("Transfer succeeded but backup failed.");
+        console.error("Backup failed:", backupResponse);
+      }
+    } else {
+      alert("Failed to transfer asset.");
+    }
+  } catch (error) {
+    console.error("Error in transfer flow:", error.response || error);
+    alert("An error occurred while processing the transfer.");
+  }
+};
 
 
 
@@ -259,8 +292,8 @@ const ComapnyTransfer = () => {
         <input
           className="dat"
           type="date"
-          value={assetUpdateDate}
-          onChange={(e) => setAssetUpdateDate(e.target.value)}
+          value={assetTransferDate}
+          onChange={(e) => setTransferDate(e.target.value)}
         />
         <input
           className="tIn"

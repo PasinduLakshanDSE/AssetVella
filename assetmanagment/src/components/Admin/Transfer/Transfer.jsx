@@ -127,6 +127,7 @@ const Transfer = () => {
 const newtrackingId = qrCodeData[0]?.trackingId;
   const transferAsset = {
     ...asset,
+    name,
     company,
     department,
     assetUserName,

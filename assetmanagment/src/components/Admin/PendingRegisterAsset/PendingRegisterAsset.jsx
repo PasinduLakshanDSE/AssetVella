@@ -132,7 +132,9 @@ const PendingAssetDetails = () => {
                 <table className="table table-bordered table-light">
                     <thead className="thead-dark">
                         <tr>
-                            <th>Registered Name</th>
+                            
+                            {assetDetailsView === "pendingregisterAsset" && <th>Registered Name</th>}
+                            {assetDetailsView === "pendingtransferasset" && <th>Tranfered Date</th>}
                             <th>Company</th>
                             <th>Department</th>
                             <th>Category</th>
