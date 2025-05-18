@@ -90,6 +90,11 @@ const AsetRegisterSchema = mongoose.Schema(
         type: String,
         required: false,
       },
+      isTransfer: {
+  type: Boolean,
+  default: false,
+},
+
       
     
   },

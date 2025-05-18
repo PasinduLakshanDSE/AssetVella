@@ -1,7 +1,7 @@
 :root {
   --background: white;
-  --navbar-width: 200px;
-  --navbar-width-min: 80px;
+  --navbar1-width: 200px;
+  --navbar1-width-min: 80px;
   --navbar-dark-primary: linear-gradient(#063e4d, #043c57);;
   --navbar-dark-secondary: #0f3d52;
   --navbar-light-primary: #f3f3f5;
@@ -13,6 +13,8 @@
     margin: 0;
     background: var(--background);
   }
+
+  
   
  
  
@@ -70,7 +72,7 @@
     pointer-events: none;
   }
   
-  #nav-bar {
+  #nav-bar1 {
     position: absolute;
     left: 1vw;
     top: 1vw;
@@ -85,7 +87,7 @@
     user-select: none;
   }
   
-  #nav-bar hr {
+  #nav-bar1 hr {
     margin: 0;
     position: relative;
     left: 16px;
@@ -94,12 +96,12 @@
     border-top: solid 1px var(--navbar-dark-secondary);
   }
   
-  #nav-bar a {
+  #nav-bar1 a {
     color: inherit;
     text-decoration: inherit;
   }
   
-  #nav-bar input[type="checkbox"] {
+  #nav-bar1 input[type="checkbox"] {
     display: none;
   }
   
@@ -185,10 +187,10 @@
     height: 8px;
   }
   
-  #nav-content::-webkit-scrollbar-thumb {
+  /*#nav-content::-webkit-scrollbar-thumb {
     border-radius: 99px;
     background-color: #D62929;
-  }
+  }*/
   
   #nav-content::-webkit-scrollbar-button {
     height: 16px;
@@ -244,8 +246,8 @@
     transition: min-width 0.2s;
   }
   
-  #nav-bar .fas {
-    min-width: 3rem;
+  #nav-bar1 .fas {
+    min-width: 2rem;
     text-align: center;
   }
   

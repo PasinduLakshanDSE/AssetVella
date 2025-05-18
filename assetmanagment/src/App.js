@@ -46,6 +46,7 @@ import PendingAssetDetails from "./components/Admin/PendingRegisterAsset/Pending
 import PendingAsset from "./components/Audit/PendingAsset/PendingAsset";
 import PendingDiscardAsset from "./components/Admin/PendingDiscardItem/PendingDiscard";
 import PendingDiscardItem from "./components/Audit/PendingDiscardItem/PendingDiscardItem";
+import TransferReport from "./components/Admin/TransferReport/TransferReport";
 
 
 function App() {
@@ -89,6 +90,7 @@ function App() {
         <Route path="/PendingAsset" element={<PendingAsset/>} />
         <Route path="/PendingDiscardAsset" element={<PendingDiscardAsset/>} />
         <Route path="/PendingDiscardItem" element={<PendingDiscardItem/>} />
+        <Route path="/TransferAssetReport" element={<TransferReport/>} />
         
       </Routes>
     </div>

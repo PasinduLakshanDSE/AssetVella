@@ -19,7 +19,7 @@ const AdminNavBar = () => {
 
   return (
     <div className="main">
-      <div id="nav-bar">
+      <div id="nav-bar1">
         <input id="nav-toggle" type="checkbox" />
         <div id="nav-header">
           <a
@@ -81,6 +81,12 @@ const AdminNavBar = () => {
             <i className="fas fa-file"></i>
             <a href="/GetReport" className="nav-link">
               Get Report
+            </a>
+          </div>
+           <div className="nav-button">
+            <i className="fas fa-file-invoice"></i>
+            <a href="/TransferAssetReport" className="nav-link">
+              Transfer Report
             </a>
           </div>
           

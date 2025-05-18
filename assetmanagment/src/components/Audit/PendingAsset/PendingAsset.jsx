@@ -162,7 +162,7 @@ const PendingAsset = () => {
                             <th>Asset Name</th>
                             <th>User Name</th>
                             <th>Model</th>
-                            <th>Update Date</th>
+                            <th>Register Date</th>
                             {assetDetailsView === "pendingtransferasset" && <th>Tranfer Date</th>}
                             <th>Serial Number</th>
                             <th>Tracking ID</th>

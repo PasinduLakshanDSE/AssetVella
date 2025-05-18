@@ -188,10 +188,10 @@ label[for="nav-toggle"] {
   height: 8px;
 }
 
-#nav-content::-webkit-scrollbar-thumb {
+/*#nav-content::-webkit-scrollbar-thumb {
   border-radius: 99px;
   background-color: #D62929;
-}
+}*/
 
 #nav-content::-webkit-scrollbar-button {
   height: 16px;
@@ -325,7 +325,7 @@ label[for="nav-toggle"] {
   height: 8px;
 }
 
-#nav-footer-content::-webkit-scrollbar-thumb {
+/*#nav-footer-content::-webkit-scrollbar-thumb {
   border-radius: 99px;
   background-color: #D62929;
-}
+}*/

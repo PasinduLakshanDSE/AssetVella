@@ -28,7 +28,11 @@ router.post("/verifyTransferAsset/:id", async (req, res) => {
     const asset = await PendingTransferAsset.findById(req.params.id);
     if (!asset) return res.status(404).json({ message: "Asset not found" });
 
-    const verifiedAsset = new AssetRegisterDetails(asset.toObject());
+    // Convert to plain JS object and set isTransfer to true
+    const assetData = asset.toObject();
+    assetData.isTransfer = true;
+
+    const verifiedAsset = new AssetRegisterDetails(assetData);
     await verifiedAsset.save();
     await PendingTransferAsset.findByIdAndDelete(req.params.id);
 

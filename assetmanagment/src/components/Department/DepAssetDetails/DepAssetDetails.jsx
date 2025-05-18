@@ -159,7 +159,7 @@ const DepAssetDetails = () => {
                             <th>Asset Name</th>
                             <th>User Name</th>
                             <th>Model</th>
-                            <th>Update Date</th>
+                            <th>Register Date</th>
                             <th>Serial Number</th>
                             <th>Tracking ID</th>
                             <th>Special Note</th>

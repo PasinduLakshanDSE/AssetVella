@@ -69,7 +69,7 @@ const PendingAssetDetails = () => {
                 <h1 className="assethead">Pending Asset Details</h1>
                 <p>
                     <Link to="/AdminDashboardPage">Dashboard</Link> /{" "}
-                    <Link to="/AssetDetails">Asset Details</Link>
+                    <Link to="/pendingRegisterasset">Pending Asset Details</Link>
                 </p>
 
                 {/* Radio Buttons */}<div className="radio-toggle-container mb-4">
@@ -142,7 +142,8 @@ const PendingAssetDetails = () => {
                             <th>Asset Name</th>
                             <th>User Name</th>
                             <th>Model</th>
-                            <th>Update Date</th>
+                           
+                             <th>Register Date</th>
                             {assetDetailsView === "pendingtransferasset" && <th>Tranfer Date</th>}
                             <th>Serial Number</th>
                             <th>Tracking ID</th>
