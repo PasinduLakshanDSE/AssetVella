@@ -105,39 +105,69 @@ useEffect(() => {
       return;
     }
 
-    // Define column headers
-    const headers = [
-      "Registered Name", "Company", "Department", "Category", "Type", "Components",
-      "Asset Name", "User Name", "Model", "Register Date", "Serial Number",
-      "Tracking ID"
-    ];
+   const wb = XLSX.utils.book_new();
+  const ws_data = [
+    ["Label", "Registered Name", "Company", "Department", "Category", "Type", "Asset Name", "User Name", "Model", "Transfer/Register Date", "Serial Number", "Tracking ID", "Components"]
+  ];
 
-    // Map data to match column headers
-    const data = filteredAssets.map(asset => ({
-      "Registered Name": asset.name,
-      "Company": asset.company,
-      "Department": asset.department,
-      "Category": asset.mainCategory,
-      "Type": asset.type,
-      "Components": asset.computerComponents,
-      "Asset Name": asset.assetName,
-      "User Name": asset.assetUserName,
-      "Model": asset.assetModel,
-      "Register Date": asset.assetUpdateDate,
-      "Serial Number": asset.serialNumber,
-      "Tracking ID": asset.trackingId,
+  filteredAssets.forEach(asset => {
+    const old = oldAssetDetails[asset.trackingId];
 
-    }));
+    // Transferred
+    ws_data.push([
+      "Transferred", asset.name, asset.company, asset.department,
+      asset.mainCategory, asset.type, asset.assetName, asset.assetUserName,
+      asset.assetModel, asset.assetTransferDate, asset.serialNumber,
+      asset.trackingId, asset.computerComponents || "-"
+    ]);
 
-    // Create worksheet with headers
-    const ws = XLSX.utils.json_to_sheet(data, { header: headers, skipHeader: false });
+    // Old
+    ws_data.push([
+      "Old", old?.name || "-", old?.company || "-", old?.department || "-",
+      old?.mainCategory || "-", old?.type || "-", old?.assetName || "-",
+      old?.assetUserName || "-", old?.assetModel || "-", old?.assetUpdateDate || "-",
+      old?.serialNumber || "-", old?.trackingId || "-", old?.computerComponents || "-"
+    ]);
+  });
 
-    // Create workbook
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Filtered Assets");
+  const ws = XLSX.utils.aoa_to_sheet(ws_data);
 
-    // Save file
-    XLSX.writeFile(wb, "Filtered_Asset_Report.xlsx");
+  // Apply styles to header row
+  const headerStyle = {
+    font: { bold: true, color: { rgb: "FFFFFF" } },
+    fill: { fgColor: { rgb: "004085" } }, // dark blue
+    alignment: { horizontal: "center" }
+  };
+
+  const yellowCellStyle = {
+    fill: { fgColor: { rgb: "FFFF00" } },
+    font: { bold: true }
+  };
+
+  const lightYellowStyle = {
+    fill: { fgColor: { rgb: "F3F381" } },
+    font: { bold: true }
+  };
+
+  // Apply header styles
+  const range = XLSX.utils.decode_range(ws['!ref']);
+  for (let C = range.s.c; C <= range.e.c; ++C) {
+    const cell_address = { c: C, r: 0 };
+    const cell_ref = XLSX.utils.encode_cell(cell_address);
+    if (!ws[cell_ref]) continue;
+    ws[cell_ref].s = headerStyle;
+  }
+
+  // Apply label-cell styles
+  for (let R = 1; R <= range.e.r; ++R) {
+    const labelCell = ws[XLSX.utils.encode_cell({ r: R, c: 0 })];
+    if (labelCell?.v === "Transferred") labelCell.s = yellowCellStyle;
+    if (labelCell?.v === "Old") labelCell.s = lightYellowStyle;
+  }
+
+  // Append sheet and write file
+  XLSX.utils.book_append_sheet(wb, ws, "Transfer Report");
+  XLSX.writeFile(wb, "Styled_Transfer_Report.xlsx");
   };
 
 
