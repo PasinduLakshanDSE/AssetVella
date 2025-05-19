@@ -32,7 +32,7 @@ const AsetRegisterSchema = mongoose.Schema(
       assetUpdateDate: {
         type: String,
         required: false,
-      },
+      },assetTransferDate: String, // ✅ Add this field
       serialNumber: {
         type: String,
         required: false,

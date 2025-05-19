@@ -130,6 +130,25 @@ router.get("/getPendingTransferAssetDetails",async(req,res)=>{
 })
 
 
+// Route: GET /api/beforeTransfer/getBeforeTransferDetails/:newtrackingId
+router.get("/getBeforeTransferDetails/:newtrackingId", async (req, res) => {
+  const { newtrackingId } = req.params;
+
+  try {
+    const beforeTransfer = await BeforeTransferAsset.findOne({ newtrackingId });
+
+    if (!beforeTransfer) {
+      return res.status(404).json({ message: "No matching asset found for the provided tracking ID." });
+    }
+
+    res.status(200).json(beforeTransfer);
+  } catch (error) {
+    console.error("Error fetching before asset details:", error);
+    res.status(500).json({ error: "Server error. Unable to retrieve asset." });
+  }
+});
+
+
 
 
 

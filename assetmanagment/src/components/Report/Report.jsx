@@ -21,6 +21,7 @@ const Report = () => {
 
   useEffect(() => {
     fetchAssets();
+    
   }, []);
 
   const fetchAssets = async () => {

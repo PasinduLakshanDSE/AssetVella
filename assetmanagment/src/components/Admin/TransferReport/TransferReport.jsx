@@ -18,28 +18,48 @@ const TransferReport = () => {
   const [computerComponentOptions, setComputerComponentOptions] = useState([]);
   const [assetRegisterDetails, setAssetRegisterDetails] = useState([]);
   const [filteredAssets, setFilteredAssets] = useState([]);
+  //const[oldAssetDetails, setOldAsset] =useState ([]);
+  const [oldAssetDetails, setOldAssetDetails] = useState({});
+
 
   useEffect(() => {
     fetchAssets();
+
   }, []);
 
   const fetchAssets = async () => {
     try {
       const response = await axios.get("http://localhost:8000/api/AssetRegisterDetails/getAssetDetails");
-      setAssetRegisterDetails(response.data);
+      const allAssets = response.data;
+      const transferAssets = allAssets.filter(asset => asset.isTransfer === true);
+      setAssetRegisterDetails(transferAssets);
 
-      // Extract unique values
+      // Fetch old asset details for each transferred asset
+      const oldDetailsMap = {};
+      await Promise.all(
+        transferAssets.map(async (asset) => {
+          const trackingId = asset.trackingId;
+          try {
+            const res = await axios.get(`http://localhost:8000/api/beforeTransfer/getBeforeTransferDetails/${trackingId}`);
+            oldDetailsMap[trackingId] = res.data;
+          } catch (err) {
+            console.error(`Error fetching old data for ${asset.trackingId}`, err);
+          }
+        })
+      );
+      setOldAssetDetails(oldDetailsMap);
+
+      // Continue extracting unique values
       const uniqueCompanies = [...new Set(response.data.map(asset => asset.company))];
       const uniqueDepartments = [...new Set(response.data.map(asset => asset.department))];
       const uniqueCategories = [...new Set(response.data.map(asset => asset.mainCategory))];
-      const uniqueComponents = [...new Set(response.data.map(asset => asset.computerComponents))].filter(Boolean); // Ensure no empty values
+      const uniqueComponents = [...new Set(response.data.map(asset => asset.computerComponents))].filter(Boolean);
 
       setCompanies(uniqueCompanies);
       setDepartments(uniqueDepartments);
       setMainCategories(uniqueCategories);
       setComputerComponentOptions(uniqueComponents);
 
-      // Group types by category
       const groupedTypes = response.data.reduce((acc, asset) => {
         if (!acc[asset.mainCategory]) {
           acc[asset.mainCategory] = new Set();
@@ -47,14 +67,16 @@ const TransferReport = () => {
         acc[asset.mainCategory].add(asset.type);
         return acc;
       }, {});
-
       setAllTypes(groupedTypes);
     } catch (error) {
       console.error("Error fetching asset details:", error);
     }
   };
 
-  useEffect(() => {
+
+
+
+useEffect(() => {
     filterAssets();
   }, [company, department, mainCategory, type, selectedComputerComponent]);
 
@@ -82,14 +104,14 @@ const TransferReport = () => {
       alert("No data available for download.");
       return;
     }
-  
+
     // Define column headers
     const headers = [
-      "Registered Name", "Company", "Department", "Category", "Type", "Components", 
-      "Asset Name", "User Name", "Model", "Register Date", "Serial Number", 
+      "Registered Name", "Company", "Department", "Category", "Type", "Components",
+      "Asset Name", "User Name", "Model", "Register Date", "Serial Number",
       "Tracking ID"
     ];
-  
+
     // Map data to match column headers
     const data = filteredAssets.map(asset => ({
       "Registered Name": asset.name,
@@ -104,176 +126,136 @@ const TransferReport = () => {
       "Register Date": asset.assetUpdateDate,
       "Serial Number": asset.serialNumber,
       "Tracking ID": asset.trackingId,
-      
+
     }));
-  
+
     // Create worksheet with headers
     const ws = XLSX.utils.json_to_sheet(data, { header: headers, skipHeader: false });
-  
+
     // Create workbook
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Filtered Assets");
-  
+
     // Save file
     XLSX.writeFile(wb, "Filtered_Asset_Report.xlsx");
   };
-  
+
 
   return (
     <div>
-      <h1 className="assethead"style={{ marginTop: "20px" }}>Download Report</h1>
+      <h1 className="assethead" style={{ marginTop: "20px" }}>Download Transfer Report</h1>
       <p>
-        <Link to="/AdminDashboardPage">Dashboard</Link> / <Link to="/GetReport">Report Details</Link>
+        <Link to="/AdminDashboardPage">Dashboard</Link> / <Link to="/TransferAssetReport">Report Transfer Details</Link>
       </p>
 
       {/* Filters Section */}
       <div className="filters">
-        {/*<select value={company} onChange={(e) => setCompany(e.target.value)}>
-          <option value="">Select Company</option>
+
+
+        <input
+          className="cat1"
+          list="company-list"
+          value={company}
+          onChange={(e) => setCompany(e.target.value)}
+          placeholder="Select company"
+        />
+        <datalist id="company-list">
           {companies.map((com, index) => (
             <option key={index} value={com}>{com}</option>
           ))}
-        </select>*/}
 
-
-
+        </datalist>
 
         <input
-                className="cat1"
-                list="company-list"
-                value={company}
-                onChange={(e) => setCompany(e.target.value)}
-                placeholder="Select company"
-              />
-              <datalist id="company-list">
-                {companies.map((com, index) => (
-                  <option key={index} value={com}>{com}</option>
-                ))}
-
-              </datalist>
-
-
-
-        {/*<select value={department} onChange={(e) => setDepartment(e.target.value)}>
-          <option value="">Select Department</option>
+          className="cat1"
+          list="department-list"
+          value={department}
+          onChange={(e) => setDepartment(e.target.value)}
+          placeholder="Select department"
+        />
+        <datalist id="department-list">
           {departments.map((dep, index) => (
             <option key={index} value={dep}>{dep}</option>
           ))}
-        </select>*/}
 
-
+        </datalist>
 
         <input
-                className="cat1"
-                list="department-list"
-                value={department}
-                onChange={(e) => setDepartment(e.target.value)}
-                placeholder="Select department"
-              />
-              <datalist id="department-list">
-                {departments.map((dep, index) => (
-                  <option key={index} value={dep}>{dep}</option>
-                ))}
-
-              </datalist>
-
-
-
-       {/*} <select value={mainCategory} onChange={(e) => setMainCategory(e.target.value)}>
-          <option value="">Select Category</option>
+          className="cat1"
+          list="mainCategory-list"
+          value={mainCategory}
+          onChange={(e) => setMainCategory(e.target.value)}
+          placeholder="Select Category"
+        />
+        <datalist id="mainCategory-list">
           {mainCategories.map((cat, index) => (
             <option key={index} value={cat}>{cat}</option>
           ))}
-        </select>*/}
 
-
-        <input
-                className="cat1"
-                list="mainCategory-list"
-                value={mainCategory}
-                onChange={(e) => setMainCategory(e.target.value)}
-                placeholder="Select Category"
-              />
-              <datalist id="mainCategory-list">
-                {mainCategories.map((cat, index) => (
-                  <option key={index} value={cat}>{cat}</option>
-                ))}
-
-              </datalist>
+        </datalist>
 
 
 
 
-              {mainCategory && (
-  <>
-    <input
-      className="cat1"
-      list="type-list"
-      value={type}
-      onChange={(e) => setType(e.target.value)}
-      placeholder="Select type"
-    />
-    <datalist id="type-list">
-      {types.map((t, index) => (
-        <option key={index} value={t} />
-      ))}
-    </datalist>
-  </>
-)}
-
-
-
-
-{/*<input
-                className="cat1"
-                list="department-list"
-                value={department}
-                onChange={(e) => setDepartment(e.target.value)}
-                placeholder="Select Department"
-              />
-              <datalist id="department-list">
-                {departments.map((dep) => (
-                  <option key={dep} value={dep}>{dep}</option>
-                ))}
-
-              </datalist>*/}
+        {mainCategory && (
+          <>
+            <input
+              className="cat1"
+              list="type-list"
+              value={type}
+              onChange={(e) => setType(e.target.value)}
+              placeholder="Select type"
+            />
+            <datalist id="type-list">
+              {types.map((t, index) => (
+                <option key={index} value={t} />
+              ))}
+            </datalist>
+          </>
+        )}
 
 
 
 
 
 
-{type === "Computer" && (
-  <>
-    <input
-      className="cat1"
-      list="Component-list"
-      value={selectedComputerComponent}
-      onChange={(e) => setSelectedComputerComponent(e.target.value)}
-      placeholder="Select Component"
-    />
-    <datalist id="Component-list">
-      {computerComponentOptions.map((Ccom, index) => (
-        <option key={index} value={Ccom} />
-      ))}
-    </datalist>
-  </>
-)}
+
+
+
+
+
+        {type === "Computer" && (
+          <>
+            <input
+              className="cat1"
+              list="Component-list"
+              value={selectedComputerComponent}
+              onChange={(e) => setSelectedComputerComponent(e.target.value)}
+              placeholder="Select Component"
+            />
+            <datalist id="Component-list">
+              {computerComponentOptions.map((Ccom, index) => (
+                <option key={index} value={Ccom} />
+              ))}
+            </datalist>
+          </>
+        )}
 
       </div>
-      
+
       <div className="download-container">
-  <button onClick={downloadExcel} className="download-btn1">Report <i className="fas fa-download"></i></button>
-</div>
+        <button onClick={downloadExcel} className="download-btn1">Report <i className="fas fa-download"></i></button>
+      </div>
 
       {/* Display Filtered Results */}
       {filteredAssets.length > 0 ? (
         <div>
-          
+
           <table className="asset-table">
             <thead>
               <tr>
-                <th>Registered Name</th>
+                <th></th>
+                <th>Transfered Name/RegisterName</th>
                 <th>Company</th>
                 <th>Department</th>
                 <th>Category</th>
@@ -281,31 +263,60 @@ const TransferReport = () => {
                 <th>Asset Name</th>
                 <th>User Name</th>
                 <th>Model</th>
-                <th>Register Date</th>
+                <th>Transfer Date/Register Date</th>
                 <th>Serial Number</th>
                 <th>Tracking ID</th>
                 <th>Components</th>
+
               </tr>
             </thead>
             <tbody>
-              {filteredAssets.map((asset, index) => (
-                <tr key={index}>
-                  <td>{asset.name}</td>
-                  <td>{asset.company}</td>
-                  <td>{asset.department}</td>
-                  <td>{asset.mainCategory}</td>
-                  <td>{asset.type}</td>
-                  <td>{asset.assetName}</td>
-                  <td>{asset.assetUserName}</td>
-                  <td>{asset.assetModel}</td>
-                  <td>{asset.assetUpdateDate}</td>
-                  <td>{asset.serialNumber}</td>
-                  <td>{asset.trackingId}</td>
-                  <td>{asset.computerComponents}</td>
-                </tr>
-              ))}
+              {filteredAssets.map((asset, index) => {
+                const old = oldAssetDetails[asset.trackingId];
+                return (
+                  <React.Fragment key={index}>
+                    <tr>
+                      <td className="label-cell transfer">transferdetails</td>
+                      <td>{asset.name}</td>
+                      <td>{asset.company}</td>
+                      <td>{asset.department}</td>
+                      <td>{asset.mainCategory}</td>
+                      <td>{asset.type}</td>
+                      <td>{asset.assetName}</td>
+                      <td>{asset.assetUserName}</td>
+                      <td>{asset.assetModel}</td>
+                      <td>{asset.assetTransferDate}</td>
+                      <td>{asset.serialNumber}</td>
+                      <td>{asset.trackingId}</td>
+                      <td>{asset.computerComponents}</td>
+
+                    </tr>
+                    <tr>
+                      <td className="label-cell old">old details</td>
+                      <td>{old?.name || "-"}</td>
+
+
+                      <td>{old?.company || "-"}</td>
+                      <td>{old?.department || "-"}</td>
+                      <td>{old?.mainCategory || "-"}</td>
+                      <td>{old?.type || "-"}</td>
+                      <td>{old?.assetName || "-"}</td>
+                      <td>{old?.assetUserName || "-"}</td>
+                      <td>{old?.assetModel || "-"}</td>
+                      <td>{old?.assetUpdateDate || "-"}</td>
+                      <td>{old?.serialNumber || "-"}</td>
+                      <td>{old?.trackingId || "-"}</td>
+                      <td>{old?.computerComponents || "-"}</td>
+
+
+                    </tr>
+                  </React.Fragment>
+                );
+              })}
             </tbody>
           </table>
+
+
         </div>
       ) : (
         <p>No matching assets found.</p>

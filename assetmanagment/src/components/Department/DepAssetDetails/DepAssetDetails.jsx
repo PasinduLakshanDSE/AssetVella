@@ -190,7 +190,7 @@ const DepAssetDetails = () => {
                                             <td>{asset.assetName}</td>
                                             <td>{asset.assetUserName}</td>
                                             <td>{asset.assetModel}</td>
-                                            <td>{asset.assetUpdateDate}</td>
+                                           <td>{asset.isTransfer ? asset.assetTransferDate : asset.assetUpdateDate}</td>
                                             <td>{asset.serialNumber}</td>
                                             <td>{asset.trackingId}</td>
                                             <td>{asset.specialNote}</td>

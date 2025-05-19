@@ -67,9 +67,13 @@ const DashBoard = () => {
 
       <div className="dashboard">
         <div className="dashboard-header">
-          <h1 className="title">Dashboard</h1>
+        <h1 style={{ fontSize: "35px", textDecoration: "underline", marginBottom: "50px"}} className="title1">
+  Dashboard
+</h1>
+
+
           <p>
-            <Link to="/">Home</Link> / <Link to="/AdminDashboardPage">DashBoard</Link>
+            {/*<Link to="/">Home</Link> / <Link to="/AdminDashboardPage">DashBoard</Link>*/}
           </p>
         </div>
 

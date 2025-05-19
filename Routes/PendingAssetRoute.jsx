@@ -32,6 +32,11 @@ router.post("/verifyTransferAsset/:id", async (req, res) => {
     const assetData = asset.toObject();
     assetData.isTransfer = true;
 
+     // Ensure assetTransferDate exists
+    if (!assetData.assetTransferDate) {
+      assetData.assetTransferDate = new Date().toISOString().split("T")[0];
+    }
+
     const verifiedAsset = new AssetRegisterDetails(assetData);
     await verifiedAsset.save();
     await PendingTransferAsset.findByIdAndDelete(req.params.id);
