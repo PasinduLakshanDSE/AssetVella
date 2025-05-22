@@ -59,18 +59,36 @@ const TransferReport = () => {
               }
             }
           } else if (oldData) {
-            // If oldData is a single object
-            allHistory.push(oldData);
-            const newTrackID = oldData.trackingId;
-            const moreRes = await axios.get(`http://localhost:8000/api/beforeTransfer/getBeforeTransferAllDetails/${newTrackID}`);
-            const moreData = moreRes.data;
+  let currentData = oldData;
+const visitedTrackingIds = new Set(); // Prevent loops
 
-            if (Array.isArray(moreData)) {
-              allHistory.push(...moreData);
-            } else if (moreData) {
-              allHistory.push(moreData);
-            }
-          }
+while (currentData && !visitedTrackingIds.has(currentData.trackingId)) {
+  visitedTrackingIds.add(currentData.trackingId); // Mark as visited
+  allHistory.push(currentData);
+
+  const newTrackID = currentData.trackingId;
+
+  try {
+    const moreRes = await axios.get(`http://localhost:8000/api/beforeTransfer/getBeforeTransferAllDetails/${newTrackID}`);
+    const moreData = moreRes.data;
+
+    if (Array.isArray(moreData) && moreData.length > 0) {
+      currentData = moreData[0]; // continue with the first item
+    } else if (moreData && typeof moreData === 'object') {
+      currentData = moreData;
+    } else {
+      break;
+    }
+
+  } catch (error) {
+    console.error(`Error fetching history for ${newTrackID}:`, error);
+    break;
+  
+
+    }
+  }
+}
+
 
           oldDetailsMap[trackingId] = allHistory;
         } catch (err) {
@@ -140,7 +158,7 @@ useEffect(() => {
 
    const wb = XLSX.utils.book_new();
   const ws_data = [
-    ["Label", "Registered Name", "Company", "Department", "Category", "Type", "Asset Name", "User Name", "Model", "Transfer/Register Date", "Serial Number", "Tracking ID", "Components"]
+    ["Label", "Registered Name", "Company", "Department", "Category", "Type", "Asset Name", "User Name", "Model","Register Date", "Transfer Date", "Serial Number", "Tracking ID", "Components"]
   ];
 
   filteredAssets.forEach(asset => {
@@ -150,7 +168,7 @@ useEffect(() => {
   ws_data.push([
     "Transferred", asset.name, asset.company, asset.department,
     asset.mainCategory, asset.type, asset.assetName, asset.assetUserName,
-    asset.assetModel, asset.assetTransferDate, asset.serialNumber,
+    asset.assetModel, asset.assetUpdateDate, asset.assetTransferDate, asset.serialNumber,
     asset.trackingId, asset.computerComponents || "-"
   ]);
 
@@ -159,7 +177,7 @@ useEffect(() => {
     ws_data.push([
       `Old ${i + 1}`, old?.name || "-", old?.company || "-", old?.department || "-",
       old?.mainCategory || "-", old?.type || "-", old?.assetName || "-",
-      old?.assetUserName || "-", old?.assetModel || "-", old?.assetUpdateDate || "-",
+      old?.assetUserName || "-", old?.assetModel || "-", old?.assetUpdateDate || "-", old?.assetTransferDate || "-",
       old?.serialNumber || "-", old?.trackingId || "-", old?.computerComponents || "-"
     ]);
   });
@@ -328,7 +346,8 @@ useEffect(() => {
                 <th>Asset Name</th>
                 <th>User Name</th>
                 <th>Model</th>
-                <th>Transfer Date/Register Date</th>
+                <th>Register Date</th>
+                <th>Transfer Date</th>
                 <th>Serial Number</th>
                 <th>Tracking ID</th>
                 <th>Components</th>
@@ -354,6 +373,7 @@ useEffect(() => {
         <td>{asset.assetName}</td>
         <td>{asset.assetUserName}</td>
         <td>{asset.assetModel}</td>
+        <td>{asset.assetUpdateDate}</td>
         <td>{asset.assetTransferDate}</td>
         <td>{asset.serialNumber}</td>
         <td>{asset.trackingId}</td>
@@ -372,7 +392,8 @@ useEffect(() => {
           <td>{old?.assetName || "-"}</td>
           <td>{old?.assetUserName || "-"}</td>
           <td>{old?.assetModel || "-"}</td>
-          <td>{old?.assetUpdateDate || "-"}</td>
+          <td>{old?.assetUpdateDate}</td>
+          <td>{old?.assetTransferDate || "-"}</td>
           <td>{old?.serialNumber || "-"}</td>
           <td>{old?.trackingId || "-"}</td>
           <td>{old?.computerComponents || "-"}</td>

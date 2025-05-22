@@ -35,6 +35,10 @@ const BeforeTransferAssetSchema = mongoose.Schema(
         type: String,
         required: false,
       },
+      assetTransferDate: {
+        type: String,
+        require: false,
+      },
       serialNumber: {
         type: String,
         required: false,
