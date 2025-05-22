@@ -28,50 +28,83 @@ const TransferReport = () => {
   }, []);
 
   const fetchAssets = async () => {
-    try {
-      const response = await axios.get("http://localhost:8000/api/AssetRegisterDetails/getAssetDetails");
-      const allAssets = response.data;
-      const transferAssets = allAssets.filter(asset => asset.isTransfer === true);
-      setAssetRegisterDetails(transferAssets);
+  try {
+    const response = await axios.get("http://localhost:8000/api/AssetRegisterDetails/getAssetDetails");
+    const allAssets = response.data;
+    const transferAssets = allAssets.filter(asset => asset.isTransfer === true);
+    setAssetRegisterDetails(transferAssets);
 
-      // Fetch old asset details for each transferred asset
-      const oldDetailsMap = {};
-      await Promise.all(
-        transferAssets.map(async (asset) => {
-          const trackingId = asset.trackingId;
-          try {
-            const res = await axios.get(`http://localhost:8000/api/beforeTransfer/getBeforeTransferDetails/${trackingId}`);
-            oldDetailsMap[trackingId] = res.data;
-          } catch (err) {
-            console.error(`Error fetching old data for ${asset.trackingId}`, err);
+    // Fetch old asset details for each transferred asset
+    const oldDetailsMap = {};
+
+    await Promise.all(
+      transferAssets.map(async (asset) => {
+        const trackingId = asset.trackingId;
+        try {
+          const res = await axios.get(`http://localhost:8000/api/beforeTransfer/getBeforeTransferDetails/${trackingId}`);
+          const oldData = res.data;
+
+          const allHistory = [];
+
+          if (Array.isArray(oldData)) {
+            for (const old of oldData) {
+              const newTrackID = old.trackingId;
+              const moreRes = await axios.get(`http://localhost:8000/api/beforeTransfer/getBeforeTransferAllDetails/${newTrackID}`);
+              const moreData = moreRes.data;
+
+              if (Array.isArray(moreData)) {
+                allHistory.push(...moreData);
+              } else if (moreData) {
+                allHistory.push(moreData);
+              }
+            }
+          } else if (oldData) {
+            // If oldData is a single object
+            allHistory.push(oldData);
+            const newTrackID = oldData.trackingId;
+            const moreRes = await axios.get(`http://localhost:8000/api/beforeTransfer/getBeforeTransferAllDetails/${newTrackID}`);
+            const moreData = moreRes.data;
+
+            if (Array.isArray(moreData)) {
+              allHistory.push(...moreData);
+            } else if (moreData) {
+              allHistory.push(moreData);
+            }
           }
-        })
-      );
-      setOldAssetDetails(oldDetailsMap);
 
-      // Continue extracting unique values
-      const uniqueCompanies = [...new Set(response.data.map(asset => asset.company))];
-      const uniqueDepartments = [...new Set(response.data.map(asset => asset.department))];
-      const uniqueCategories = [...new Set(response.data.map(asset => asset.mainCategory))];
-      const uniqueComponents = [...new Set(response.data.map(asset => asset.computerComponents))].filter(Boolean);
-
-      setCompanies(uniqueCompanies);
-      setDepartments(uniqueDepartments);
-      setMainCategories(uniqueCategories);
-      setComputerComponentOptions(uniqueComponents);
-
-      const groupedTypes = response.data.reduce((acc, asset) => {
-        if (!acc[asset.mainCategory]) {
-          acc[asset.mainCategory] = new Set();
+          oldDetailsMap[trackingId] = allHistory;
+        } catch (err) {
+          console.error(`Error fetching old data for ${trackingId}`, err);
         }
-        acc[asset.mainCategory].add(asset.type);
-        return acc;
-      }, {});
-      setAllTypes(groupedTypes);
-    } catch (error) {
-      console.error("Error fetching asset details:", error);
-    }
-  };
+      })
+    );
+
+    setOldAssetDetails(oldDetailsMap);
+
+    // Continue extracting unique values
+    const uniqueCompanies = [...new Set(allAssets.map(asset => asset.company))];
+    const uniqueDepartments = [...new Set(allAssets.map(asset => asset.department))];
+    const uniqueCategories = [...new Set(allAssets.map(asset => asset.mainCategory))];
+    const uniqueComponents = [...new Set(allAssets.map(asset => asset.computerComponents))].filter(Boolean);
+
+    setCompanies(uniqueCompanies);
+    setDepartments(uniqueDepartments);
+    setMainCategories(uniqueCategories);
+    setComputerComponentOptions(uniqueComponents);
+
+    const groupedTypes = allAssets.reduce((acc, asset) => {
+      if (!acc[asset.mainCategory]) {
+        acc[asset.mainCategory] = new Set();
+      }
+      acc[asset.mainCategory].add(asset.type);
+      return acc;
+    }, {});
+    setAllTypes(groupedTypes);
+  } catch (error) {
+    console.error("Error fetching asset details:", error);
+  }
+};
+
 
 
 
@@ -111,24 +144,26 @@ useEffect(() => {
   ];
 
   filteredAssets.forEach(asset => {
-    const old = oldAssetDetails[asset.trackingId];
+  const history = oldAssetDetails[asset.trackingId] || [];
 
-    // Transferred
-    ws_data.push([
-      "Transferred", asset.name, asset.company, asset.department,
-      asset.mainCategory, asset.type, asset.assetName, asset.assetUserName,
-      asset.assetModel, asset.assetTransferDate, asset.serialNumber,
-      asset.trackingId, asset.computerComponents || "-"
-    ]);
+  // Transferred
+  ws_data.push([
+    "Transferred", asset.name, asset.company, asset.department,
+    asset.mainCategory, asset.type, asset.assetName, asset.assetUserName,
+    asset.assetModel, asset.assetTransferDate, asset.serialNumber,
+    asset.trackingId, asset.computerComponents || "-"
+  ]);
 
-    // Old
+  // All Old Records
+  history.forEach((old, i) => {
     ws_data.push([
-      "Old", old?.name || "-", old?.company || "-", old?.department || "-",
+      `Old ${i + 1}`, old?.name || "-", old?.company || "-", old?.department || "-",
       old?.mainCategory || "-", old?.type || "-", old?.assetName || "-",
       old?.assetUserName || "-", old?.assetModel || "-", old?.assetUpdateDate || "-",
       old?.serialNumber || "-", old?.trackingId || "-", old?.computerComponents || "-"
     ]);
   });
+});
 
   const ws = XLSX.utils.aoa_to_sheet(ws_data);
 
@@ -301,48 +336,52 @@ useEffect(() => {
               </tr>
             </thead>
             <tbody>
+
+
               {filteredAssets.map((asset, index) => {
-                const old = oldAssetDetails[asset.trackingId];
-                return (
-                  <React.Fragment key={index}>
-                    <tr>
-                      <td className="label-cell transfer">transferdetails</td>
-                      <td>{asset.name}</td>
-                      <td>{asset.company}</td>
-                      <td>{asset.department}</td>
-                      <td>{asset.mainCategory}</td>
-                      <td>{asset.type}</td>
-                      <td>{asset.assetName}</td>
-                      <td>{asset.assetUserName}</td>
-                      <td>{asset.assetModel}</td>
-                      <td>{asset.assetTransferDate}</td>
-                      <td>{asset.serialNumber}</td>
-                      <td>{asset.trackingId}</td>
-                      <td>{asset.computerComponents}</td>
+  const history = oldAssetDetails[asset.trackingId] || []; // now it's an array
 
-                    </tr>
-                    <tr>
-                      <td className="label-cell old">old details</td>
-                      <td>{old?.name || "-"}</td>
+  return (
+    <React.Fragment key={index}>
+      {/* Current Transferred Row */}
+      <tr>
+        <td className="label-cell transfer">Transferred</td>
+        <td>{asset.name}</td>
+        <td>{asset.company}</td>
+        <td>{asset.department}</td>
+        <td>{asset.mainCategory}</td>
+        <td>{asset.type}</td>
+        <td>{asset.assetName}</td>
+        <td>{asset.assetUserName}</td>
+        <td>{asset.assetModel}</td>
+        <td>{asset.assetTransferDate}</td>
+        <td>{asset.serialNumber}</td>
+        <td>{asset.trackingId}</td>
+        <td>{asset.computerComponents || "-"}</td>
+      </tr>
 
+      {/* All Historical Transfers */}
+      {history.map((old, i) => (
+        <tr key={`history-${index}-${i}`}>
+          <td className="label-cell old">Old {i + 1}</td>
+          <td>{old?.name || "-"}</td>
+          <td>{old?.company || "-"}</td>
+          <td>{old?.department || "-"}</td>
+          <td>{old?.mainCategory || "-"}</td>
+          <td>{old?.type || "-"}</td>
+          <td>{old?.assetName || "-"}</td>
+          <td>{old?.assetUserName || "-"}</td>
+          <td>{old?.assetModel || "-"}</td>
+          <td>{old?.assetUpdateDate || "-"}</td>
+          <td>{old?.serialNumber || "-"}</td>
+          <td>{old?.trackingId || "-"}</td>
+          <td>{old?.computerComponents || "-"}</td>
+        </tr>
+      ))}
+    </React.Fragment>
+  );
+})}
 
-                      <td>{old?.company || "-"}</td>
-                      <td>{old?.department || "-"}</td>
-                      <td>{old?.mainCategory || "-"}</td>
-                      <td>{old?.type || "-"}</td>
-                      <td>{old?.assetName || "-"}</td>
-                      <td>{old?.assetUserName || "-"}</td>
-                      <td>{old?.assetModel || "-"}</td>
-                      <td>{old?.assetUpdateDate || "-"}</td>
-                      <td>{old?.serialNumber || "-"}</td>
-                      <td>{old?.trackingId || "-"}</td>
-                      <td>{old?.computerComponents || "-"}</td>
-
-
-                    </tr>
-                  </React.Fragment>
-                );
-              })}
             </tbody>
           </table>
 

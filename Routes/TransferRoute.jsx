@@ -130,23 +130,40 @@ router.get("/getPendingTransferAssetDetails",async(req,res)=>{
 })
 
 
+
+
 // Route: GET /api/beforeTransfer/getBeforeTransferDetails/:newtrackingId
 router.get("/getBeforeTransferDetails/:newtrackingId", async (req, res) => {
   const { newtrackingId } = req.params;
 
   try {
-    const beforeTransfer = await BeforeTransferAsset.findOne({ newtrackingId });
-
-    if (!beforeTransfer) {
+    const asset = await BeforeTransferAsset.findOne({ newtrackingId });
+    if (!asset) {
       return res.status(404).json({ message: "No matching asset found for the provided tracking ID." });
     }
-
-    res.status(200).json(beforeTransfer);
+    res.status(200).json(asset);
   } catch (error) {
-    console.error("Error fetching before asset details:", error);
+    console.error("Error fetching before transfer details:", error);
     res.status(500).json({ error: "Server error. Unable to retrieve asset." });
   }
 });
+
+// Route: GET /api/beforeTransfer/getBeforeTransferAllDetails/:newtrackingId
+router.get("/getBeforeTransferAllDetails/:newtrackingId", async (req, res) => {
+  const { newtrackingId } = req.params;
+
+  try {
+    const asset = await BeforeTransferAsset.find({ newtrackingId }); // Use `find` if expecting multiple
+    if (!asset || asset.length === 0) {
+      return res.status(404).json({ message: "No matching assets found for the provided tracking ID." });
+    }
+    res.status(200).json(asset); // Send array if using find
+  } catch (error) {
+    console.error("Error fetching before transfer all details:", error);
+    res.status(500).json({ error: "Server error. Unable to retrieve assets." });
+  }
+});
+
 
 
 
