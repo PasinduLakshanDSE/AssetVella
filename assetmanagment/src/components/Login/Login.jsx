@@ -31,7 +31,7 @@ const Login = () => {
     if (!validateForm(e)) return;
   
     try {
-      const response = await axios.post('/api/users/login', {
+      const response = await axios.post('http://localhost:8000/api/users/login', {
         username,
         password,
       });
