@@ -31,7 +31,7 @@ const Login = () => {
     if (!validateForm(e)) return;
   
     try {
-      const response = await axios.post('http://18.139.160.129:3000//api/users/login', {
+      const response = await axios.post('http://18.139.160.129:3000/api/users/login', {
         username,
         password,
       });
