@@ -24,7 +24,7 @@ const DashBoard = () => {
 
 
         // Fetch all users
-        const usersResponse = await axios.get("http://localhost:8000/api/users/getallUsers");
+        const usersResponse = await axios.get("http://18.139.160.129:8000/api/users/getallUsers");
 
         // Filter users with destination === 'admin'
         const adminUsers = usersResponse.data.filter(user => user.selectedOption === "Admin");
