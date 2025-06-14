@@ -13,7 +13,7 @@ const QRVIEW = () => {
     const fetchQRData = async () => {
       try {
         console.log(`Fetching data for Tracking ID: ${trackingId}`);
-        const response = await axios.get(`http://localhost:8000/api/AssetRegisterDetails/${trackingId}`);
+        const response = await axios.get(`http://18.139.160.129:8000/api/AssetRegisterDetails/${trackingId}`);
 
         if (response.data) {
           setQrData(response.data);
