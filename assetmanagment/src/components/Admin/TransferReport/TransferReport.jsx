@@ -29,7 +29,7 @@ const TransferReport = () => {
 
   const fetchAssets = async () => {
   try {
-    const response = await axios.get("http://localhost:8000/api/AssetRegisterDetails/getAssetDetails");
+    const response = await axios.get("http://18.139.160.129:8000/api/AssetRegisterDetails/getAssetDetails");
     const allAssets = response.data;
     const transferAssets = allAssets.filter(asset => asset.isTransfer === true);
     setAssetRegisterDetails(transferAssets);
@@ -41,7 +41,7 @@ const TransferReport = () => {
       transferAssets.map(async (asset) => {
         const trackingId = asset.trackingId;
         try {
-          const res = await axios.get(`http://localhost:8000/api/beforeTransfer/getBeforeTransferDetails/${trackingId}`);
+          const res = await axios.get(`http://18.139.160.129:8000/api/beforeTransfer/getBeforeTransferDetails/${trackingId}`);
           const oldData = res.data;
 
           const allHistory = [];
@@ -49,7 +49,7 @@ const TransferReport = () => {
           if (Array.isArray(oldData)) {
             for (const old of oldData) {
               const newTrackID = old.trackingId;
-              const moreRes = await axios.get(`http://localhost:8000/api/beforeTransfer/getBeforeTransferAllDetails/${newTrackID}`);
+              const moreRes = await axios.get(`http://18.139.160.129:8000/api/beforeTransfer/getBeforeTransferAllDetails/${newTrackID}`);
               const moreData = moreRes.data;
 
               if (Array.isArray(moreData)) {
@@ -69,7 +69,7 @@ while (currentData && !visitedTrackingIds.has(currentData.trackingId)) {
   const newTrackID = currentData.trackingId;
 
   try {
-    const moreRes = await axios.get(`http://localhost:8000/api/beforeTransfer/getBeforeTransferAllDetails/${newTrackID}`);
+    const moreRes = await axios.get(`http://18.139.160.129:8000/api/beforeTransfer/getBeforeTransferAllDetails/${newTrackID}`);
     const moreData = moreRes.data;
 
     if (Array.isArray(moreData) && moreData.length > 0) {

@@ -15,7 +15,7 @@ const Users = () => {
   // Fetch users from the server
   const fetchUsers = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/users/getallUsers");
+      const response = await axios.get("http://18.139.160.129:8000/api/users/getallUsers");
       setUsers(response.data);
     } catch (error) {
       console.error("Error fetching users:", error);
@@ -30,7 +30,7 @@ const Users = () => {
     const confirmLogout = window.confirm("Are you sure you want to Block?");
     if (confirmLogout) {
       try {
-        await axios.put(`http://localhost:8000/api/users/block/${id}`);
+        await axios.put(`http://18.139.160.129:8000/api/users/block/${id}`);
         alert("User blocked successfully!");
         fetchUsers(); // Refresh the list after blocking
       } catch (error) {
@@ -44,7 +44,7 @@ const Users = () => {
     const confirmLogout = window.confirm("Are you sure you want to UnBlock?");
     if (confirmLogout) {
       try {
-        await axios.put(`http://localhost:8000/api/users/unblock/${id}`);
+        await axios.put(`http://18.139.160.129:8000/api/users/unblock/${id}`);
         alert("User unblocked successfully!");
         fetchUsers(); // Refresh the list after unblocking
       } catch (error) {
@@ -61,7 +61,7 @@ const Users = () => {
 
   const handleUpdate = async (updatedUser) => {
     try {
-      const response = await axios.put(`http://localhost:8000/api/users/${updatedUser._id}`, updatedUser);
+      const response = await axios.put(`http://18.139.160.129:8000/api/users/${updatedUser._id}`, updatedUser);
       if (response.status === 200) {
         alert("User updated successfully!");
         fetchUsers(); // Refresh the list after update

@@ -74,7 +74,7 @@ const AssetRegister = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/categories/getCategory");
+      const response = await axios.get("http://18.139.160.129:8000/api/categories/getCategory");
       setCategories(response.data);
     } catch (error) {
       console.error("Error fetching categories:", error);
@@ -159,7 +159,7 @@ const AssetRegister = () => {
       items.forEach((item) => {
         if (item.asset) {
           const id = generateTrackingId(item.serial); // Generate a unique tracking ID
-          const qrData = `http://localhost:3000/QRView/${id}`;
+          const qrData = `http://18.139.160.129:3000/QRView/${id}`;
 
           //const qrData= `http://localhost:3000/QRView/${id}`;
 
@@ -185,7 +185,7 @@ const AssetRegister = () => {
         assetModel,
         specialNote,
       });*/
-      const qrData = `http://localhost:3000/QRView/${id}`;
+      const qrData = `http://18.139.160.129:3000/QRView/${id}`;
       qrDataArray.push({ qrData, trackingId: id });
     }
 
@@ -333,7 +333,7 @@ const AssetRegister = () => {
               computerComponents: component.label, // Label component type
             };
 
-            await axios.post("http://localhost:8000/api/PendingAssetRegisterDetails", assetData);
+            await axios.post("http://18.139.160.129:8000/api/PendingAssetRegisterDetails", assetData);
           }
         }
       } else {
@@ -353,7 +353,7 @@ const AssetRegister = () => {
           computerComponents,
         };
 
-        await axios.post("http://localhost:8000/api/PendingAssetRegisterDetails", assetData);
+        await axios.post("http://18.139.160.129:8000/api/PendingAssetRegisterDetails", assetData);
       }
 
       alert("Assets submitted successfully!");

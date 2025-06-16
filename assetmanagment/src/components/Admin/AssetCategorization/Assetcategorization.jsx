@@ -64,7 +64,7 @@ const Categorization = () => {
     };
 
     try {
-      const response = await axios.post("http://localhost:8000/api/categories", payload);
+      const response = await axios.post("http://18.139.160.129:8000/api/categories", payload);
       alert(response.data.message); // Success message
       // Reset form
       setCategory("");

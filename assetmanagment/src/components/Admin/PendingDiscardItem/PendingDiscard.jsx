@@ -19,7 +19,7 @@ const PendingDiscardAsset = () => {
     }, []);
 
     const fetchAssets = () => {
-        axios.get("http://localhost:8000/api/PendingAsset/getPendingDiscardAsset")
+        axios.get("http://18.139.160.129:8000/api/PendingAsset/getPendingDiscardAsset")
             .then(response => setAssetRegisterDetails(response.data))
             .catch(error => console.error("Error fetching asset details:", error));
     };

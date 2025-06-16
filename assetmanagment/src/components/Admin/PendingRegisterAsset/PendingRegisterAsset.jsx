@@ -21,14 +21,14 @@ const PendingAssetDetails = () => {
 
     const fetchRegisterAssets = () => {
         axios
-            .get("http://localhost:8000/api/PendingAssetRegisterDetails/getPendingAssetDetails")
+            .get("http://18.139.160.129:8000/api/PendingAssetRegisterDetails/getPendingAssetDetails")
             .then((response) => setAssetRegisterDetails(response.data))
             .catch((error) => console.error("Error fetching register asset details:", error));
     };
 
     const fetchTransferAssets = () => {
         axios
-            .get("http://localhost:8000/api/transfer/getPendingTransferAssetDetails")
+            .get("http://18.139.160.129:8000/api/transfer/getPendingTransferAssetDetails")
             .then((response) => setTransferAssetDetails(response.data))
             .catch((error) => console.error("Error fetching transfer asset details:", error));
     };

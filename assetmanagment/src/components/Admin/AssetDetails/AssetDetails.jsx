@@ -19,7 +19,7 @@ const AssetDetails = () => {
     }, []);
 
     const fetchAssets = () => {
-        axios.get("http://localhost:8000/api/AssetRegisterDetails/getAssetDetails")
+        axios.get("http://18.139.160.129:8000/api/AssetRegisterDetails/getAssetDetails")
             .then(response => setAssetRegisterDetails(response.data))
             .catch(error => console.error("Error fetching asset details:", error));
     };
@@ -33,7 +33,7 @@ const AssetDetails = () => {
 
     // Update an existing asset
     const handleUpdateAsset = (id, updatedAsset) => {
-        axios.put(`http://localhost:8000/api/AssetRegisterDetails/updateAsset/${id}`, updatedAsset)
+        axios.put(`http://18.139.160.129:8000/api/AssetRegisterDetails/updateAsset/${id}`, updatedAsset)
             .then(() => {
                 fetchAssets();
                 setEditingAsset(null);
@@ -47,10 +47,10 @@ const AssetDetails = () => {
 
     if (window.confirm("Are you sure you want to delete this asset?")) {
         // Step 1: Post the asset to another collection
-        axios.post("http://localhost:8000/api/DeletedAssets/add", assetToDelete)
+        axios.post("http://18.139.160.129:8000/api/DeletedAssets/add", assetToDelete)
             .then(() => {
                 // Step 2: Delete from current collection after successful post
-                axios.delete(`http://localhost:8000/api/AssetRegisterDetails/deleteAsset/${id}`)
+                axios.delete(`http://18.139.160.129:8000/api/AssetRegisterDetails/deleteAsset/${id}`)
                     .then(() => fetchAssets())
                     .catch(error => console.error("Error deleting asset:", error));
             })
@@ -61,7 +61,7 @@ const AssetDetails = () => {
 
 
     const handleDownloadQR = (trackingId) => {
-        const URL = `http://localhost:3000/QRView/${trackingId}`;
+        const URL = `http://18.139.160.129:3000/QRView/${trackingId}`;
         const canvas = document.createElement("canvas");
         const ctx = canvas.getContext("2d");
         const qrSize = 80;
