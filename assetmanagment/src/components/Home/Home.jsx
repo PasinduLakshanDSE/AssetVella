@@ -42,7 +42,7 @@ const Home = () => {
       </section>
 {/* Features Section */}
 <section id="features" className="features">
-  <h2>Our Features</h2>
+  <h2>Our Features 2</h2>
   <div className="feature-cards">
     <div className="feature-card">
       <img src="/home1.jpg" alt="Asset Tracking" className="feature-icon" />
