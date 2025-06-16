@@ -29,7 +29,7 @@ const CompanyDashBoard = () => {
 
 
         // Fetch all registered users
-        const userResponse = await axios.get("http://localhost:8000/api/users/getallUsers");
+        const userResponse = await axios.get("http://18.139.160.129:8000/api/users/getallUsers");
         const allUsers = userResponse.data;
 
         // Find the user that matches the current username
@@ -41,7 +41,7 @@ const CompanyDashBoard = () => {
         }
 
         // Fetch asset details
-        const assetResponse = await axios.get("http://localhost:8000/api/AssetRegisterDetails/getAssetDetails2");
+        const assetResponse = await axios.get("http://18.139.160.129:8000/api/AssetRegisterDetails/getAssetDetails2");
         const filteredAssets = assetResponse.data.filter(asset => asset.company === userData.companyName);
 
         setAsset(filteredAssets); // Only set assets that match the company
@@ -49,7 +49,7 @@ const CompanyDashBoard = () => {
 
 
         // Fetch all users
-        const usersResponse = await axios.get("http://localhost:8000/api/users/getallUsers");
+        const usersResponse = await axios.get("http://18.139.160.129:8000/api/users/getallUsers");
 
         // Filter users with destination === 'admin'
         /* const adminUsers = usersResponse.data.filter(user => user.selectedOption === "Admin");

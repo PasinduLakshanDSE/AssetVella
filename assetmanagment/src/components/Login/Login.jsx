@@ -73,13 +73,13 @@ const Login = () => {
     setError(""); // Clear any previous errors when moving to the next step
     setShowError(false);
     try {
-        const response = await axios.post('http://localhost:8000/api/users/request', { username });
+        const response = await axios.post('http://18.139.160.129:8000/api/users/request', { username });
 
         if (response.data.message === "User Correct") {
             const otpCode = Math.floor(100000 + Math.random() * 900000).toString(); // Generate OTP
 
             // Send OTP to backend for saving
-            await axios.post('http://localhost:8000/api/users/otp', { username, otp: otpCode });
+            await axios.post('http://18.139.160.129:8000/api/users/otp', { username, otp: otpCode });
 
             //setUsername(""); // Clear username after request
             setStep(2);
@@ -99,7 +99,7 @@ const Login = () => {
     setError(""); // Clear any previous errors when moving to the next step
     setShowError(false);
     try {
-      await axios.post('http://localhost:8000/api/users/verify', { username, otp });
+      await axios.post('http://18.139.160.129:8000/api/users/verify', { username, otp });
       setStep(3);
     } catch (error) {
       setError("Invalid OTP.");
@@ -111,7 +111,7 @@ const Login = () => {
     setError(""); // Clear any previous errors when moving to the next step
     setShowError(false);
     try {
-      await axios.post('http://localhost:8000/api/users/reset-password', { username, newPassword });
+      await axios.post('http://18.139.160.129:8000/api/users/reset-password', { username, newPassword });
       setShowForgotPassword(false);
       setStep(1);
     } catch (error) {

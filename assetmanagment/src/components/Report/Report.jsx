@@ -26,7 +26,7 @@ const Report = () => {
 
   const fetchAssets = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/AssetRegisterDetails/getAssetDetails");
+      const response = await axios.get("http://18.139.160.129:8000/api/AssetRegisterDetails/getAssetDetails");
       setAssetRegisterDetails(response.data);
 
       // Extract unique values

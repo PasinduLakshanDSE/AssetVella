@@ -30,7 +30,7 @@ const DepAssetDetails = () => {
     
         try {
             // Fetch all registered users
-            const userResponse = await axios.get("http://localhost:8000/api/users/getallUsers");
+            const userResponse = await axios.get("http://18.139.160.129:8000/api/users/getallUsers");
             const allUsers = userResponse.data;
     
             // Find the user that matches the current username
@@ -42,7 +42,7 @@ const DepAssetDetails = () => {
             }
     
             // Fetch asset details
-            const assetResponse = await axios.get("http://localhost:8000/api/AssetRegisterDetails/getAssetDetails2");
+            const assetResponse = await axios.get("http://18.139.160.129:8000/api/AssetRegisterDetails/getAssetDetails2");
             const filteredAssets = assetResponse.data.filter(asset => asset.company === userData.companyName && asset.department === userData.department);
     
             setAssetRegisterDetails(filteredAssets); // Only set assets that match the company
@@ -63,7 +63,7 @@ const DepAssetDetails = () => {
 
     // Update an existing asseta
     const handleUpdateAsset = (id, updatedAsset) => {
-        axios.put(`http://localhost:8000/api/AssetRegisterDetails/updateAsset/${id}`, updatedAsset)
+        axios.put(`http://18.139.160.129:8000/api/AssetRegisterDetails/updateAsset/${id}`, updatedAsset)
             .then(() => {
                 fetchAssets();
                 setEditingAsset(null);
@@ -74,7 +74,7 @@ const DepAssetDetails = () => {
     // Delete an asset
     const handleDeleteAsset = (id) => {
         if (window.confirm("Are you sure you want to delete this asset?")) {
-            axios.delete(`http://localhost:8000/api/AssetRegisterDetails/deleteAsset/${id}`)
+            axios.delete(`http://18.139.160.129:8000/api/AssetRegisterDetails/deleteAsset/${id}`)
                 .then(() => fetchAssets())
                 .catch(error => console.error("Error deleting asset:", error));
         }
@@ -82,7 +82,7 @@ const DepAssetDetails = () => {
 
 
     const handleDownloadQR = (trackingId) => {
-        const URL = `http://localhost:3000/QRView/${trackingId}`;
+        const URL = `http://18.139.160.129:3000/QRView/${trackingId}`;
         const canvas = document.createElement("canvas");
         const ctx = canvas.getContext("2d");
         const qrSize = 80;

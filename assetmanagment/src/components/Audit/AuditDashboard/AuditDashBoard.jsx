@@ -16,20 +16,20 @@ const AuditDashBoard = () => {
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        const AssetResponse = await axios.get("http://localhost:8000/api/AssetRegisterDetails/getAssetDetails")
+        const AssetResponse = await axios.get("http://18.139.160.129:8000/api/AssetRegisterDetails/getAssetDetails")
         setAsset(AssetResponse.data);
 
 
 
 
-        const PendingAsset = await axios.get("http://localhost:8000/api/PendingAssetRegisterDetails/getPendingAssetDetails");
+        const PendingAsset = await axios.get("http://18.139.160.129:8000/api/PendingAssetRegisterDetails/getPendingAssetDetails");
         setPendingAsset(PendingAsset.data.length);
 
 
-        const PendingDiscardAsset = await axios.get("http://localhost:8000/api/PendingAsset/getPendingDiscardAsset");
+        const PendingDiscardAsset = await axios.get("http://18.139.160.129:8000/api/PendingAsset/getPendingDiscardAsset");
         setPendingDiscardAsset(PendingDiscardAsset.data.length);
 
-const PendingTransferAsset = await axios.get("http://localhost:8000/api/transfer/getPendingTransferAssetDetails");
+const PendingTransferAsset = await axios.get("http://18.139.160.129:8000/api/transfer/getPendingTransferAssetDetails");
 setPendingTransferAsset(PendingTransferAsset.data.length);
 
 

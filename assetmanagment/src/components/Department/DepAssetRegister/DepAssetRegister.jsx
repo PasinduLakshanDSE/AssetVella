@@ -73,7 +73,7 @@ const DepAssetRegister = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/categories/getCategory");
+      const response = await axios.get("http://18.139.160.129:8000/api/categories/getCategory");
       setCategories(response.data);
     } catch (error) {
       console.error("Error fetching categories:", error);
@@ -153,7 +153,7 @@ const DepAssetRegister = () => {
       items.forEach((item) => {
         if (item.asset) {
           const id = generateTrackingId(item.serial); // Generate a unique tracking ID
-          const qrData = `http://localhost:3000/QRView/${id}`;
+          const qrData = `http://18.139.160.129:3000/QRView/${id}`;
 
           //const qrData= `http://localhost:3000/QRView/${id}`;
 
@@ -179,7 +179,7 @@ const DepAssetRegister = () => {
         assetModel,
         specialNote,
       });*/
-      const qrData = `http://localhost:3000/QRView/${id}`;
+      const qrData = `http://18.139.160.129:3000/QRView/${id}`;
       qrDataArray.push({ qrData, trackingId: id });
     }
 
@@ -285,7 +285,7 @@ const DepAssetRegister = () => {
 
     try {
       // Fetch all registered users
-      const userResponse = await axios.get("http://localhost:8000/api/users/getallUsers");
+      const userResponse = await axios.get("http://18.139.160.129:8000/api/users/getallUsers");
       const allUsers = userResponse.data;
 
       // Find the user that matches the current username
@@ -366,7 +366,7 @@ const DepAssetRegister = () => {
               computerComponents: component.label, // Label component type
             };
 
-            await axios.post("http://localhost:8000/api/PendingAssetRegisterDetails", assetData);
+            await axios.post("http://18.139.160.129:8000/api/PendingAssetRegisterDetails", assetData);
           }
         }
       } else {
@@ -386,7 +386,7 @@ const DepAssetRegister = () => {
           computerComponents,
         };
 
-        await axios.post("http://localhost:8000/api/PendingAssetRegisterDetails", assetData);
+        await axios.post("http://18.139.160.129:8000/api/PendingAssetRegisterDetails", assetData);
       }
 
       alert("Assets submitted successfully!");

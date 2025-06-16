@@ -19,7 +19,7 @@ const PendingDiscardItem = () => {
     }, []);
 
     const fetchAssets = () => {
-        axios.get("http://localhost:8000/api/PendingAsset/getPendingDiscardAsset")
+        axios.get("http://18.139.160.129:8000/api/PendingAsset/getPendingDiscardAsset")
             .then(response => setAssetRegisterDetails(response.data))
             .catch(error => console.error("Error fetching asset details:", error));
     };
@@ -56,7 +56,7 @@ const PendingDiscardItem = () => {
 
     const handleVerifyDeleteAsset = (id) => {
         if (window.confirm("Are you sure you want to Discard this asset?")) {
-          axios.delete(`http://localhost:8000/api/PendingAsset/discardAsset/${id}`)
+          axios.delete(`http://18.139.160.129:8000/api/PendingAsset/discardAsset/${id}`)
             .then(() => {
               alert("Asset Discard successfully!");
               fetchAssets(); // Refresh the pending list

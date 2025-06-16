@@ -26,14 +26,14 @@ const PendingAsset = () => {
 
     const fetchRegisterAssets = () => {
         axios
-            .get("http://localhost:8000/api/PendingAssetRegisterDetails/getPendingAssetDetails")
+            .get("http://18.139.160.129:8000/api/PendingAssetRegisterDetails/getPendingAssetDetails")
             .then((response) => setAssetRegisterDetails(response.data))
             .catch((error) => console.error("Error fetching register asset details:", error));
     };
 
     const fetchTransferAssets = () => {
         axios
-            .get("http://localhost:8000/api/transfer/getPendingTransferAssetDetails")
+            .get("http://18.139.160.129:8000/api/transfer/getPendingTransferAssetDetails")
             .then((response) => setTransferAssetDetails(response.data))
             .catch((error) => console.error("Error fetching transfer asset details:", error));
     };
@@ -81,7 +81,7 @@ const PendingAsset = () => {
 
     const handleVerifyAsset = (id) => {
         if (window.confirm("Are you sure you want to verify this asset?")) {
-            axios.post(`http://localhost:8000/api/verify/verifyAsset/${id}`)
+            axios.post(`http://18.139.160.129:8000/api/verify/verifyAsset/${id}`)
                 .then(() => {
                     alert("Asset verified successfully!");
                     //fetchAssets(); // Refresh the pending list
@@ -97,7 +97,7 @@ const PendingAsset = () => {
 
     const handleVerifyTransferAsset = (id) => {
         if (window.confirm("Are you sure you want to verify this asset?")) {
-            axios.post(`http://localhost:8000/api/verify/verifyTransferAsset/${id}`)
+            axios.post(`http://18.139.160.129:8000/api/verify/verifyTransferAsset/${id}`)
                 .then(() => {
                     alert("Asset verified successfully!");
                     //fetchAssets(); // Refresh the pending list

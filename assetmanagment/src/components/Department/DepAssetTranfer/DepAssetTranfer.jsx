@@ -88,7 +88,7 @@ const DepartmentTransfer = () => {
     }
 
     const trackingId = generateTrackingId(asset?.serialNumber); // Generate tracking ID first
-    const youtubeURL = `http://localhost:3000/QRView/${trackingId}`; // Now use trackingId
+    const youtubeURL = `http://18.139.160.129:3000/QRView/${trackingId}`; // Now use trackingId
 
     setQrCodeData([{ component: asset?.assetName, qrData: youtubeURL, trackingId }]);
   };
@@ -131,7 +131,7 @@ const newtrackingId = qrCodeData[0]?.trackingId;
   try {
     // 1. Post to transfer database
     const response = await axios.post(
-      `http://localhost:8000/api/transfer/transfers`,
+      `http://18.139.160.129:8000/api/transfer/transfers`,
       transferAsset
     );
 
@@ -140,7 +140,7 @@ const newtrackingId = qrCodeData[0]?.trackingId;
       const beforeTransferAsset = { ...asset,newtrackingId };
 
       const backupResponse = await axios.post(
-        `http://localhost:8000/api/beforeTransfer/beforetransfers`,
+        `http://18.139.160.129:8000/api/beforeTransfer/beforetransfers`,
         beforeTransferAsset
       );
 
@@ -148,7 +148,7 @@ const newtrackingId = qrCodeData[0]?.trackingId;
         // 3. Delete from original asset register
         const id = asset._id
         const deleteResponse = await axios.delete(
-          `http://localhost:8000/api/AssetRegisterDetails/deleteAsset/${id}`
+          `http://18.139.160.129:8000/api/AssetRegisterDetails/deleteAsset/${id}`
         );
 
         if (deleteResponse.status === 200) {
