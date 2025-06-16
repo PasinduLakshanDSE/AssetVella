@@ -269,6 +269,9 @@ const EditUserModal = ({ show, onClose, user, onUpdate }) => {
             <select className="form-control" name="selectedOption" value={updatedUser.selectedOption || ''} onChange={handleChange}>
               <option value="Admin">Admin</option>
               <option value="CompanyAdmin">Company Admin</option>
+              
+                        <option value="DepartmentAdmin">Department Admin (HOD)</option>
+                        <option value="Audit">Audit</option>
             </select>
           </div>
           <div className="modal-footer">
