@@ -19,7 +19,7 @@ const AddUsersRole = () => {
     const [existingUsernames, setExistingUsernames] = useState([]);
     const [department, setDepartment] = useState("")
 
-    const departments = ["ICT", "HR", "Kitchen", "Front Office", "Store", "Account", "Audit", "F&B"];
+    const departments = ["ICT", "HR", "Kitchen", "Front Office", "Store", "Account", "Audit", "F&B","House Keeping", "Maintains","Garden","Reservation","Resturent","Procurement","Reception","Laundry","Complains","SPA","GYM","Naturalist","Yoga","Marketing"];
 
     const validateForm = () => {
         let formErrors = {};
@@ -56,7 +56,7 @@ const AddUsersRole = () => {
         return strongPasswordRegex.test(password);
     };
 
-    const companies = ["Vella", "98 Acres", "Ravana Pool Club", "Flying Ravana", "Le Maas Tota", "Tea Factory", "Walaa kulu", "Kiri Kopi"];
+    const companies = ["Vella", "98 Acres", "Ravana Pool Club", "Flying Ravana", "Le Maas Tota", "Tea Factory", "Walaa kulu", "Kiri Kopi","Tea Export"," Ambuluwawa Swing"];
 
     const handleSubmit = async (e) => {
         e.preventDefault();

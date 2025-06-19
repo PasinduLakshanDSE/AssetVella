@@ -61,7 +61,7 @@ const AssetRegister = () => {
   ];
 
   const companies = ["Vella", "98 Acres", "Ravana Pool Club", "Flying Ravana", "Le Maas Tota", "Tea Factory", "Walaa kulu", "kiri kopi"];
-  const departments = ["ICT", "HR", "Kitchen", "Front Office", "Store", "Account", "Audit", "F&B"];
+  const departments = ["ICT", "HR", "Kitchen", "Front Office", "Store", "Account", "Audit", "F&B","House Keeping", "Maintains","Garden","Reservation","Resturent","Procurement","Reception","Laundry","Complains","SPA","GYM","Naturalist","Yoga","Marketing"];
 
   useEffect(() => {
     fetchCategories();
@@ -90,8 +90,8 @@ const AssetRegister = () => {
   };
 
   const generateTrackingId = (serialNumber) => {
-    const companyCodes = { Vella: "VE", "98 Acres": "98", "Ravana Pool Club": "RPC", "Flying Ravana": "FR", "Le Maas Tota": "LMT", "Tea Factory": "TF", "Walaa kulu": "WK", "kiri kopi": "KK" };
-    const departmentCodes = { ICT: "IT", HR: "HR", Kitchen: "KT", Store: "ST", "Front Office": "FO", Account: "AC", Audit: "AU", "F&B": "F&B" };
+    const companyCodes = { Vella: "VE", "98 Acres": "98", "Ravana Pool Club": "RPC", "Flying Ravana": "FR", "Le Maas Tota": "LMT", "Tea Factory": "TF", "Walaa kulu": "WK", "kiri kopi": "KK","Tea Export":"TEX"," Ambuluwawa Swing":"AS" };
+    const departmentCodes = { ICT: "IT", HR: "HR", Kitchen:"KIT", "Front Office":"FO", Store:"ST", Account:"ACC", Audit:"AU", "F&B":"F&B","House Keeping":"HK", Maintains:"MA",Garden:"GA",Reservation:"RE",Resturent:"REST",Procurement:"PR",Reception:"REC",Laundry:"LAU",Complains:"COM",SPA:"SPA",GYM:"GYM",Naturalist:"NAT",Yoga:"YO",Marketing:"MA"};
 
     const companyCode = companyCodes[company] || "XX";
     const departmentCode = departmentCodes[department] || "XX";
@@ -446,25 +446,7 @@ const AssetRegister = () => {
 
             </div>
 
-            <div className="col-md-6">
-              
-
-
-              <input
-                className="cat1"
-                list="department-list"
-                value={department}
-                onChange={(e) => setDepartment(e.target.value)}
-                placeholder="Select Department"
-              />
-              <datalist id="department-list">
-                {departments.map((dep) => (
-                  <option key={dep} value={dep}>{dep}</option>
-                ))}
-
-              </datalist>
-
-            </div>
+               
             <div className="col-md-6">
 
              

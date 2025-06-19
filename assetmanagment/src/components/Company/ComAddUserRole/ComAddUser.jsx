@@ -19,7 +19,7 @@ const CompanyAddUsersRole = () => {
     const [existingUsernames, setExistingUsernames] = useState([]);
     const [department, setDepartment] = useState("");
 
-    const departments = ["ICT", "HR", "Kitchen", "Front Office", "Store", "Account", "Audit", "F&B"];
+    const departments = ["ICT", "HR", "Kitchen", "Front Office", "Store", "Account", "Audit", "F&B","House Keeping", "Maintains","Garden","Reservation","Resturent","Procurement","Reception","Laundry","Complains","SPA","GYM","Naturalist","Yoga","Marketing"];
 
     const validateForm = () => {
         let formErrors = {};

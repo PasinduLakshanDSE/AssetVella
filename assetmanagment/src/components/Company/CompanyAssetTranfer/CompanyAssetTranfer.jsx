@@ -25,17 +25,7 @@ const ComapnyTransfer = () => {
    
 
   
-  const departments = [
-    "ICT",
-
-    "HR",
-    "Kitchen",
-    "Front Office",
-    "Store",
-    "Account",
-    "Audit",
-    "F&B",
-  ];
+  const departments = ["ICT", "HR", "Kitchen", "Front Office", "Store", "Account", "Audit", "F&B","House Keeping", "Maintains","Garden","Reservation","Resturent","Procurement","Reception","Laundry","Complains","SPA","GYM","Naturalist","Yoga","Marketing"];
 
 
 
@@ -50,17 +40,9 @@ const ComapnyTransfer = () => {
       "Tea Factory": "TF",
       "Walaa kulu": "WK",
       "kiri kopi": "KK",
+      "Tea Export":"TEX"," Ambuluwawa Swing":"AS",
     };
-    const departmentCodes = {
-      ICT: "IT",
-      HR: "HR",
-      Kitchen: "KT",
-      Store: "ST",
-      "Front Office": "FO",
-      Account: "AC",
-      Audit: "AU",
-      "F&B": "F&B",
-    };
+    const departmentCodes = { ICT: "IT", HR: "HR", Kitchen:"KIT", "Front Office":"FO", Store:"ST", Account:"ACC", Audit:"AU", "F&B":"F&B","House Keeping":"HK", Maintains:"MA",Garden:"GA",Reservation:"RE",Resturent:"REST",Procurement:"PR",Reception:"REC",Laundry:"LAU",Complains:"COM",SPA:"SPA",GYM:"GYM",Naturalist:"NAT",Yoga:"YO",Marketing:"MA"};
 
     const companyCode = companyCodes[company] || "XX";
     const departmentCode = departmentCodes[department] || "XX";
