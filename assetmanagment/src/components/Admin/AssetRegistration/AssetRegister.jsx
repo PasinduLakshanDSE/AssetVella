@@ -63,6 +63,15 @@ const AssetRegister = () => {
   const companies = ["Vella", "98 Acres", "Ravana Pool Club", "Flying Ravana", "Le Maas Tota", "Tea Factory", "Walaa kulu", "kiri kopi"];
   const departments = ["ICT", "HR", "Kitchen", "Front Office", "Store", "Account", "Audit", "F&B","House Keeping", "Maintains","Garden","Reservation","Resturent","Procurement","Reception","Laundry","Complains","SPA","GYM","Naturalist","Yoga","Marketing"];
 
+/*const departmentOptions = [
+  "ICT", "HR", "Kitchen", "Front Office", "Store", "Account", "Audit", "F&B",
+  "House Keeping", "Maintains", "Garden", "Reservation", "Resturent", "Procurement",
+  "Reception", "Laundry", "Complains", "SPA", "GYM", "Naturalist", "Yoga", "Marketing"
+].map(dep => ({ value: dep, label: dep }));*/
+
+
+
+
   useEffect(() => {
     fetchCategories();
   }, []);
@@ -443,6 +452,25 @@ const AssetRegister = () => {
 
               </datalist>
 
+
+            </div>
+             <div className="col-md-6">
+              
+
+
+              <input
+                className="cat1"
+                list="department-list"
+                value={department}
+                onChange={(e) => setDepartment(e.target.value)}
+                placeholder="Select Department"
+              />
+              <datalist id="department-list">
+                {departments.map((dep) => (
+                  <option key={dep} value={dep}>{dep}</option>
+                ))}
+
+              </datalist>
 
             </div>
 
