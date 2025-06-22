@@ -3,6 +3,8 @@ import axios from "axios";
 import "./transferReport.css";
 import { Link } from "react-router-dom";
 import * as XLSX from 'xlsx';  // Import xlsx library
+import Select from "react-select";   // add this line if not present
+
 
 const TransferReport = () => {
   const [company, setCompany] = useState("");
@@ -224,6 +226,9 @@ useEffect(() => {
   };
 
 
+  const toOptions = arr => arr.map(v => ({ value: v, label: v }));
+
+
   return (
     <div>
       <h1 className="assethead" style={{ marginTop: "20px" }}>Download Transfer Report</h1>
@@ -235,7 +240,7 @@ useEffect(() => {
       <div className="filters">
 
 
-        <input
+        {/*<input
           className="cat1"
           list="company-list"
           value={company}
@@ -322,7 +327,69 @@ useEffect(() => {
               ))}
             </datalist>
           </>
-        )}
+        )}*/}
+
+
+
+
+
+        {/* Company */}
+  <Select
+    classNamePrefix="react-select"
+    placeholder="Select Company"
+    options={toOptions(companies)}
+    value={company ? { value: company, label: company } : null}
+    onChange={sel => setCompany(sel ? sel.value : "")}
+    isClearable
+  />
+
+  {/* Department */}
+  <Select
+    classNamePrefix="react-select"
+    placeholder="Select Department"
+    options={toOptions(departments)}
+    value={department ? { value: department, label: department } : null}
+    onChange={sel => setDepartment(sel ? sel.value : "")}
+    isClearable
+  />
+
+  {/* Main Category */}
+  <Select
+    classNamePrefix="react-select"
+    placeholder="Select Category"
+    options={toOptions(mainCategories)}
+    value={mainCategory ? { value: mainCategory, label: mainCategory } : null}
+    onChange={sel => setMainCategory(sel ? sel.value : "")}
+    isClearable
+  />
+
+  {/* Type – only when a category is chosen */}
+  {mainCategory && (
+    <Select
+      classNamePrefix="react-select"
+      placeholder="Select Type"
+      options={toOptions(types)}
+      value={type ? { value: type, label: type } : null}
+      onChange={sel => setType(sel ? sel.value : "")}
+      isClearable
+    />
+  )}
+
+  {/* Computer components – only when Type === "Computer" */}
+  {type === "Computer" && (
+    <Select
+      classNamePrefix="react-select"
+      placeholder="Select Component"
+      options={toOptions(computerComponentOptions)}
+      value={selectedComputerComponent
+        ? { value: selectedComputerComponent, label: selectedComputerComponent }
+        : null}
+      onChange={sel => setSelectedComputerComponent(sel ? sel.value : "")}
+      isClearable
+    />
+  )}
+
+
 
       </div>
 

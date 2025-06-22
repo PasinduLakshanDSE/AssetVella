@@ -1,224 +1,273 @@
+// AddUsersRole.jsx
 import './adduserrole.css';
+//import './selectStyles.css';           // optional: custom styles for react‑select
 import React, { useState, useEffect } from 'react';
+
 import axios from 'axios';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import Select from 'react-select';
+//import AsyncSelect from 'react-select/async';
 
-const AddUsersRole = () => {
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [designation, setDesignation] = useState("");
-    const [contact, setContact] = useState("");
-    const [username, setUsername] = useState("");
-    const [selectedOption, setSelectedOption] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
-    const [showPassword, setShowPassword] = useState(false);
-    const [companyName, setCompanyName] = useState("");
-    const [errors, setErrors] = useState({});
-    const [passwordStrength, setPasswordStrength] = useState("");
-    const [existingUsernames, setExistingUsernames] = useState([]);
-    const [department, setDepartment] = useState("")
 
-    const departments = ["ICT", "HR", "Kitchen", "Front Office", "Store", "Account", "Audit", "F&B","House Keeping", "Maintains","Garden","Reservation","Resturent","Procurement","Reception","Laundry","Complains","SPA","GYM","Naturalist","Yoga","Marketing"];
+/* ---------- constants ---------- */
+const departmentOptions = [
+  "ICT", "HR", "Kitchen", "Front Office", "Store", "Account", "Audit", "F&B",
+  "House Keeping", "Maintains", "Garden", "Reservation", "Resturent",
+  "Procurement", "Reception", "Laundry", "Complains", "SPA", "GYM",
+  "Naturalist", "Yoga", "Marketing"
+].map(dep => ({ value: dep, label: dep }));
 
-    const validateForm = () => {
-        let formErrors = {};
-        if (!firstName) formErrors.firstName = "First Name is required.";
-        if (!lastName) formErrors.lastName = "Last Name is required.";
-        if (!designation) formErrors.designation = "Designation is required.";
-        if (!contact.trim() || !/^\d{10}$/.test(contact)) {
-            formErrors.contact = "Enter a valid 10-digit contact number.";
-        }
+const companyOptions = [
+  "Vella", "98 Acres", "Ravana Pool Club", "Flying Ravana",
+  "Le Maas Tota", "Tea Factory", "Walaa kulu", "Kiri Kopi",
+  "Tea Export", "Ambuluwawa Swing"
+];
 
-        // Ensure department selection when "Department Admin" is chosen
-        if (selectedOption === "DepartmentAdmin" && !department) {
-            formErrors.department = "Department is required for Department Admin.";
-        }
-        if (!username) {
-            formErrors.username = "Username is required.";
-        } else if (existingUsernames.includes(username)) {
-            formErrors.username = "This username is already taken. Please try another.";
-        }
-        if (!confirmPassword) formErrors.confirmPassword = "Confirm Password is required.";
-        if (!companyName) formErrors.companyName = "Company Name is required.";
-        if (password && !validatePasswordStrength(password)) {
-            formErrors.password = "Password must be at least 8 characters, include uppercase, lowercase, and a number.";
-        }
-        if (password !== confirmPassword) {
-            formErrors.confirmPassword = "Passwords do not match.";
-        }
-        setErrors(formErrors);
-        return Object.keys(formErrors).length === 0;
+/* ---------- utility ---------- */
+const isStrongPassword = (pwd) =>
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(pwd);
+
+/* ---------- main component ---------- */
+export default function AddUsersRole() {
+  /* form state */
+  const [firstName, setFirstName]       = useState('');
+  const [lastName, setLastName]         = useState('');
+  const [designation, setDesignation]   = useState('');
+  const [contact, setContact]           = useState('');
+  const [username, setUsername]         = useState('');
+  const [role, setRole]                 = useState('');
+  const [password, setPassword]         = useState('');
+  const [confirmPwd, setConfirmPwd]     = useState('');
+  const [showPwd, setShowPwd]           = useState(false);
+  const [company, setCompany]           = useState('');
+  const [department, setDepartment]     = useState('');
+  const [errors, setErrors]             = useState({});
+  const [existingUsernames, setExistingUsernames] = useState([]);
+
+  /* -------- fetch existing usernames once -------- */
+  useEffect(() => {
+    (async () => {
+      try {
+        const { data } = await axios.get(
+          'http://18.139.160.129:8000/api/users/getallUsers'
+        );
+        setExistingUsernames(data.map(u => u.username));
+      } catch (err) {
+        console.error('Error fetching users', err);
+      }
+    })();
+  }, []);
+
+  /* -------- validation -------- */
+  const validate = () => {
+    const err = {};
+    if (!firstName)               err.firstName = 'First Name is required.';
+    if (!lastName)                err.lastName  = 'Last Name is required.';
+    if (!designation)             err.designation = 'Designation is required.';
+    if (!/^\d{10}$/.test(contact))
+      err.contact = 'Enter a valid 10‑digit contact number.';
+    if (!username)                err.username = 'Username is required.';
+    else if (existingUsernames.includes(username))
+      err.username = 'Username already taken.';
+    if (!company)                 err.company  = 'Company is required.';
+    if (!password)                err.password = 'Password is required.';
+    else if (!isStrongPassword(password))
+      err.password = 'Password must be 8+ chars, with upper, lower & number.';
+    if (!confirmPwd)              err.confirmPwd = 'Confirm Password is required.';
+    else if (password !== confirmPwd)
+      err.confirmPwd = 'Passwords do not match.';
+    if (role === 'DepartmentAdmin' && !department)
+      err.department = 'Department is required for Department Admin.';
+    setErrors(err);
+    return Object.keys(err).length === 0;
+  };
+
+  /* -------- submit -------- */
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!validate()) return;
+
+    const payload = {
+      firstName,
+      lastName,
+      designation,
+      contact,
+      username,
+      selectedOption: role,
+      password,
+      companyName: company,
+      department: role === 'DepartmentAdmin' ? department : null
     };
 
-    const validatePasswordStrength = (password) => {
-        const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
-        return strongPasswordRegex.test(password);
-    };
+    try {
+      await axios.post('http://18.139.160.129:8000/api/users', payload);
+      alert('User created successfully!');
+      handleReset();
+    } catch (err) {
+      console.error('Error creating user', err);
+      alert('Error creating user. Please try again.');
+    }
+  };
 
-    const companies = ["Vella", "98 Acres", "Ravana Pool Club", "Flying Ravana", "Le Maas Tota", "Tea Factory", "Walaa kulu", "Kiri Kopi","Tea Export"," Ambuluwawa Swing"];
+  /* -------- reset -------- */
+  const handleReset = () => {
+    setFirstName(''); setLastName(''); setDesignation('');
+    setContact(''); setUsername(''); setRole('');
+    setPassword(''); setConfirmPwd(''); setShowPwd(false);
+    setCompany(''); setDepartment(''); setErrors({});
+  };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (!validateForm()) return;
+  /* ---------- UI ---------- */
+  return (
+    <div className="Users">
+      <h1 className="userhead">User Registration</h1>
+      <p>
+        <Link to="/AdminDashboardPage">Dashboard</Link> /
+        <Link to="/UsersRole"> User Registration</Link>
+      </p>
 
-        const userData = {
-            firstName,
-            lastName,
-            designation,
-            contact,
-            username,
-            selectedOption,
-            password,
-            companyName,
-            department: selectedOption === "DepartmentAdmin" ? department : null // Ensure department is always included
+      <fieldset>
+        <form onSubmit={handleSubmit}>
+          {/* ---- names ---- */}
+          <div className="row">
+            <div className="col-md-6">
+              <label>First Name*</label>
+              <input
+                className="input"
+                value={firstName}
+                onChange={e => setFirstName(e.target.value)}
+              />
+              {errors.firstName && <span className="error">{errors.firstName}</span>}
+            </div>
+            <div className="col-md-6">
+              <label>Last Name*</label>
+              <input
+                className="input"
+                value={lastName}
+                onChange={e => setLastName(e.target.value)}
+              />
+              {errors.lastName && <span className="error">{errors.lastName}</span>}
+            </div>
+          </div>
 
-        };
+          {/* ---- job & contact ---- */}
+          <div className="row">
+            <div className="col-md-6">
+              <label>Designation*</label>
+              <input
+                className="input"
+                value={designation}
+                onChange={e => setDesignation(e.target.value)}
+              />
+              {errors.designation && <span className="error">{errors.designation}</span>}
+            </div>
+            <div className="col-md-6">
+              <label>Contact*</label>
+              <input
+                className="input"
+                value={contact}
+                onChange={e => setContact(e.target.value)}
+              />
+              {errors.contact && <span className="error">{errors.contact}</span>}
+            </div>
+          </div>
 
-        try {
-            await axios.post('http://18.139.160.129:8000/api/users', userData);
-            alert("User created successfully");
-            handleReset();
-        } catch (error) {
-            console.error("Error creating user:", error);
-            alert("Error creating user. Please try again.");
-        }
-    };
+          {/* ---- username & company ---- */}
+          <div className="row">
+            <div className="col-md-6">
+              <label>Username*</label>
+              <input
+                className="input"
+                value={username}
+                onChange={e => setUsername(e.target.value)}
+              />
+              {errors.username && <span className="error">{errors.username}</span>}
+            </div>
+            <div className="col-md-6">
+              <label>Company Name*</label>
+              <select
+                value={company}
+                onChange={e => setCompany(e.target.value)}
+              >
+                <option value="">Select Company</option>
+                {companyOptions.map(c => (
+                  <option key={c} value={c}>{c}</option>
+                ))}
+              </select>
+              {errors.company && <span className="error">{errors.company}</span>}
+            </div>
+          </div>
 
-    const fetchUsers = async () => {
-        try {
-            const response = await axios.get("http://18.139.160.129:8000/api/users/getallUsers");
-            const usernames = response.data.map(user => user.username);
-            setExistingUsernames(usernames);
-        } catch (error) {
-            console.error("Error fetching users:", error);
-        }
-    };
+          {/* ---- password ---- */}
+          <label>Password*</label>
+          <input
+            className="input"
+            type={showPwd ? 'text' : 'password'}
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+          />
+          {errors.password && <span className="error">{errors.password}</span>}
 
-    useEffect(() => {
-        fetchUsers(); // Fetch data when the component mounts
-    }, []);
+          <label>Confirm Password*</label>
+          <input
+            className="input"
+            type={showPwd ? 'text' : 'password'}
+            value={confirmPwd}
+            onChange={e => setConfirmPwd(e.target.value)}
+          />
+          {errors.confirmPwd && <span className="error">{errors.confirmPwd}</span>}
 
-    const handleReset = () => {
-        setFirstName("");
-        setLastName("");
-        setDesignation("");
-        setContact("");
-        setUsername("");
-        setSelectedOption("");
-        setPassword("");
-        setConfirmPassword("");
-        setShowPassword(false);
-        setCompanyName("");
-        setErrors({});
-        setPasswordStrength("");
-        setDepartment("");
-    };
+          <label>
+            <input
+              type="checkbox"
+              checked={showPwd}
+              onChange={() => setShowPwd(!showPwd)}
+            />{' '}
+            Show Password
+          </label>
 
-    return (
-        <div className="Users">
-            <h1 className='userhead'>User Registration</h1>
-            <p>
-                <Link to="/AdminDashboardPage">Dashboard</Link> / <Link to="/UsersRole">User Registration</Link>
-            </p>
-            <fieldset>
-                <form onSubmit={handleSubmit}>
-                    <div className='row'>
-                        <div className='col-md-6'>
-                            <label>First Name*</label>
-                            <input className="input" type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-                            {errors.firstName && <span className="error">{errors.firstName}</span>}
-                        </div>
-                        <div className='col-md-6'>
-                            <label>Last Name*</label>
-                            <input className="input" type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
-                            {errors.lastName && <span className="error">{errors.lastName}</span>}
-                        </div>
-                    </div>
+          {/* ---- role ---- */}
 
-                    <div className='row'>
-                        <div className='col-md-6'>
-                            <label>Designation*</label>
-                            <input className="input" type="text" value={designation} onChange={(e) => setDesignation(e.target.value)} />
-                            {errors.designation && <span className="error">{errors.designation}</span>}
-                        </div>
-                        <div className='col-md-6'>
-                            <label>Contact*</label>
-                            <input className="input" type="text" value={contact} onChange={(e) => setContact(e.target.value)} />
-                            {errors.contact && <span className="error">{errors.contact}</span>}
-                        </div>
-                    </div>
+          <div className='row'>
+            <div className="col-md-6">
+          <select value={role} onChange={e => setRole(e.target.value)}>
+            <option value="">Select Role</option>
+            <option value="Admin">Admin</option>
+            <option value="CompanyAdmin">Company Admin</option>
+            <option value="DepartmentAdmin">Department Admin (HOD)</option>
+            <option value="Audit">Audit</option>
+          </select></div>
+<div className="col-md-6">
+          {/* ---- department (conditional) ---- */}
+          {role === 'DepartmentAdmin' && (
+            <div className="mb-3">
+              <Select
+                classNamePrefix="react-select"
+                placeholder="Select Department"
+                options={departmentOptions}
+                value={
+                  departmentOptions.find(opt => opt.value === department) || null
+                }
+                onChange={sel => setDepartment(sel ? sel.value : '')}
+                isClearable
+              />
+              {errors.department && (
+                <span className="error">{errors.department}</span>
+              )}
+            </div>
+          )}</div></div>
 
-                    <div className='row'>
-                        <div className='col-md-6'>
-                            <label>Username*</label>
-                            <input className="input" type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
-                            {errors.username && <span className="error">{errors.username}</span>}
-                        </div>
-                        <div className='col-md-6'>
-                            <label>Company Name*</label>
-                            <select value={companyName} onChange={(e) => setCompanyName(e.target.value)}>
-                                <option value="">Select Company</option>
-                                {companies.map((com) => (
-                                    <option key={com} value={com}>{com}</option>
-                                ))}
-                            </select>
-                            {errors.companyName && <span className="error">{errors.companyName}</span>}
-                        </div>
-                    </div>
-
-                    <label>Password*</label>
-                    <input className="input"
-                        type={showPassword ? "text" : "password"}
-                        value={password}
-                        onChange={(e) => {
-                            setPassword(e.target.value);
-
-                        }}
-                    />
-                    <span className={`password-strength ${passwordStrength.toLowerCase()}`}>{passwordStrength}</span>
-                    {errors.password && <span className="error">{errors.password}</span>}
-
-                    <label>Confirm Password*</label>
-                    <input className="input"
-                        type={showPassword ? "text" : "password"}
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                    />
-                    {errors.confirmPassword && <span className="error">{errors.confirmPassword}</span>}
-
-                    <label>
-                        <input type="checkbox" checked={showPassword} onChange={() => setShowPassword(!showPassword)} />
-                        Show Password
-                    </label>
-
-                    <label>User Role*</label>
-                    <select value={selectedOption} onChange={(e) => setSelectedOption(e.target.value)}>
-                        <option value="">Select Role</option>
-                        <option value="Admin">Admin</option>
-                        <option value="CompanyAdmin">Company Admin</option>
-                        <option value="DepartmentAdmin">Department Admin (HOD)</option>
-                        <option value="Audit">Audit</option>
-                    </select>
-                    {selectedOption === "DepartmentAdmin" && (
-                        <div className="mb-3">
-                            <select value={department} onChange={(e) => setDepartment(e.target.value)}>
-                                <option value="">Select Department</option>
-                                {departments.map((dep) => (
-                                    <option key={dep} value={dep}>{dep}</option>
-                                ))}
-
-                            </select>{errors.department && <span className="error">{errors.department}</span>}</div>
-                    )}
-
-                    <div className="button-group">
-                        <button className="btn1" type="button" onClick={handleReset}>Reset</button>
-                        <button className="btn2" type="submit">Submit</button>
-                    </div>
-                </form>
-            </fieldset>
-        </div>
-    );
-};
-
-export default AddUsersRole;
+          {/* ---- buttons ---- */}
+          <div className="button-group">
+            <button className="btn1" type="button" onClick={handleReset}>
+              Reset
+            </button>
+            <button className="btn2" type="submit">
+              Submit
+            </button>
+          </div>
+        </form>
+      </fieldset>
+    </div>
+  );
+}

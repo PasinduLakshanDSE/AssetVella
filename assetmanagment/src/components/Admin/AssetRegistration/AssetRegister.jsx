@@ -58,16 +58,18 @@ const AssetRegister = () => {
     "Furniture",
     "Outdoor & Garden Equipment",
     "Stationery",
-  ];
+  ].map(cat => ({ value: cat, label: cat }));
 
-  const companies = ["Vella", "98 Acres", "Ravana Pool Club", "Flying Ravana", "Le Maas Tota", "Tea Factory", "Walaa kulu", "kiri kopi"];
-  const departments = ["ICT", "HR", "Kitchen", "Front Office", "Store", "Account", "Audit", "F&B","House Keeping", "Maintains","Garden","Reservation","Resturent","Procurement","Reception","Laundry","Complains","SPA","GYM","Naturalist","Yoga","Marketing"];
+  const companies = ["Vella", "98 Acres", "Ravana Pool Club", "Flying Ravana", "Le Maas Tota", "Tea Factory", "Walaa kulu", "kiri kopi"].map(com => ({ value: com, label: com }));
+  //const departments = ["ICT", "HR", "Kitchen", "Front Office", "Store", "Account", "Audit", "F&B","House Keeping", "Maintains","Garden","Reservation","Resturent","Procurement","Reception","Laundry","Complains","SPA","GYM","Naturalist","Yoga","Marketing"];
 
-/*const departmentOptions = [
-  "ICT", "HR", "Kitchen", "Front Office", "Store", "Account", "Audit", "F&B",
-  "House Keeping", "Maintains", "Garden", "Reservation", "Resturent", "Procurement",
-  "Reception", "Laundry", "Complains", "SPA", "GYM", "Naturalist", "Yoga", "Marketing"
-].map(dep => ({ value: dep, label: dep }));*/
+  const departmentOptions = [
+    "ICT", "HR", "Kitchen", "Front Office", "Store", "Account", "Audit", "F&B",
+    "House Keeping", "Maintains", "Garden", "Reservation", "Resturent",
+    "Procurement", "Reception", "Laundry", "Complains", "SPA", "GYM",
+    "Naturalist", "Yoga", "Marketing"
+  ].map(dep => ({ value: dep, label: dep }));
+
 
 
 
@@ -99,8 +101,8 @@ const AssetRegister = () => {
   };
 
   const generateTrackingId = (serialNumber) => {
-    const companyCodes = { Vella: "VE", "98 Acres": "98", "Ravana Pool Club": "RPC", "Flying Ravana": "FR", "Le Maas Tota": "LMT", "Tea Factory": "TF", "Walaa kulu": "WK", "kiri kopi": "KK","Tea Export":"TEX"," Ambuluwawa Swing":"AS" };
-    const departmentCodes = { ICT: "IT", HR: "HR", Kitchen:"KIT", "Front Office":"FO", Store:"ST", Account:"ACC", Audit:"AU", "F&B":"F&B","House Keeping":"HK", Maintains:"MA",Garden:"GA",Reservation:"RE",Resturent:"REST",Procurement:"PR",Reception:"REC",Laundry:"LAU",Complains:"COM",SPA:"SPA",GYM:"GYM",Naturalist:"NAT",Yoga:"YO",Marketing:"MA"};
+    const companyCodes = { Vella: "VE", "98 Acres": "98", "Ravana Pool Club": "RPC", "Flying Ravana": "FR", "Le Maas Tota": "LMT", "Tea Factory": "TF", "Walaa kulu": "WK", "kiri kopi": "KK", "Tea Export": "TEX", " Ambuluwawa Swing": "AS" };
+    const departmentCodes = { ICT: "IT", HR: "HR", Kitchen: "KIT", "Front Office": "FO", Store: "ST", Account: "ACC", Audit: "AU", "F&B": "F&B", "House Keeping": "HK", Maintains: "MA", Garden: "GA", Reservation: "RE", Resturent: "REST", Procurement: "PR", Reception: "REC", Laundry: "LAU", Complains: "COM", SPA: "SPA", GYM: "GYM", Naturalist: "NAT", Yoga: "YO", Marketing: "MA" };
 
     const companyCode = companyCodes[company] || "XX";
     const departmentCode = departmentCodes[department] || "XX";
@@ -434,11 +436,11 @@ const AssetRegister = () => {
           <div className="row">
             <div className="col-md-6" style={{ marginBottom: "20px" }}>
 
-              
 
 
 
-              <input
+
+              {/*<input
                 className="cat1"
                 list="company-list"
                 value={company}
@@ -450,15 +452,26 @@ const AssetRegister = () => {
                   <option key={com} value={com}>{com}</option>
                 ))}
 
-              </datalist>
+              </datalist>*/}
 
+
+              <Select
+                classNamePrefix="react-select"
+                placeholder="Select Company"
+                options={companies}
+                value={
+                  companies.find(opt => opt.value === company) || null
+                }
+                onChange={sel => setCompany(sel ? sel.value : '')}
+                isClearable
+              />
 
             </div>
-             <div className="col-md-6">
-              
+            <div className="col-md-6">
 
 
-              <input
+
+              {/*} <input
                 className="cat1"
                 list="department-list"
                 value={department}
@@ -470,17 +483,34 @@ const AssetRegister = () => {
                   <option key={dep} value={dep}>{dep}</option>
                 ))}
 
-              </datalist>
+              </datalist>*/}
+
+
+
+              <div className="mb-3">
+                <Select
+                  classNamePrefix="react-select"
+                  placeholder="Select Department"
+                  options={departmentOptions}
+                  value={
+                    departmentOptions.find(opt => opt.value === department) || null
+                  }
+                  onChange={sel => setDepartment(sel ? sel.value : '')}
+                  isClearable
+                />
+
+              </div>
+
 
             </div>
 
-               
+
             <div className="col-md-6">
 
-             
 
 
-              <input className="cat1"
+
+              {/*<input className="cat1"
                 list="mainCategory-list"
                 value={mainCategory}
                 onChange={(e) => setMainCategory(e.target.value)}
@@ -490,11 +520,38 @@ const AssetRegister = () => {
                 {mainCategories.map((cat) => (
                   <option key={cat} value={cat}>{cat}</option>
                 ))}
-              </datalist></div>
+              </datalist>*/}
+
+
+              <Select
+                  classNamePrefix="react-select"
+                  placeholder="Select Categories"
+                  options={mainCategories}
+                  value={
+                    mainCategories.find(opt => opt.value === mainCategory) || null
+                  }
+                  onChange={sel => setMainCategory(sel ? sel.value : '')}
+                  isClearable
+                /></div>
 
 
 
-            {mainCategory && (
+  {mainCategory && (
+  <div className="col-md-6 mb-3">
+    <Select
+      classNamePrefix="react-select"
+      placeholder="Select Types"
+      options={[...types.map(t => ({ value: t, label: t })), ]}
+      value={type ? { value: type, label: type } : null}
+      onChange={(selected) => setType(selected ? selected.value : '')}
+      isClearable
+    />
+  </div>
+)}
+
+
+
+            {/*{mainCategory && (
               <div className="col-md-6">
                 <input
                   className="cat1"
@@ -510,12 +567,12 @@ const AssetRegister = () => {
                   <option value="Other">Other</option>
                 </datalist>
               </div>
-            )}
+            )}*/}
 
           </div>
 
 
-          
+
 
           {type === "Other" && (
             <div className="mb-3">
@@ -550,20 +607,20 @@ const AssetRegister = () => {
                         type="text"
                         value={CPUassetName}
                         onChange={(e) => setCPUAssetName(e.target.value)}
-                        placeholder="Enter Asset Name/Brand"  style={{ marginBottom: "5px" }}
+                        placeholder="Enter Asset Name/Brand" style={{ marginBottom: "5px" }}
                       />
                       <input
                         type="text"
                         value={CPUassetModel}
                         onChange={(e) => setCPUAssetModel(e.target.value)}
-                        placeholder="Enter Asset Model Number"  style={{ marginBottom: "5px" }}
+                        placeholder="Enter Asset Model Number" style={{ marginBottom: "5px" }}
                       />
 
                       <input
                         type="text"
                         value={CPUserialNumber}
                         onChange={(e) => setCPUSerialNumber(e.target.value)}
-                        placeholder="Enter Serial Number"  style={{ marginBottom: "5px" }}
+                        placeholder="Enter Serial Number" style={{ marginBottom: "5px" }}
                       />
                     </label>
                     <div className="button-group">
@@ -579,19 +636,19 @@ const AssetRegister = () => {
                         type="text"
                         value={MoniterassetName}
                         onChange={(e) => setMoniterAssetName(e.target.value)}
-                        placeholder="Enter Asset Name / Brand"  style={{ marginBottom: "5px" }}
+                        placeholder="Enter Asset Name / Brand" style={{ marginBottom: "5px" }}
                       />
                       <input
                         type="text"
                         value={MoniterassetModel}
                         onChange={(e) => setMoniterAssetModel(e.target.value)}
-                        placeholder="Enter Asset Model Number"  style={{ marginBottom: "5px" }}
+                        placeholder="Enter Asset Model Number" style={{ marginBottom: "5px" }}
                       />
                       <input
                         type="text"
                         value={MoniterserialNumber}
                         onChange={(e) => setMoniterSerialNumber(e.target.value)}
-                        placeholder="Enter Serial Number"  style={{ marginBottom: "5px" }}
+                        placeholder="Enter Serial Number" style={{ marginBottom: "5px" }}
                       />
                     </label>
                     <div className="button-group">
@@ -605,13 +662,13 @@ const AssetRegister = () => {
                         type="text"
                         value={MouseassetName}
                         onChange={(e) => setMouseAssetName(e.target.value)}
-                        placeholder="Enter Asset Name / Brand"  style={{ marginBottom: "5px" }}
+                        placeholder="Enter Asset Name / Brand" style={{ marginBottom: "5px" }}
                       />
                       <input
                         type="text"
                         value={MouseassetModel}
                         onChange={(e) => setMouseAssetModel(e.target.value)}
-                        placeholder="Enter Asset Model Number"  style={{ marginBottom: "5px" }}
+                        placeholder="Enter Asset Model Number" style={{ marginBottom: "5px" }}
                       />
                       <input
                         type="text"
@@ -629,19 +686,19 @@ const AssetRegister = () => {
                         type="text"
                         value={KeyboardassetName}
                         onChange={(e) => setKeyboardAssetName(e.target.value)}
-                        placeholder="Enter Asset Name / Brand"  style={{ marginBottom: "5px" }}
+                        placeholder="Enter Asset Name / Brand" style={{ marginBottom: "5px" }}
                       />
                       <input
                         type="text"
                         value={KeyboardassetModel}
                         onChange={(e) => setKeyboardAssetModel(e.target.value)}
-                        placeholder="Enter Asset Model Number"  style={{ marginBottom: "5px" }}
+                        placeholder="Enter Asset Model Number" style={{ marginBottom: "5px" }}
                       />
                       <input
                         type="text"
                         value={KeyboardserialNumber}
                         onChange={(e) => setKeyboardSerialNumber(e.target.value)}
-                        placeholder="Enter Serial Number"  style={{ marginBottom: "5px" }}
+                        placeholder="Enter Serial Number" style={{ marginBottom: "5px" }}
                       />
                     </label>
                     <div className="button-group">

@@ -6,6 +6,7 @@ import axios from "axios";
 import { model } from "mongoose";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
+import Select from 'react-select';
 
 const DepAssetRegister = () => {
   const user = JSON.parse(localStorage.getItem("currentUser"));
@@ -57,10 +58,10 @@ const DepAssetRegister = () => {
     "Furniture",
     "Outdoor & Garden Equipment",
     "Stationery",
-  ];
+  ].map(cat => ({ value: cat, label: cat }));
 
-  const companies = ["Vella", "98 Acers", "Ravana Pool Club", "Flying Ravana", "Le Maas Tota", "Tea Factory", "Walaa kulu", "kiri kopi","Tea Export"," Ambuluwawa Swing"];
-  const departments = ["ICT", "HR", "Kitchen", "Front Office", "Store", "Account", "Audit", "F&B","House Keeping", "Maintains","Garden","Reservation","Resturent","Procurement","Reception","Laundry","Complains","SPA","GYM","Naturalist","Yoga","Marketing"];
+  const companies = ["Vella", "98 Acers", "Ravana Pool Club", "Flying Ravana", "Le Maas Tota", "Tea Factory", "Walaa kulu", "kiri kopi", "Tea Export", " Ambuluwawa Swing"];
+  const departments = ["ICT", "HR", "Kitchen", "Front Office", "Store", "Account", "Audit", "F&B", "House Keeping", "Maintains", "Garden", "Reservation", "Resturent", "Procurement", "Reception", "Laundry", "Complains", "SPA", "GYM", "Naturalist", "Yoga", "Marketing"];
 
   useEffect(() => {
     fetchCategories();
@@ -89,8 +90,8 @@ const DepAssetRegister = () => {
   };
 
   const generateTrackingId = (serialNumber) => {
-    const companyCodes = { Vella: "VE", "Ravana Pool Club": "RPC", "Flying Ravana": "FR", "Le Maas Tota": "LMT", "Tea Factory": "TF", "Walaa kulu": "WK", "kiri kopi": "KK", "98 Acres": "98","Tea Export":"TEX"," Ambuluwawa Swing":"AS",};
-    const departmentCodes = { ICT: "IT", HR: "HR", Kitchen:"KIT", "Front Office":"FO", Store:"ST", Account:"ACC", Audit:"AU", "F&B":"F&B","House Keeping":"HK", Maintains:"MA",Garden:"GA",Reservation:"RE",Resturent:"REST",Procurement:"PR",Reception:"REC",Laundry:"LAU",Complains:"COM",SPA:"SPA",GYM:"GYM",Naturalist:"NAT",Yoga:"YO",Marketing:"MA"};
+    const companyCodes = { Vella: "VE", "Ravana Pool Club": "RPC", "Flying Ravana": "FR", "Le Maas Tota": "LMT", "Tea Factory": "TF", "Walaa kulu": "WK", "kiri kopi": "KK", "98 Acres": "98", "Tea Export": "TEX", " Ambuluwawa Swing": "AS", };
+    const departmentCodes = { ICT: "IT", HR: "HR", Kitchen: "KIT", "Front Office": "FO", Store: "ST", Account: "ACC", Audit: "AU", "F&B": "F&B", "House Keeping": "HK", Maintains: "MA", Garden: "GA", Reservation: "RE", Resturent: "REST", Procurement: "PR", Reception: "REC", Laundry: "LAU", Complains: "COM", SPA: "SPA", GYM: "GYM", Naturalist: "NAT", Yoga: "YO", Marketing: "MA" };
 
     const companyCode = companyCodes[company] || "XX";
     const departmentCode = departmentCodes[department] || "XX";
@@ -435,7 +436,7 @@ const DepAssetRegister = () => {
 
   return (
     <div className="asset-register">
-      <div className="form-container">
+      <div className="form-containe con">
 
         <h2 className="registerhead">Asset Registration</h2>
         <p>
@@ -474,7 +475,7 @@ const DepAssetRegister = () => {
           <div className="row r1">
             <div className="col-md-6 r1">
 
-            <input className="cat1"
+              {/*<input className="cat1"
                 list="mainCategory-list"
                 value={mainCategory}
                 onChange={(e) => setMainCategory(e.target.value)}
@@ -484,11 +485,25 @@ const DepAssetRegister = () => {
                 {mainCategories.map((cat) => (
                   <option key={cat} value={cat}>{cat}</option>
                 ))}
-              </datalist></div>
+              </datalist>*/}
+
+              <Select
+                classNamePrefix="react-select"
+                placeholder="Select Categories"
+                options={mainCategories}
+                value={
+                  mainCategories.find(opt => opt.value === mainCategory) || null
+                }
+                onChange={sel => setMainCategory(sel ? sel.value : '')}
+                isClearable
+              />
+
+
+            </div>
 
 
 
-            {mainCategory && (
+            {/*} {mainCategory && (
               <div className="col-md-6">
                 <input
                   className="cat1"
@@ -504,9 +519,24 @@ const DepAssetRegister = () => {
                   
                 </datalist>
               </div>
+            )}*/}
+
+
+
+            {mainCategory && (
+              <div className="col-md-6 mb-3">
+                <Select
+                  classNamePrefix="react-select"
+                  placeholder="Select Types"
+                  options={[...types.map(t => ({ value: t, label: t })),]}
+                  value={type ? { value: type, label: type } : null}
+                  onChange={(selected) => setType(selected ? selected.value : '')}
+                  isClearable
+                />
+              </div>
             )}
           </div>
-          
+
 
           {type === "Computer" && (
             <div className="computer-options">
@@ -531,7 +561,7 @@ const DepAssetRegister = () => {
                         type="text"
                         value={CPUassetName}
                         onChange={(e) => setCPUAssetName(e.target.value)}
-                        placeholder="Enter Asset Name/Brand"  style={{ marginBottom: "5px" }}
+                        placeholder="Enter Asset Name/Brand" style={{ marginBottom: "5px" }}
                       />
                       <input
                         type="text"
@@ -608,7 +638,7 @@ const DepAssetRegister = () => {
 
                   <div className="col-md-6">
                     <label className="l" >
-                      <input type="checkbox" checked readOnly  /> Keyboard <input
+                      <input type="checkbox" checked readOnly /> Keyboard <input
                         type="text"
                         value={KeyboardassetName}
                         onChange={(e) => setKeyboardAssetName(e.target.value)}

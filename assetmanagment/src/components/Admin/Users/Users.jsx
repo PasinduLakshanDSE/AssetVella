@@ -116,7 +116,7 @@ const Users = () => {
         <table className="table table-bordered table-light">
           <thead className="bs">
             <tr>
-              <th>ID</th>
+              
               <th>First Name</th>
               <th>Last Name</th>
               <th>Designation</th>
@@ -136,7 +136,7 @@ const Users = () => {
             {usersf.length > 0 ? (
               usersf.map((user) => (
                 <tr key={user._id}>
-                  <td>{user._id}</td>
+                 
                   <td>{user.firstName}</td>
                   <td>{user.lastName}</td>
                   <td>{user.designation}</td>
@@ -211,8 +211,13 @@ const EditUserModal = ({ show, onClose, user, onUpdate }) => {
   const handleSubmit = () => {
     onUpdate(updatedUser);
   };
-  const companies = ["Vella", "98 Acers", "Ravana Pool Club", "Flying Ravana", "Le Maas Tota", "Tea Factory", "Walaa kulu", "Kiri Kopi"];
-  const departments = ["ICT", "HR", "Kitchen", "Front Office", "Store", "Account", "Audit", "F&B"];
+  const companies = ["Vella", "98 Acres", "Ravana Pool Club", "Flying Ravana",
+  "Le Maas Tota", "Tea Factory", "Walaa kulu", "Kiri Kopi",
+  "Tea Export", "Ambuluwawa Swing"];
+  const departments = ["ICT", "HR", "Kitchen", "Front Office", "Store", "Account", "Audit", "F&B",
+  "House Keeping", "Maintains", "Garden", "Reservation", "Resturent",
+  "Procurement", "Reception", "Laundry", "Complains", "SPA", "GYM",
+  "Naturalist", "Yoga", "Marketing"];
   return (
     <div className={`modal fade ${show ? "show d-block" : ""}`} tabIndex="-1" role="dialog">
       <div className="modal-dialog">

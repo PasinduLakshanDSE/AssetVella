@@ -6,6 +6,7 @@ import axios from "axios";
 import { model } from "mongoose";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link} from "react-router-dom";
+import Select from 'react-select';
 
 const ComAssetRegister = () => {
   const user = JSON.parse(localStorage.getItem("currentUser"));
@@ -57,10 +58,10 @@ const ComAssetRegister = () => {
     "Furniture",
     "Outdoor & Garden Equipment",
     "Stationery",
-  ];
+  ].map(cat => ({ value: cat, label: cat }));
 
-  const companies = ["Vella", "98 Acres", "Ravana Pool Club", "Flying Ravana", "Le Maas Tota", "Tea Factory","Walaa kulu","kiri kopi","Tea Export"," Ambuluwawa Swing"];
-  const departments = ["ICT", "HR", "Kitchen", "Front Office", "Store", "Account", "Audit", "F&B","House Keeping", "Maintains","Garden","Reservation","Resturent","Procurement","Reception","Laundry","Complains","SPA","GYM","Naturalist","Yoga","Marketing"];
+  const companies = ["Vella", "98 Acres", "Ravana Pool Club", "Flying Ravana", "Le Maas Tota", "Tea Factory","Walaa kulu","kiri kopi","Tea Export"," Ambuluwawa Swing"].map(com => ({ value: com, label: com }));
+  const departmentOptions = ["ICT", "HR", "Kitchen", "Front Office", "Store", "Account", "Audit", "F&B","House Keeping", "Maintains","Garden","Reservation","Resturent","Procurement","Reception","Laundry","Complains","SPA","GYM","Naturalist","Yoga","Marketing"].map(dep => ({ value: dep, label: dep }));
 
   useEffect(() => {
     fetchCategories();
@@ -434,7 +435,7 @@ const ComAssetRegister = () => {
 
   return (
     <div className="asset-register">
-      <div className="form-container">
+      <div className="form-containe con">
         
         <h2 className="registerhead">Asset Registration</h2>
         <p>
@@ -460,7 +461,7 @@ const ComAssetRegister = () => {
             </div>
 
             <div className="col-md-6">
-            <input
+            {/*<input
                 className="cat1"
                 list="department-list"
                 value={department}
@@ -472,7 +473,20 @@ const ComAssetRegister = () => {
                   <option key={dep} value={dep}>{dep}</option>
                 ))}
 
-              </datalist>
+              </datalist>*/}
+              <div className="mb-3">
+                              <Select
+                                classNamePrefix="react-select"
+                                placeholder="Select Department"
+                                options={departmentOptions}
+                                value={
+                                  departmentOptions.find(opt => opt.value === department) || null
+                                }
+                                onChange={sel => setDepartment(sel ? sel.value : '')}
+                                isClearable
+                              />
+              
+                            </div>
 
             </div>
             <div className="col-md-6">
@@ -480,7 +494,7 @@ const ComAssetRegister = () => {
              
 
 
-              <input className="cat1"
+             {/*} <input className="cat1"
                 list="mainCategory-list"
                 value={mainCategory}
                 onChange={(e) => setMainCategory(e.target.value)}
@@ -490,11 +504,24 @@ const ComAssetRegister = () => {
                 {mainCategories.map((cat) => (
                   <option key={cat} value={cat}>{cat}</option>
                 ))}
-              </datalist></div>
+              </datalist>*/}
+              
+                <Select
+                                classNamePrefix="react-select"
+                                placeholder="Select Categories"
+                                options={mainCategories}
+                                value={
+                                  mainCategories.find(opt => opt.value === mainCategory) || null
+                                }
+                                onChange={sel => setMainCategory(sel ? sel.value : '')}
+                                isClearable
+                              />
+              
+              </div>
 
 
 
-            {mainCategory && (
+            {/*{mainCategory && (
               <div className="col-md-6">
                 <input
                   className="cat1"
@@ -509,6 +536,19 @@ const ComAssetRegister = () => {
                   ))}
                   
                 </datalist>
+              </div>
+            )}*/}
+
+            {mainCategory && (
+              <div className="col-md-6 mb-3">
+                <Select
+                  classNamePrefix="react-select"
+                  placeholder="Select Types"
+                  options={[...types.map(t => ({ value: t, label: t })), ]}
+                  value={type ? { value: type, label: type } : null}
+                  onChange={(selected) => setType(selected ? selected.value : '')}
+                  isClearable
+                />
               </div>
             )}
           </div>

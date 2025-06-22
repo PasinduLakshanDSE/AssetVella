@@ -93,7 +93,7 @@ router.post("/otp", async (req, res) => {
     }
 
     user.otp = otp;
-    user.expiresAt = new Date(Date.now() + 5 * 60 * 1000); // 5 min expiry
+    user.expiresAt = new Date(Date.now() + 15 * 60 * 1000); // 15 min expiry
     await user.save();
 
     res.status(200).json({ message: "OTP sent successfully" });
