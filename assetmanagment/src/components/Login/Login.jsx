@@ -14,7 +14,10 @@ const Login = () => {
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [otp, setOtp] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [step, setStep] = useState(1);
+  const [showPassword, setShowPassword] = useState(false);
+  const [formErrors, setFormErrors] = useState({});
 
   const validateForm = (e) => {
     e.preventDefault();
@@ -26,41 +29,69 @@ const Login = () => {
     return true;
   };
 
+  const validatePasswordStrength = (password) => {
+    const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+    return strongPasswordRegex.test(password);
+  };
+
+  const validateNewPasswordForm = () => {
+    let errors = {};
+
+    if (!newPassword) {
+      errors.newPassword = "New password is required.";
+    } else if (!validatePasswordStrength(newPassword)) {
+      errors.newPassword = "Password must be at least 8 characters, include uppercase, lowercase, and a number.";
+    }
+
+    if (!confirmPassword) {
+      errors.confirmPassword = "Confirm Password is required.";
+    } else if (newPassword !== confirmPassword) {
+      errors.confirmPassword = "Passwords do not match.";
+    }
+
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm(e)) return;
-  
+
     try {
       const response = await axios.post('http://18.139.160.129:8000/api/users/login', {
         username,
         password,
       });
-  
+
       const user = response.data;
       setUsername("");
       setPassword("");
       setShowError(false);
-  
+
       if (user.isBlocked) {
         setError("Your account is blocked. Please contact the administrator.");
         setShowError(true);
         return;
       }
-  
+
       localStorage.setItem('currentUser', JSON.stringify({ username: user.name, role: user.selectedOption }));
-  
-      if (user.selectedOption === "Admin") {
-        navigate('/AdminDashboardPage');
-      } else if (user.selectedOption === "CompanyAdmin") {
-        navigate('/CompanyDashBord');
-      } else if( user.selectedOption === "DepartmentAdmin"){
-        navigate('/DepartmentDashBoard');
-      
-      }else if(user.selectedOption === "Audit"){
-        navigate('/AuditDashBoard');
-      } else {
-        setError("Unauthorized role.");
-        setShowError(true);
+
+      switch (user.selectedOption) {
+        case "Admin":
+          navigate('/AdminDashboardPage');
+          break;
+        case "CompanyAdmin":
+          navigate('/CompanyDashBord');
+          break;
+        case "DepartmentAdmin":
+          navigate('/DepartmentDashBoard');
+          break;
+        case "Audit":
+          navigate('/AuditDashBoard');
+          break;
+        default:
+          setError("Unauthorized role.");
+          setShowError(true);
       }
     } catch (error) {
       console.error(error);
@@ -68,35 +99,29 @@ const Login = () => {
       setShowError(true);
     }
   };
-  
+
   const handleForgotPassword = async () => {
-    setError(""); // Clear any previous errors when moving to the next step
+    setError("");
     setShowError(false);
     try {
-        const response = await axios.post('http://18.139.160.129:8000/api/users/request', { username });
+      const response = await axios.post('http://18.139.160.129:8000/api/users/request', { username });
 
-        if (response.data.message === "User Correct") {
-            const otpCode = Math.floor(100000 + Math.random() * 900000).toString(); // Generate OTP
-
-            // Send OTP to backend for saving
-            await axios.post('http://18.139.160.129:8000/api/users/otp', { username, otp: otpCode });
-
-            //setUsername(""); // Clear username after request
-            setStep(2);
-        } else {
-            setError("User not found.");
-            setShowError(true);
-        }
-    } catch (error) {
-        setError(error.response?.data?.message || "User not found.");
+      if (response.data.message === "User Correct") {
+        const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
+        await axios.post('http://18.139.160.129:8000/api/users/otp', { username, otp: otpCode });
+        setStep(2);
+      } else {
+        setError("User not found.");
         setShowError(true);
+      }
+    } catch (error) {
+      setError(error.response?.data?.message || "User not found.");
+      setShowError(true);
     }
-};
-
-  
+  };
 
   const handleVerifyOtp = async () => {
-    setError(""); // Clear any previous errors when moving to the next step
+    setError("");
     setShowError(false);
     try {
       await axios.post('http://18.139.160.129:8000/api/users/verify', { username, otp });
@@ -108,12 +133,18 @@ const Login = () => {
   };
 
   const handleResetPassword = async () => {
-    setError(""); // Clear any previous errors when moving to the next step
+    setError("");
     setShowError(false);
+    setFormErrors({});
+
+    if (!validateNewPasswordForm()) return;
+
     try {
       await axios.post('http://18.139.160.129:8000/api/users/reset-password', { username, newPassword });
       setShowForgotPassword(false);
       setStep(1);
+      setNewPassword("");
+      setConfirmPassword("");
     } catch (error) {
       setError("Password reset failed.");
       setShowError(true);
@@ -139,11 +170,20 @@ const Login = () => {
                   onChange={(e) => setUsername(e.target.value)}
                 />
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   placeholder="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
+                <div className="show-password-checkbox">
+                  <input
+                    type="checkbox"
+                    id="showPassword"
+                    checked={showPassword}
+                    onChange={() => setShowPassword(!showPassword)}
+                  />
+                  <label htmlFor="showPassword" className='shopass'>Show Password</label>
+                </div>
                 <p
                   className="forgot-password"
                   style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}
@@ -159,24 +199,24 @@ const Login = () => {
           </>
         ) : (
           <div className="panel1 resetpanel">
-            <h2 className='resethead'>Reset Your Password</h2><hr></hr>
+            <h2 className='resethead'>Reset Your Password</h2><hr />
             {showError && <p className="error-message">{error}</p>}
             {step === 1 && (
               <>
-                <input className='userinput'
+                <input
+                  className='userinput'
                   type="text"
                   placeholder="Enter Your Username"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                 />
-                <button  className="btnrequest" onClick={handleForgotPassword}>Request OTP</button>
+                <button className="btnrequest" onClick={handleForgotPassword}>Request OTP</button>
               </>
             )}
             {step === 2 && (
               <>
-              
                 <input
-                className='userinput'
+                  className='userinput'
                   type="text"
                   placeholder="Enter OTP"
                   value={otp}
@@ -188,22 +228,41 @@ const Login = () => {
             {step === 3 && (
               <>
                 <input
-                className='userinput'
-                  type="password"
+                  className='userinput'
+                  type={showPassword ? "text" : "password"}
                   placeholder="New Password"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
                 />
+                {formErrors.newPassword && <span className="error">{formErrors.newPassword}</span>}
+
+                <input
+                  className='userinput'
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Confirm Password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+                {formErrors.confirmPassword && <span className="error">{formErrors.confirmPassword}</span>}
+
+                <div className="show-password-checkbox">
+                  <input
+                    type="checkbox"
+                    id="showPasswordReset"
+                    checked={showPassword}
+                    onChange={() => setShowPassword(!showPassword)}
+                  />
+                  <label htmlFor="showPasswordReset" className='shopass'>Show Password</label>
+                </div>
+
                 <button className="btnrequest" onClick={handleResetPassword}>Reset Password</button>
               </>
             )}
-            {/*<button onClick={() => setShowForgotPassword(false)}>Back to Login</button>*/}
           </div>
         )}
       </div>
     </div>
   );
 };
-
 
 export default Login;

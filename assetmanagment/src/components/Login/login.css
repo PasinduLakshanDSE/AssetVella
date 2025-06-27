@@ -21,6 +21,25 @@
   padding: 20px;
 }
 
+
+.show-password-checkbox {
+  display: flex;
+  align-items: center;
+  font-size: 10px;
+  margin-bottom: 16px;
+}
+
+.show-password-checkbox input[type="checkbox"] {
+  margin-right: 8px;
+}
+
+.shopass{
+  font-size: 12px;
+}
+
+
+
+
 .panel1 {
   height: 500px;
   width: 550px;
@@ -132,3 +151,5 @@
   font-size: 0.875rem;
   margin-bottom: 1rem;
 }
+
+
