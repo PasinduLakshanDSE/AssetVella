@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const mongoURL = 'mongodb+srv://root:Pasindu2003%40@cluster1.epawd.mongodb.net/AssetManagement';
+//const mongoURL = 'mongodb+srv://lakshan:Psindu2003%40@assetmanagmentsystem.6uqw7ag.mongodb.net/VellaAssetManagment';
 
 
 mongoose.connect(mongoURL, { useUnifiedTopology: true, useNewUrlParser: true });
