@@ -1,12 +1,14 @@
 /* Global Styling */
 .main{
   background-image: url('/public/Vella.jpg');
+  background-repeat: no-repeat;
+  
 }
 .container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  
 }
 
 /* Split Panels */
@@ -150,6 +152,127 @@
   color: red;
   font-size: 0.875rem;
   margin-bottom: 1rem;
+}
+
+
+
+/* ====================== Responsive Design for All Devices ====================== */
+
+/* Tablets (≤1024px) */
+@media (max-width: 1024px) {
+  .panel,
+  .panel1 {
+    width: 90%;
+    height: auto;
+    padding: 30px 15px;
+  }
+
+  .titleleft {
+    font-size: 36px;
+  }
+
+  .titleright {
+    font-size: 24px;
+  }
+
+  .sign-up-button {
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+  }
+}
+
+/* Mobile (≤768px) */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    padding: 20px;
+    height: auto;
+  }
+
+  .panel,
+  .sign-up-panel,
+  .sign-in-panel,
+  .panel1 {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+
+  .titleleft {
+    font-size: 28px;
+    text-align: center;
+  }
+
+  .titleright {
+    font-size: 22px;
+    text-align: center;
+  }
+
+  .userinput,
+  .signup-form input {
+    width: 90%;
+    font-size: 14px;
+  }
+
+  .sign-up-button {
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .btnrequest {
+    width: 90%;
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .resethead {
+    font-size: 24px;
+  }
+
+  .show-password-checkbox {
+    font-size: 12px;
+  }
+
+  .error {
+    font-size: 12px;
+  }
+}
+
+/* Extra Small Devices (≤480px) */
+@media (max-width: 480px) {
+  .titleleft {
+    font-size: 22px;
+  }
+
+  .titleright {
+    font-size: 20px;
+  }
+
+  .resethead {
+    font-size: 20px;
+  }
+
+  .sign-up-button,
+  .btnrequest {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  .shopass {
+    font-size: 11px;
+  }
+
+  .userinput,
+  .signup-form input {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  .container {
+    padding: 10px;
+  }
 }
 
 
