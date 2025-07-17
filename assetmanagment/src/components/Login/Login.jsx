@@ -74,6 +74,7 @@ const Login = () => {
         return;
       }
 
+      localStorage.setItem('token', 'valid'); // ← set token so ProtectedRoute works
       localStorage.setItem('currentUser', JSON.stringify({ username: user.name, role: user.selectedOption }));
 
       switch (user.selectedOption) {

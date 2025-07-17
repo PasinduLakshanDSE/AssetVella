@@ -47,52 +47,49 @@ import PendingAsset from "./components/Audit/PendingAsset/PendingAsset";
 import PendingDiscardAsset from "./components/Admin/PendingDiscardItem/PendingDiscard";
 import PendingDiscardItem from "./components/Audit/PendingDiscardItem/PendingDiscardItem";
 import TransferReport from "./components/Admin/TransferReport/TransferReport";
-
+import ProtectedRoute from "./components/ProtectedRoute";
 
 
 function App() {
   return (
     <div className="App">
-       
       <Routes>
-        
-        <Route path="/" element={<Home/>}/>
-        <Route path="/AdminNavBar" element={<AdminNavBar/>}/>
-        <Route path="/AdminDashboardPage"  element={<DashBoard/>}/>
-        <Route path="/UsersRole"  element={<AddUsersRole/>}/>
        
-        <Route path="/CompanyDashBord"  element={<CompanyDashBord/>}/>
-        <Route path="/CompanyNavBar"  element={<CompanyNavBar/>}/>
-        <Route path="/Login"  element={<Login/>}/>
-        <Route path="/Users"  element={<Users/>}/>
-        <Route path="/AssetRegister" element={<AssetRegister/>}/>
-        <Route path="/category" element={<Categorization/>}/>
-        <Route path="/AssetDetails" element={<AssetDetails/>}/>
-        <Route path="/QRview/:trackingId" element={<QRVIEW/>}/>
-        <Route path="/transfer-form" element={<TransferForm />} />
-        <Route path="/contact" element={<Contact/>}/>
-        <Route path="/about" element={<About/>} />
-        <Route path="/companyUserRole" element={<CompanyAddUsersRole/>} />
-        <Route path="/Comasset" element={<ComAssetDetails/>} />
-        <Route path="/ComapnyAssetRegister" element={<ComAssetRegister/>} />
-        
-        <Route path="/CompanyUsers" element={<ComapnyUsers/>} />
-        <Route path="/CompanyAssetTranfer" element={<ComapnyTransfer/>} />
-        <Route path="/DepartmentNav" element={<DepartmentNavBar/>} />
-        <Route path="/DepartmentDashBoard" element={<DepartmentDashBoard/>} />
-        <Route path="/DepartmentAssetRegister" element={<DepAssetRegister/>} />
-       
-        <Route path="/DepartmentAssetDetails" element={<DepAssetDetails/>} />
-        <Route path="/DepartmnetAssetTranfer" element={<DepartmentTransfer/>} />
-        <Route path="/GetReport"  element={<Report/>} />
-        <Route path="/AuditDashBoard" element={<AuditDashBoard/>} />
-        <Route path="/AuditNavBar" element={<AuditNavBar/>} />
-        <Route path="/pendingRegisterasset" element={<PendingAssetDetails/>} />
-        <Route path="/PendingAsset" element={<PendingAsset/>} />
-        <Route path="/PendingDiscardAsset" element={<PendingDiscardAsset/>} />
-        <Route path="/PendingDiscardItem" element={<PendingDiscardItem/>} />
-        <Route path="/TransferAssetReport" element={<TransferReport/>} />
-        
+     <Route path="/" element={<Home />} />
+        <Route path="/Login" element={<Login />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/QRview/:trackingId" element={<QRVIEW />} />
+
+        {/* Protected Routes - One by One */}
+        <Route path="/AdminNavBar" element={<ProtectedRoute><AdminNavBar /></ProtectedRoute>} />
+        <Route path="/AdminDashboardPage" element={<ProtectedRoute><DashBoard /></ProtectedRoute>} />
+        <Route path="/UsersRole" element={<ProtectedRoute><AddUsersRole /></ProtectedRoute>} />
+        <Route path="/CompanyDashBord" element={<ProtectedRoute><CompanyDashBord /></ProtectedRoute>} />
+        <Route path="/CompanyNavBar" element={<ProtectedRoute><CompanyNavBar /></ProtectedRoute>} />
+        <Route path="/Users" element={<ProtectedRoute><Users /></ProtectedRoute>} />
+        <Route path="/AssetRegister" element={<ProtectedRoute><AssetRegister /></ProtectedRoute>} />
+        <Route path="/category" element={<ProtectedRoute><Categorization /></ProtectedRoute>} />
+        <Route path="/AssetDetails" element={<ProtectedRoute><AssetDetails /></ProtectedRoute>} />
+        <Route path="/transfer-form" element={<ProtectedRoute><TransferForm /></ProtectedRoute>} />
+        <Route path="/companyUserRole" element={<ProtectedRoute><CompanyAddUsersRole /></ProtectedRoute>} />
+        <Route path="/Comasset" element={<ProtectedRoute><ComAssetDetails /></ProtectedRoute>} />
+        <Route path="/ComapnyAssetRegister" element={<ProtectedRoute><ComAssetRegister /></ProtectedRoute>} />
+        <Route path="/CompanyUsers" element={<ProtectedRoute><ComapnyUsers /></ProtectedRoute>} />
+        <Route path="/CompanyAssetTranfer" element={<ProtectedRoute><ComapnyTransfer /></ProtectedRoute>} />
+        <Route path="/DepartmentNav" element={<ProtectedRoute><DepartmentNavBar /></ProtectedRoute>} />
+        <Route path="/DepartmentDashBoard" element={<ProtectedRoute><DepartmentDashBoard /></ProtectedRoute>} />
+        <Route path="/DepartmentAssetRegister" element={<ProtectedRoute><DepAssetRegister /></ProtectedRoute>} />
+        <Route path="/DepartmentAssetDetails" element={<ProtectedRoute><DepAssetDetails /></ProtectedRoute>} />
+        <Route path="/DepartmnetAssetTranfer" element={<ProtectedRoute><DepartmentTransfer /></ProtectedRoute>} />
+        <Route path="/GetReport" element={<ProtectedRoute><Report /></ProtectedRoute>} />
+        <Route path="/AuditDashBoard" element={<ProtectedRoute><AuditDashBoard /></ProtectedRoute>} />
+        <Route path="/AuditNavBar" element={<ProtectedRoute><AuditNavBar /></ProtectedRoute>} />
+        <Route path="/pendingRegisterasset" element={<ProtectedRoute><PendingAssetDetails /></ProtectedRoute>} />
+        <Route path="/PendingAsset" element={<ProtectedRoute><PendingAsset /></ProtectedRoute>} />
+        <Route path="/PendingDiscardAsset" element={<ProtectedRoute><PendingDiscardAsset /></ProtectedRoute>} />
+        <Route path="/PendingDiscardItem" element={<ProtectedRoute><PendingDiscardItem /></ProtectedRoute>} />
+        <Route path="/TransferAssetReport" element={<ProtectedRoute><TransferReport /></ProtectedRoute>} />
       </Routes>
     </div>
    
