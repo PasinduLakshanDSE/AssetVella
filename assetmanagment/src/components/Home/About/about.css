@@ -1,122 +1,193 @@
-/* About.css */
-.about-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 20px;
-    color: white;
-   
-  }
-  
-  .about-content {
-    background: rgb(9, 126, 81);
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgb(123, 126, 125);
-    max-width: 700px;
-    text-align: center;
-    margin: 30px;
-  }
-  .about-team {
-    display: flex;
-    flex-wrap: wrap;  /* Ensures responsiveness */
-    justify-content: center;  /* Centers the cards */
-    gap: 20px;  /* Adds space between cards */
+/* General Container */
+.homepage1 {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
 }
+
+/* Semi-transparent overlay for readability */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.55);
+  z-index: 1;
+}
+
+/* Content Container */
+.about-container {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 20px;
+  color: white;
+}
+
+.about-content {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+  max-width: 900px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Typography */
+.about-title {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.about-subtitle {
+  font-size: 26px;
+  font-weight: bold;
+  margin-top: 30px;
+  animation: slide-in-left 1s ease-in-out;
+}
+
+.about-text {
+  font-size: 17px;
+  line-height: 1.8;
+  margin-top: 15px;
+  text-align: justify;
+}
+
+.gradient-text {
+  background: linear-gradient(45deg, #ffffff, #d1d1d1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Section Divider */
+.divider {
+  margin: 40px auto;
+  width: 60%;
+  height: 2px;
+  background-color: #ffffff33;
+}
+
+/* Leadership Cards */
+.about-team {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+  font-size: 12px;
+  
+}
+.t1 {
+  font-size: 22px; /* or 14px for smaller size */
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 5px;
+}
+
+
+
 
 .team-member {
-    width: 155px;  /* Set a fixed width */
-    height: 150px;  /* Set a fixed height */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 15px;
+  width: 180px;
+  height: 150px;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 15px;
+  padding: 15px;
+  transition: transform 0.4s ease-in-out;
 }
 
-  .gradient-text {
-    background: linear-gradient(45deg, #080e12, #040404);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  
-  .about-subtitle {
-    font-size: 22px;
-    font-weight: bold;
-    margin-top: 20px;
-    animation: slide-in-left 1s ease-in-out;
-  }
-  
-  .colorful-list {
-    display: flex;
-    flex-direction: column;  /* Stack items vertically */
-    align-items: center;  /* Center horizontally */
+.team-member:hover {
+  transform: scale(1.08);
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
 }
 
-.colorful-list li {
-    font-size: 16px;
-    padding: 10px;
-    background: #467f8f6b;
-    border-radius: 8px;
-    margin: 5px 0;
-    width: 500px;
-    height: 40px;
-    transition: all 0.3s ease-in-out;
-    text-align: center;  /* Center text */
-    display: flex;  
-    align-items: center;  /* Center vertically */
-    justify-content: center;  /* Center text horizontally */
+/* Gallery */
+.photo-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-top: 30px;
+  
 }
 
-  .about-list {
-    list-style-type: none;  /* Removes bullet points */
-    padding: 0;  /* Removes default padding */
-    margin: 0;  /* Adjust margin if needed */
-  }
-  
-  
-  .colorful-list li:hover {
-    background: #154768;
-    transform: scale(1.05);
-  }
-  
-  .about-team {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 10px;
-  }
-  
-  .colorful-card {
-    background: linear-gradient(135deg, #2e615bc3, #2f6f64ab);
-    padding: 1px;
-    border-radius: 30px;
-    transition: all 1s ease-in-out;
+.photo-card {
+  overflow: hidden;
+  border-radius: 800px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease-in-out;
+}
 
+.photo-card:hover {
+  transform: scale(1.05);
+}
+
+.gallery-img {
+  width: 100%;
+  height:150px;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+/* Back Link */
+.vibrant-link {
+  display: inline-block;
+  margin-top: 40px;
+  color: #ffffff;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.vibrant-link:hover {
+  text-decoration: underline;
+  color: #ffd700;
+}
+
+/* Animations */
+@keyframes slide-in-left {
+  from {
+    transform: translateX(-50px);
+    opacity: 0;
   }
-  
-  .colorful-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.44);
+  to {
+    transform: translateX(0);
+    opacity: 1;
   }
+}
+
+.slide-in-right {
+  animation: slide-in-left 1s ease-in-out reverse;
+}
+
+/* Responsive */
+
+
+@media (max-width: 1024px) {
+  .photo-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-top: 30px;
   
-  .vibrant-link {
-    display: block;
-    margin-top: 20px;
-    color: #040202;
-    font-weight: bold;
-    text-decoration: none;
-  }
-  
-  .vibrant-link:hover {
-    color: #090908;
-    text-decoration: underline;
-  }
-  
-  /* Animations */
-  @keyframes slide-in-left {
-    from { transform: translateX(-50px); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
-  }
-  
+}
+
+.photo-card {
+  overflow: hidden;
+  border-radius: 10000px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease-in-out;
+}
+.gallery-img {
+  width: 70%;
+  height:120px;
+  object-fit: cover;
+  border-radius: 20px;
+}
+}

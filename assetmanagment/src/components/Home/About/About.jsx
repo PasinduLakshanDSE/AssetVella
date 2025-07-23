@@ -5,51 +5,43 @@ import { Link } from "react-router-dom";
 const About = () => {
   return (
     <div className="homepage1" style={{ backgroundImage: `url('./Vella.jpg')` }}>
-         
-    <div className="about-container colorful-bg">
-      <div className="about-content colorful-card">
-        <h1 className="about-title gradient-text">About Vella</h1>
-        <p className="about-text fade-in">
-          Vella’s journey began in 1971 with the acquisition of the Uva Halpewatte Tea Estate.
-          Inspired by Ella’s natural beauty, the family expanded into leisure, achieving remarkable success.
-        </p>
-        <h2 className="about-subtitle slide-in-left gradient-text">A Legacy of Excellence</h2>
-        <p className="about-text slide-in-right">
-          Founded in 1971 by Mr. A. P. D. Abeyrathne, Vella Group started with high-quality tea production.
-          Over the years, Vella expanded into leisure, IT, and strategic investments.
-        </p>
-        <h2 className="about-subtitle slide-in-left gradient-text">Key Milestones</h2>
-<ul className="about-list zoom-in colorful-list">
-  <li><strong>1971:</strong> Acquisition of Uva Halpewatte Tea Factory</li>
-  <li><strong>2009:</strong> Launched Halpé Tea Exports</li>
-  <li><strong>2012:</strong> Opened 98 Acres Resort & Spa</li>
-  <li><strong>2019:</strong> Flying Ravana Adventure Park launched</li>
-  <li><strong>2024:</strong> Expansion into IT with 98 Solutions</li>
-</ul>
-        <h2 className="about-subtitle slide-in-left gradient-text">Meet Our Leadership</h2>
-        
-        <div className="about-team">
-          <div className="team-member zoom-in colorful-card">
-            <h3 className="t1">Chamara Abeyratna</h3>
-            <p>Director & Co-Founder</p>
+      <div className="overlay"></div>
+      <div className="about-container colorful-bg">
+        <div className="about-content colorful-card">
+          <h1 className="about-title gradient-text">About Vella</h1>
+
+          <h2 className="about-subtitle gradient-text">A Legacy of Excellence</h2>
+          <p className="about-text slide-in-right">
+           Vella Group, founded in 1971 by Mr. A. P. D. Abeyrathne with the acquisition of Uva Halpewatte Tea Estate, began as a family-run tea business and has since evolved into a diversified conglomerate. Expanding into leisure in 2012 with 98 Acres Resort & Spa, the group has grown to include Halpé Tea exports, Flying Ravana Adventure Park, Ravana Pool Club, boutique villas, and attractions like Ella Swing. Today, with over 10 companies across sectors including IT and strategic investments like Kiri Kōpi, Vella remains committed to its family values while showcasing the best of Sri Lanka to the world.
+            {/* Truncated for brevity */}
+          </p>
+
+          <div className="divider"></div>
+
+          <h2 className="about-subtitle gradient-text">Our Company </h2>
+          <div className="photo-gallery">
+            {["vellalogo.jpg","98.png", "Fr.png", "lee.png","RPC.png","swing.png","vala.png", "tea.png","kirikopi.jpg"].map((img, idx) => (
+              <div key={idx} className="photo-card">
+                <img src={`./${img}`} alt={`Vella ${idx + 1}`} className="gallery-img" />
+              </div>
+            ))}
           </div>
-          <div className="team-member zoom-in colorful-card">
-            
-            <h3 className="t1">Ranga Abeyrathne</h3>
-            <p>Director & Co-Founder</p>
+
+          <div className="divider"></div>
+
+          <h2 className="about-subtitle gradient-text"> Our Leadership</h2>
+          <div className="about-team">
+            {["Chamara Abeyratna", "Ranga Abeyrathne", "Eranda Aberathna", "Dr. Kumudu Gunasekera"].map((name, index) => (
+              <div key={index} className="team-member zoom-in colorful-card">
+                <h3 className="t1">{name}</h3>
+                <p>{index === 3 ? "Deputy Chairman" : "Director & Co-Founder"}</p>
+              </div>
+            ))}
           </div>
-          <div className="team-member zoom-in colorful-card">
-            <h3 className="t1">Eranda Aberathna</h3>
-            <p>Director & Co-Founder</p>
-          </div>
-          <div className="team-member zoom-in colorful-card">
-            <h3 className="t1">Dr.Kumudu Gunasekera</h3>
-            <p>Deputy Chairman</p>
-          </div>
+
+          <Link to="/" className="about-link fade-in vibrant-link">Back to Home</Link>
         </div>
-        <Link to="/" className="about-link fade-in vibrant-link">Back to Home</Link>
       </div>
-    </div>
     </div>
   );
 };
