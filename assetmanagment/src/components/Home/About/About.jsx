@@ -20,7 +20,7 @@ const About = () => {
 
           <h2 className="about-subtitle gradient-text">Our Company </h2>
           <div className="photo-gallery">
-            {["vellalogo.jpg","98.png", "Fr.png", "lee.png","RPC.png","swing.png","vala.png", "tea.png","kirikopi.jpg"].map((img, idx) => (
+            {["vellalogo.jpg","98.png", "FR.png", "lee.png","RPC.png","swing.png","vala.png", "tea.png","kirikopi.jpg"].map((img, idx) => (
               <div key={idx} className="photo-card">
                 <img src={`./${img}`} alt={`Vella ${idx + 1}`} className="gallery-img" />
               </div>
