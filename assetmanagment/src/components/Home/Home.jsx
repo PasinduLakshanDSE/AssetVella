@@ -64,7 +64,7 @@ const Home = () => {
 
       {/* Footer */}
       <footer className="footer">
-        <p>© 2025 Asset Management System. All rights reserved.</p>
+        <p>© 2025 Asset Management System. All rights reserved.Designed and Developed by Vella Team IT</p>
       </footer>
     </div>
     </div>
